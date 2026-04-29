@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
-  Settings, Tool, Activity, Calendar, 
+  Settings, Activity, Calendar, 
   AlertTriangle, CheckCircle2, Plus, 
   Search, Filter, MoreVertical, Layers,
   Wrench, ShieldCheck, Database, Zap,
