@@ -1,289 +1,222 @@
 import React, { useState } from 'react';
-import { motion } from 'framer-motion';
-import { Users, Banknote, Calendar, Clock, UserPlus, Search, Plus, Filter, Download, Briefcase } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { 
+  Users, Briefcase, FileText, Calendar, 
+  TrendingUp, GraduationCap, Clock, Wallet,
+  Search, Filter, Plus, ChevronRight,
+  ShieldCheck, Activity, LayoutDashboard,
+  UserPlus, Award, Target, Settings,
+  PieChart, Heart, User, Link
+} from 'lucide-react';
+import EmployeeManagement from './EmployeeManagement';
+import PayrollEngine from './PayrollEngine';
+import RecruitmentPortal from './RecruitmentPortal';
+import TrainingModule from './TrainingModule';
+import AbsenceManagement from './AbsenceManagement';
+import EmployeeSelfService from './EmployeeSelfService';
 
 const HRModule = () => {
-  const [activeTab, setActiveTab] = useState('personnel');
+  const [activeTab, setActiveTab] = useState('dashboard');
 
   const tabs = [
-    { id: 'personnel', label: 'Personnel', icon: Users },
-    { id: 'paie', label: 'Paie', icon: Banknote },
-    { id: 'conges', label: 'Congés & Absences', icon: Calendar },
-    { id: 'presences', label: 'Présences', icon: Clock },
-    { id: 'recrutement', label: 'Recrutement', icon: UserPlus },
+    { id: 'dashboard', label: 'SIRH Dashboard', icon: LayoutDashboard },
+    { id: 'personnel', label: 'Gestion du Personnel', icon: Users },
+    { id: 'paie', label: 'Paie & Rémunération', icon: Wallet },
+    { id: 'self-service', label: 'Espace Salarié', icon: User },
+    { id: 'recrutement', label: 'Recrutement (Talents)', icon: UserPlus },
+    { id: 'carriere', label: 'Carrières & Compétences', icon: Award },
+    { id: 'formation', label: 'Formation (GPEC)', icon: GraduationCap },
+    { id: 'absences', label: 'Temps & Absences', icon: Clock },
   ];
 
   return (
     <div className="flex flex-col h-full gap-6">
       {/* Header & Tabs */}
       <div className="flex flex-col gap-4">
-        <div className="flex bg-slate-800/50 p-1 rounded-xl border border-slate-700/50 w-fit">
-          {tabs.map((tab) => (
-            <button
-              key={tab.id}
-              onClick={() => setActiveTab(tab.id)}
-              className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
-                activeTab === tab.id
-                  ? 'bg-indigo-600 text-white shadow-md'
-                  : 'text-slate-400 hover:text-slate-200 hover:bg-slate-700/50'
-              }`}
-            >
-              <tab.icon size={16} />
-              {tab.label}
-            </button>
-          ))}
+        <div className="flex items-center justify-between">
+          <div className="flex bg-slate-800/50 p-1 rounded-xl border border-slate-700/50 overflow-x-auto no-scrollbar max-w-full">
+            {tabs.map((tab) => (
+              <button
+                key={tab.id}
+                onClick={() => setActiveTab(tab.id)}
+                className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 whitespace-nowrap ${
+                  activeTab === tab.id
+                    ? 'bg-indigo-600 text-white shadow-md'
+                    : 'text-slate-400 hover:text-slate-200 hover:bg-slate-700/50'
+                }`}
+              >
+                <tab.icon size={16} />
+                <span className="text-[10px] font-black uppercase tracking-widest">{tab.label}</span>
+              </button>
+            ))}
+          </div>
+          <div className="flex items-center gap-3">
+             <div className="flex items-center gap-2 px-3 py-1.5 bg-indigo-500/10 border border-indigo-500/20 rounded-lg">
+                <Link size={14} className="text-emerald-400" />
+                <span className="text-[10px] font-black uppercase text-emerald-400 tracking-widest">Connecté Comptabilité FI</span>
+             </div>
+             <div className="flex items-center gap-2 px-3 py-1.5 bg-indigo-500/10 border border-indigo-500/20 rounded-lg">
+                <ShieldCheck size={14} className="text-indigo-400" />
+                <span className="text-[10px] font-black uppercase text-indigo-400 tracking-widest">Conformité OHADA</span>
+             </div>
+          </div>
         </div>
       </div>
 
-      {/* Content based on tab */}
-      {activeTab === 'personnel' && (
-        <motion.div
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="flex flex-col gap-4"
-        >
-          {/* Action Bar */}
-          <div className="flex justify-between items-center bg-slate-800/30 p-4 rounded-xl border border-slate-700/50">
-            <div className="flex gap-4">
-              <div className="relative">
-                <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" size={16} />
-                <input
-                  type="text"
-                  placeholder="Rechercher un employé..."
-                  className="pl-10 pr-4 py-2 bg-slate-900 border border-slate-700 rounded-lg text-sm focus:outline-none focus:border-indigo-500 w-64"
-                />
-              </div>
-              <button className="flex items-center gap-2 px-4 py-2 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-lg text-sm transition-colors">
-                <Filter size={16} />
-                Filtres
-              </button>
-            </div>
-            <div className="flex gap-3">
-              <button className="flex items-center gap-2 px-4 py-2 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-lg text-sm transition-colors">
-                <Download size={16} />
-                Exporter
-              </button>
-              <button className="flex items-center gap-2 px-4 py-2 bg-indigo-600 hover:bg-indigo-500 rounded-lg text-sm font-medium transition-colors">
-                <Plus size={16} />
-                Nouvel Employé
-              </button>
-            </div>
-          </div>
-
-          {/* Table */}
-          <div className="bg-slate-800/30 rounded-xl border border-slate-700/50 overflow-hidden">
-            <table className="w-full text-left text-sm">
-              <thead className="bg-slate-800/80 text-slate-400 border-b border-slate-700/50">
-                <tr>
-                  <th className="p-4 font-medium">Matricule</th>
-                  <th className="p-4 font-medium">Nom & Prénom</th>
-                  <th className="p-4 font-medium">Département</th>
-                  <th className="p-4 font-medium">Poste</th>
-                  <th className="p-4 font-medium">Date d'embauche</th>
-                  <th className="p-4 font-medium text-center">Statut</th>
-                  <th className="p-4 font-medium text-center">Actions</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-slate-700/50">
-                {[
-                  { id: 'EMP-001', name: 'Sophie Martin', dept: 'Comptabilité', role: 'Directrice Financière', date: '12 Jan 2020', status: 'Actif', color: 'emerald' },
-                  { id: 'EMP-002', name: 'Lucas Bernard', dept: 'Informatique', role: 'Développeur Senior', date: '05 Mar 2021', status: 'Actif', color: 'emerald' },
-                  { id: 'EMP-003', name: 'Emma Dubois', dept: 'Ressources Humaines', role: 'Chargée de Recrutement', date: '18 Fév 2022', status: 'Actif', color: 'emerald' },
-                  { id: 'EMP-004', name: 'Thomas Petit', dept: 'Marketing', role: 'Chef de Projet', date: '30 Juin 2023', status: 'En Congé', color: 'amber' },
-                  { id: 'EMP-005', name: 'Julie Leroy', dept: 'Ventes', role: 'Commerciale', date: '15 Sep 2023', status: 'Actif', color: 'emerald' },
-                ].map((emp, i) => (
-                  <tr key={i} className="hover:bg-slate-800/50 transition-colors">
-                    <td className="p-4 font-medium text-slate-300">{emp.id}</td>
-                    <td className="p-4">
-                      <div className="flex items-center gap-3">
-                        <div className="w-8 h-8 rounded-full bg-slate-700 flex items-center justify-center text-xs font-bold">
-                           {emp.name.split(' ').map(n => n[0]).join('')}
-                        </div>
-                        {emp.name}
-                      </div>
-                    </td>
-                    <td className="p-4 text-slate-400">{emp.dept}</td>
-                    <td className="p-4 text-slate-300">{emp.role}</td>
-                    <td className="p-4 text-slate-400">{emp.date}</td>
-                    <td className="p-4">
-                      <div className={`mx-auto w-fit px-2.5 py-1 rounded-full text-xs font-medium bg-${emp.color}-500/10 text-${emp.color}-400 border border-${emp.color}-500/20`}>
-                        {emp.status}
-                      </div>
-                    </td>
-                    <td className="p-4">
-                      <button className="text-slate-400 hover:text-indigo-400 transition-colors mx-auto block">
-                        Voir profil
-                      </button>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </motion.div>
-      )}
-
-      {/* Paie */}
-      {activeTab === 'paie' && (
-        <motion.div
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="flex flex-col gap-4"
-        >
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-2">
-            <div className="card">
-              <p className="text-sm text-slate-400">Masse Salariale (Mois en cours)</p>
-              <h3 className="text-2xl font-bold mt-2 text-slate-100">84,500 €</h3>
-              <p className="text-xs text-rose-400 mt-1">+2.4% vs mois précédent</p>
-            </div>
-            <div className="card">
-              <p className="text-sm text-slate-400">Fiches de Paie Générées</p>
-              <h3 className="text-2xl font-bold mt-2 text-slate-100">42 / 45</h3>
-              <div className="w-full bg-slate-700 rounded-full h-1.5 mt-3">
-                 <div className="bg-emerald-500 h-1.5 rounded-full" style={{ width: '93%' }}></div>
-              </div>
-            </div>
-            <div className="card flex flex-col justify-center items-center">
-              <button className="w-full py-3 bg-indigo-600 hover:bg-indigo-500 rounded-xl font-bold transition-all shadow-lg shadow-indigo-500/20">
-                Générer la Paie d'Octobre
-              </button>
-            </div>
-          </div>
-          
-          <div className="bg-slate-800/30 rounded-xl border border-slate-700/50 overflow-hidden">
-             <div className="p-4 border-b border-slate-700/50">
-                <h3 className="font-semibold">Historique des Campagnes de Paie</h3>
-             </div>
-             <table className="w-full text-left text-sm">
-                <thead className="bg-slate-800/80 text-slate-400 border-b border-slate-700/50">
-                  <tr>
-                    <th className="p-4 font-medium">Période</th>
-                    <th className="p-4 font-medium">Effectif</th>
-                    <th className="p-4 font-medium text-right">Masse Salariale Brute</th>
-                    <th className="p-4 font-medium text-right">Charges Sociales</th>
-                    <th className="p-4 font-medium text-right">Net à Payer</th>
-                    <th className="p-4 font-medium text-center">Statut</th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-slate-700/50">
-                  {[
-                    { period: 'Septembre 2024', eff: 45, brut: '105,200 €', charges: '42,080 €', net: '82,550 €', status: 'Clôturé', color: 'emerald' },
-                    { period: 'Août 2024', eff: 44, brut: '102,500 €', charges: '41,000 €', net: '80,450 €', status: 'Clôturé', color: 'emerald' },
-                    { period: 'Juillet 2024', eff: 44, brut: '102,500 €', charges: '41,000 €', net: '80,450 €', status: 'Clôturé', color: 'emerald' },
-                  ].map((pay, i) => (
-                    <tr key={i} className="hover:bg-slate-800/50 transition-colors">
-                      <td className="p-4 font-medium">{pay.period}</td>
-                      <td className="p-4 text-slate-400">{pay.eff} employés</td>
-                      <td className="p-4 text-right text-slate-300">{pay.brut}</td>
-                      <td className="p-4 text-right text-slate-400">{pay.charges}</td>
-                      <td className="p-4 text-right font-bold text-slate-200">{pay.net}</td>
-                      <td className="p-4">
-                        <div className={`mx-auto w-fit px-2.5 py-1 rounded-full text-xs font-medium bg-${pay.color}-500/10 text-${pay.color}-400 border border-${pay.color}-500/20`}>
-                          {pay.status}
-                        </div>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-             </table>
-          </div>
-        </motion.div>
-      )}
-
-      {/* Congés & Absences */}
-      {activeTab === 'conges' && (
-        <motion.div
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="flex flex-col gap-4"
-        >
-          <div className="card border-indigo-500/30 bg-indigo-500/5">
-             <div className="flex items-center justify-between mb-4">
-                <div className="flex items-center gap-3 text-indigo-400">
-                    <Calendar size={24} />
-                    <h3 className="font-bold text-lg">Demandes en attente d'approbation</h3>
-                </div>
-                <span className="px-3 py-1 bg-indigo-500/20 text-indigo-400 rounded-full text-sm font-bold">
-                    3 demandes
-                </span>
-             </div>
-             
-             <div className="space-y-3">
-                {[
-                  { name: 'Thomas Petit', type: 'Congés Payés', dates: '12 Nov - 18 Nov 2024', duration: '5 jours', requestedOn: 'Aujourd\'hui' },
-                  { name: 'Sophie Martin', type: 'RTT', dates: '25 Oct 2024', duration: '1 jour', requestedOn: 'Hier' },
-                  { name: 'Lucas Bernard', type: 'Télétravail Exceptionnel', dates: '22 Oct 2024', duration: '1 jour', requestedOn: 'Il y a 2 jours' },
-                ].map((req, i) => (
-                  <div key={i} className="flex items-center justify-between p-4 bg-slate-900/50 rounded-xl border border-slate-700/50">
-                    <div className="flex items-center gap-4">
-                        <div className="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center font-bold text-sm border border-slate-700">
-                           {req.name.split(' ').map(n => n[0]).join('')}
-                        </div>
-                        <div>
-                          <p className="font-medium text-slate-200">{req.name}</p>
-                          <p className="text-xs text-slate-400">{req.type} • {req.dates} ({req.duration})</p>
-                        </div>
-                    </div>
-                    <div className="flex items-center gap-4">
-                       <p className="text-xs text-slate-500 hidden md:block">Demandé: {req.requestedOn}</p>
-                       <div className="flex gap-2">
-                           <button className="px-3 py-1.5 bg-rose-500/10 text-rose-400 hover:bg-rose-500/20 border border-rose-500/20 rounded-lg text-sm transition-colors">
-                              Refuser
-                           </button>
-                           <button className="px-3 py-1.5 bg-emerald-500/10 text-emerald-400 hover:bg-emerald-500/20 border border-emerald-500/20 rounded-lg text-sm transition-colors">
-                              Approuver
-                           </button>
-                       </div>
-                    </div>
-                  </div>
-                ))}
-             </div>
-          </div>
-        </motion.div>
-      )}
-
-      {/* Recrutement */}
-      {activeTab === 'recrutement' && (
-         <motion.div
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="card flex flex-col items-center justify-center h-96 border-dashed"
-         >
-            <div className="w-16 h-16 bg-slate-800 rounded-full flex items-center justify-center mb-4">
-               <Briefcase size={32} className="text-slate-500" />
-            </div>
-            <h3 className="text-xl font-bold mb-2">Module Recrutement</h3>
-            <p className="text-slate-400 max-w-md text-center mb-6">
-              Gérez vos offres d'emploi, suivez les candidats, planifiez des entretiens et centralisez les évaluations.
-            </p>
-            <button className="px-4 py-2 bg-indigo-600 hover:bg-indigo-500 rounded-lg text-sm font-medium transition-colors">
-              Créer une offre d'emploi
-            </button>
-         </motion.div>
-      )}
-      
-      {/* Présences */}
-      {activeTab === 'presences' && (
-         <motion.div
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="card flex flex-col items-center justify-center h-96 border-dashed"
-         >
-            <div className="w-16 h-16 bg-slate-800 rounded-full flex items-center justify-center mb-4">
-               <Clock size={32} className="text-slate-500" />
-            </div>
-            <h3 className="text-xl font-bold mb-2">Suivi des Présences</h3>
-            <p className="text-slate-400 max-w-md text-center mb-6">
-              Visualisez les pointages, les retards, les heures supplémentaires et exportez les données vers la paie.
-            </p>
-            <button className="px-4 py-2 bg-indigo-600 hover:bg-indigo-500 rounded-lg text-sm font-medium transition-colors">
-              Voir le planning d'aujourd'hui
-            </button>
-         </motion.div>
-      )}
-
+      <AnimatePresence mode="wait">
+        {activeTab === 'dashboard' && <HRDashboard key="dashboard" />}
+        {activeTab === 'personnel' && <EmployeeManagement key="personnel" />}
+        {activeTab === 'paie' && <PayrollEngine key="paie" />}
+        {activeTab === 'self-service' && <EmployeeSelfService key="self-service" />}
+        {activeTab === 'recrutement' && <RecruitmentPortal key="recrutement" />}
+        {activeTab === 'carriere' && <div className="card p-20 text-center text-slate-500 uppercase font-black tracking-widest">Module Carrières & Compétences en cours...</div>}
+        {activeTab === 'formation' && <TrainingModule key="formation" />}
+        {activeTab === 'absences' && <AbsenceManagement key="absences" />}
+      </AnimatePresence>
     </div>
   );
 };
+
+const HRDashboard = () => (
+  <motion.div 
+    initial={{ opacity: 0, y: 20 }}
+    animate={{ opacity: 1, y: 0 }}
+    exit={{ opacity: 0, y: -20 }}
+    className="grid grid-cols-1 lg:grid-cols-4 gap-6"
+  >
+    {/* Key Metrics */}
+    <StatCard title="Effectif Total" value="124" sub="Salariés actifs" icon={<Users />} color="indigo" trend="+3" />
+    <StatCard title="Masse Salariale (Mois)" value="45.8M" sub="XOF • Bruts" icon={<Wallet />} color="emerald" trend="+1.2%" />
+    <StatCard title="Turnover (Annuel)" value="4.2%" sub="Objectif : < 5%" icon={<TrendingUp />} color="amber" trend="-0.5%" />
+    <StatCard title="Taux d'Absenteïsme" value="2.8%" sub="Moyenne Groupe" icon={<Activity />} color="rose" trend="Stable" />
+
+    {/* Recruitment Pipeline */}
+    <div className="lg:col-span-2 card bg-slate-800/20 border-slate-700/50 p-8 flex flex-col gap-6 shadow-2xl">
+       <div className="flex justify-between items-center">
+          <h4 className="text-xs font-black uppercase tracking-[0.2em] text-white">Pipeline de Recrutement</h4>
+          <button className="text-[10px] font-black text-indigo-400 uppercase">Voir tout</button>
+       </div>
+       <div className="flex justify-between gap-4">
+          <PipelineStep label="Offres" value="12" active />
+          <PipelineStep label="Candidats" value="145" />
+          <PipelineStep label="Entretiens" value="24" />
+          <PipelineStep label="Hired" value="8" />
+       </div>
+       <div className="space-y-3 mt-4">
+          <CandidateRow name="Moussa Ndiaye" position="Senior Fullstack Dev" status="Entretien technique" />
+          <CandidateRow name="Aïssatou Sow" position="Contrôleur de Gestion" status="Vérification références" />
+       </div>
+    </div>
+
+    {/* Payroll Summary */}
+    <div className="lg:col-span-2 card bg-slate-800/20 border-slate-700/50 p-8 flex flex-col gap-6 shadow-2xl">
+       <div className="flex justify-between items-center">
+          <h4 className="text-xs font-black uppercase tracking-[0.2em] text-white">État de la Paie (Avril 2024)</h4>
+          <span className="px-3 py-1 bg-emerald-500/10 text-emerald-400 rounded-full text-[9px] font-black uppercase border border-emerald-500/20">Clôturée</span>
+       </div>
+       <div className="grid grid-cols-2 gap-6">
+          <div className="space-y-4">
+             <PayrollMetric label="IPRES (Part Patronale)" value="3.450.000 F" />
+             <PayrollMetric label="CSS (Accidents Travail)" value="820.000 F" />
+             <PayrollMetric label="IR (Impôt sur le Revenu)" value="5.120.000 F" />
+          </div>
+          <div className="flex flex-col items-center justify-center p-6 bg-slate-900 border border-slate-800 rounded-3xl">
+             <PieChart size={48} className="text-indigo-400 mb-4" />
+             <span className="text-xs font-black text-white uppercase tracking-widest text-center">Répartition des Charges Sociales</span>
+          </div>
+       </div>
+    </div>
+
+    {/* Training & GPEC */}
+    <div className="lg:col-span-1 card bg-slate-800/30 p-8 flex flex-col gap-6">
+       <h4 className="text-xs font-black uppercase tracking-[0.2em] text-white">GPEC & Formations</h4>
+       <div className="space-y-4">
+          <TrainingProgress label="Certif IFRS 17" progress={75} />
+          <TrainingProgress label="Management Elite" progress={40} />
+          <TrainingProgress label="Sécurité Industrielle" progress={95} />
+       </div>
+       <button className="w-full py-3 bg-slate-900 border border-slate-700 rounded-2xl text-[10px] font-black uppercase tracking-widest text-slate-400 hover:text-white transition-all">
+          Accéder au catalogue
+       </button>
+    </div>
+
+    {/* Employee Wellness / ESG */}
+    <div className="lg:col-span-3 card bg-indigo-600/5 border-indigo-500/20 p-8 flex items-center gap-8 shadow-2xl">
+       <div className="w-20 h-20 bg-indigo-500/10 rounded-3xl flex items-center justify-center text-indigo-400">
+          <Heart size={40} className="animate-pulse" />
+       </div>
+       <div className="flex-1">
+          <h4 className="text-lg font-black text-white uppercase tracking-tighter mb-2">Social & Bien-être (ESG Score)</h4>
+          <p className="text-xs text-slate-500 font-medium leading-relaxed max-w-2xl">
+             Le score social du groupe est en hausse de **15%** ce trimestre grâce à l'amélioration de la couverture santé et la mise en place du télétravail hybride. 
+             L'IA Joule suggère de renforcer les programmes de formation pour le département Production.
+          </p>
+       </div>
+       <div className="flex flex-col items-end">
+          <span className="text-3xl font-black text-indigo-400">8.4<span className="text-xs text-slate-600">/10</span></span>
+          <span className="text-[10px] font-black text-slate-500 uppercase tracking-widest">Score de Satisfaction</span>
+       </div>
+    </div>
+  </motion.div>
+);
+
+const StatCard = ({ title, value, sub, icon, color, trend }: any) => (
+  <div className="card group hover:border-indigo-500/30 transition-all cursor-pointer relative overflow-hidden p-8 shadow-xl border-slate-700/50">
+    <div className={`absolute top-0 right-0 w-24 h-24 -mr-12 -mt-12 rounded-full bg-${color === 'emerald' ? 'emerald' : color === 'amber' ? 'amber' : color === 'rose' ? 'rose' : 'indigo'}-500 opacity-5 group-hover:opacity-10 transition-opacity`}></div>
+    <div className="flex justify-between items-start mb-4">
+       <p className="text-slate-500 text-[10px] font-black uppercase tracking-widest leading-none">{title}</p>
+       <span className={`text-[9px] font-black px-2 py-0.5 rounded-lg bg-${trend.includes('+') ? 'emerald' : 'slate'}-500/10 text-${trend.includes('+') ? 'emerald' : 'slate'}-400 border border-${trend.includes('+') ? 'emerald' : 'slate'}-500/20`}>{trend}</span>
+    </div>
+    <div className="flex items-end gap-3">
+       <h3 className="text-2xl font-black text-white">{value}</h3>
+       <div className={`p-1.5 rounded-lg bg-slate-900 text-slate-600 group-hover:text-${color === 'emerald' ? 'emerald-400' : 'indigo-400'} transition-colors mb-1`}>
+          {React.cloneElement(icon, { size: 14 })}
+       </div>
+    </div>
+    <p className="text-[9px] font-bold text-slate-600 uppercase mt-2 tracking-tighter">{sub}</p>
+  </div>
+);
+
+const PipelineStep = ({ label, value, active }: any) => (
+  <div className="flex-1 flex flex-col items-center gap-2">
+     <div className={`w-full h-1.5 rounded-full ${active ? 'bg-indigo-500' : 'bg-slate-800'}`} />
+     <span className="text-[9px] font-black text-slate-500 uppercase tracking-tighter">{label}</span>
+     <span className="text-sm font-black text-white">{value}</span>
+  </div>
+);
+
+const CandidateRow = ({ name, position, status }: any) => (
+  <div className="flex items-center justify-between p-3 bg-slate-900 border border-slate-800 rounded-xl hover:bg-slate-800 transition-all cursor-pointer">
+     <div className="flex items-center gap-3">
+        <div className="w-8 h-8 rounded-lg bg-indigo-500/10 text-indigo-400 flex items-center justify-center font-black text-xs">
+           {name.split(' ').map((n: string) => n[0]).join('')}
+        </div>
+        <div className="flex flex-col">
+           <span className="text-[11px] font-bold text-white uppercase">{name}</span>
+           <span className="text-[9px] text-slate-500 font-bold uppercase">{position}</span>
+        </div>
+     </div>
+     <span className="text-[9px] font-black text-indigo-400 uppercase tracking-widest">{status}</span>
+  </div>
+);
+
+const PayrollMetric = ({ label, value }: any) => (
+  <div className="flex justify-between items-center py-2 border-b border-slate-700/30">
+     <span className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">{label}</span>
+     <span className="text-xs font-black text-white">{value}</span>
+  </div>
+);
+
+const TrainingProgress = ({ label, progress }: any) => (
+  <div className="flex flex-col gap-2">
+     <div className="flex justify-between items-center text-[10px] font-black uppercase tracking-widest">
+        <span className="text-slate-400">{label}</span>
+        <span className="text-white">{progress}%</span>
+     </div>
+     <div className="h-1 bg-slate-900 rounded-full overflow-hidden">
+        <div className="h-full bg-indigo-500" style={{ width: `${progress}%` }} />
+     </div>
+  </div>
+);
 
 export default HRModule;

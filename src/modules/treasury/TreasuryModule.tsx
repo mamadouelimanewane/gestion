@@ -1,242 +1,356 @@
 import React, { useState } from 'react';
-import { motion } from 'framer-motion';
-import { Wallet, Landmark, ArrowRightLeft, TrendingUp, Search, Plus, Filter, Download, ArrowUpRight, ArrowDownRight } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { 
+  Wallet, Landmark, ArrowRightLeft, TrendingUp, 
+  Search, Plus, Filter, Download, ArrowUpRight, 
+  ArrowDownRight, CreditCard, ShieldCheck, RefreshCw,
+  Eye, Calendar, CheckCircle2, AlertCircle, FileText
+} from 'lucide-react';
+import CashForecasting from './CashForecasting';
 
 const TreasuryModule = () => {
   const [activeTab, setActiveTab] = useState('banques');
+  const [isRefreshing, setIsRefreshing] = useState(false);
 
   const tabs = [
     { id: 'banques', label: 'Comptes Bancaires', icon: Landmark },
-    { id: 'caisse', label: 'Caisse', icon: Wallet },
+    { id: 'caisse', label: 'Petite Caisse', icon: Wallet },
     { id: 'rapprochement', label: 'Rapprochement', icon: ArrowRightLeft },
-    { id: 'previsions', label: 'Prévisions', icon: TrendingUp },
+    { id: 'previsions', label: 'Flux de Trésorerie', icon: TrendingUp },
   ];
+
+  const handleRefresh = () => {
+    setIsRefreshing(true);
+    setTimeout(() => setIsRefreshing(false), 1500);
+  };
 
   return (
     <div className="flex flex-col h-full gap-6">
       {/* Header & Tabs */}
       <div className="flex flex-col gap-4">
-        <div className="flex bg-slate-800/50 p-1 rounded-xl border border-slate-700/50 w-fit">
-          {tabs.map((tab) => (
-            <button
-              key={tab.id}
-              onClick={() => setActiveTab(tab.id)}
-              className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
-                activeTab === tab.id
-                  ? 'bg-indigo-600 text-white shadow-md'
-                  : 'text-slate-400 hover:text-slate-200 hover:bg-slate-700/50'
-              }`}
-            >
-              <tab.icon size={16} />
-              {tab.label}
-            </button>
-          ))}
+        <div className="flex items-center justify-between">
+          <div className="flex bg-slate-800/50 p-1 rounded-xl border border-slate-700/50 w-fit">
+            {tabs.map((tab) => (
+              <button
+                key={tab.id}
+                onClick={() => setActiveTab(tab.id)}
+                className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
+                  activeTab === tab.id
+                    ? 'bg-indigo-600 text-white shadow-md'
+                    : 'text-slate-400 hover:text-slate-200 hover:bg-slate-700/50'
+                }`}
+              >
+                <tab.icon size={16} />
+                {tab.label}
+              </button>
+            ))}
+          </div>
+          <div className="flex items-center gap-3">
+             <button 
+               onClick={handleRefresh}
+               className={`p-2 rounded-lg bg-slate-800 border border-slate-700 text-slate-400 hover:text-white transition-all ${isRefreshing ? 'animate-spin' : ''}`}
+             >
+                <RefreshCw size={18} />
+             </button>
+             <button className="flex items-center gap-2 px-4 py-2 bg-indigo-600 hover:bg-indigo-500 rounded-lg text-sm font-bold transition-all shadow-lg shadow-indigo-500/20">
+                <Plus size={16} />
+                Nouveau Transfert
+             </button>
+          </div>
         </div>
       </div>
 
-      {/* Content based on tab */}
-      {activeTab === 'banques' && (
-        <motion.div
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="flex flex-col gap-4"
-        >
-          {/* Action Bar */}
-          <div className="flex justify-between items-center bg-slate-800/30 p-4 rounded-xl border border-slate-700/50">
-            <div className="flex gap-4">
-              <div className="relative">
-                <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" size={16} />
-                <input
-                  type="text"
-                  placeholder="Rechercher un compte..."
-                  className="pl-10 pr-4 py-2 bg-slate-900 border border-slate-700 rounded-lg text-sm focus:outline-none focus:border-indigo-500 w-64"
-                />
-              </div>
+      <AnimatePresence mode="wait">
+        {/* Comptes Bancaires */}
+        {activeTab === 'banques' && (
+          <motion.div
+            key="banques"
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            className="flex flex-col gap-6"
+          >
+            {/* Bank Cards Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              <BankCard 
+                bank="Ecobank Sénégal" 
+                acc="SN012 01001 0123456789 01" 
+                balance="125 450 000 F" 
+                type="Compte Courant" 
+                color="indigo" 
+                trend="+2.4%" 
+                icon={<Landmark className="text-indigo-400" size={24} />}
+              />
+              <BankCard 
+                bank="CBAO Groupe Attijari" 
+                acc="SN012 08008 9876543210 99" 
+                balance="45 230 000 F" 
+                type="Compte d'Investissement" 
+                color="emerald" 
+                trend="+0.5%" 
+                icon={<ShieldCheck className="text-emerald-400" size={24} />}
+              />
+              <BankCard 
+                bank="Société Générale (SGBS)" 
+                acc="SN012 03003 1112223334 55" 
+                balance="12 400 000 F" 
+                type="Compte Devises (USD)" 
+                color="amber" 
+                trend="-1.2%" 
+                icon={<CreditCard className="text-amber-400" size={24} />}
+              />
             </div>
-            <div className="flex gap-3">
-              <button className="flex items-center gap-2 px-4 py-2 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-lg text-sm transition-colors">
-                <Download size={16} />
-                Relevés
-              </button>
-              <button className="flex items-center gap-2 px-4 py-2 bg-indigo-600 hover:bg-indigo-500 rounded-lg text-sm font-medium transition-colors">
-                <Plus size={16} />
-                Nouveau Compte
-              </button>
-            </div>
-          </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-2">
-            {[
-              { bank: 'BNP Paribas', acc: 'FR76 3000 4000 1234', balance: '124,500.00 €', type: 'Compte Courant', color: 'emerald', trend: '+2.4%' },
-              { bank: 'Société Générale', acc: 'FR76 3000 4000 5678', balance: '45,230.00 €', type: 'Compte Épargne', color: 'indigo', trend: '+0.5%' },
-              { bank: 'Crédit Mutuel', acc: 'FR76 3000 4000 9012', balance: '12,400.00 €', type: 'Compte Devises (USD)', color: 'amber', trend: '-1.2%' },
-            ].map((account, i) => (
-               <div key={i} className={`card border-${account.color}-500/20`}>
-                  <div className="flex justify-between items-start mb-4">
-                     <div>
-                        <h3 className="font-bold text-lg">{account.bank}</h3>
-                        <p className="text-xs text-slate-400 font-mono mt-1">{account.acc}</p>
-                     </div>
-                     <div className={`w-8 h-8 rounded-full bg-${account.color}-500/10 flex items-center justify-center`}>
-                        <Landmark size={16} className={`text-${account.color}-400`} />
-                     </div>
+            {/* Recent Bank Transactions */}
+            <div className="bg-slate-800/30 rounded-2xl border border-slate-700/50 overflow-hidden shadow-xl">
+               <div className="p-5 border-b border-slate-700/50 flex justify-between items-center bg-slate-800/50">
+                  <div className="flex items-center gap-3">
+                    <div className="p-2 bg-indigo-500/10 rounded-lg text-indigo-400">
+                      <ArrowRightLeft size={18} />
+                    </div>
+                    <h3 className="font-black text-sm uppercase tracking-widest">Derniers Mouvements Bancaires</h3>
                   </div>
-                  <p className="text-sm text-slate-500 mb-1">{account.type}</p>
-                  <div className="flex items-end justify-between">
-                     <h2 className="text-2xl font-bold text-slate-100">{account.balance}</h2>
-                     <span className={`text-xs font-bold text-${account.trend.startsWith('+') ? 'emerald' : 'rose'}-400`}>
-                        {account.trend} ce mois
-                     </span>
+                  <div className="flex gap-2">
+                    <div className="relative">
+                      <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500" size={14} />
+                      <input 
+                        type="text" 
+                        placeholder="Filtrer..." 
+                        className="pl-9 pr-4 py-1.5 bg-slate-900 border border-slate-700 rounded-lg text-xs outline-none focus:border-indigo-500 transition-all w-48"
+                      />
+                    </div>
+                    <button className="p-2 bg-slate-900 border border-slate-700 rounded-lg text-slate-400 hover:text-white">
+                      <Download size={16} />
+                    </button>
                   </div>
                </div>
-            ))}
-          </div>
-
-          {/* Table Transactions */}
-          <div className="bg-slate-800/30 rounded-xl border border-slate-700/50 overflow-hidden mt-4">
-             <div className="p-4 border-b border-slate-700/50 flex justify-between items-center">
-                <h3 className="font-semibold">Dernières Opérations Bancaires</h3>
-                <button className="text-sm text-indigo-400 hover:text-indigo-300">Voir tout</button>
-             </div>
-             <table className="w-full text-left text-sm">
-                <thead className="bg-slate-800/80 text-slate-400 border-b border-slate-700/50">
-                  <tr>
-                    <th className="p-4 font-medium">Date</th>
-                    <th className="p-4 font-medium">Libellé</th>
-                    <th className="p-4 font-medium">Banque</th>
-                    <th className="p-4 font-medium text-right">Débit</th>
-                    <th className="p-4 font-medium text-right">Crédit</th>
-                    <th className="p-4 font-medium text-center">Statut</th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-slate-700/50">
-                  {[
-                    { date: '29 Oct 2024', label: 'Virement Client ALPHA', bank: 'BNP Paribas', debit: '', credit: '+ 4,500.00', status: 'Rapproché', color: 'emerald' },
-                    { date: '28 Oct 2024', label: 'Prélèvement URSSAF', bank: 'Société Générale', debit: '- 2,340.00', credit: '', status: 'En attente', color: 'amber' },
-                    { date: '27 Oct 2024', label: 'Paiement Fournisseur BETA', bank: 'BNP Paribas', debit: '- 1,200.00', credit: '', status: 'Rapproché', color: 'emerald' },
-                  ].map((trx, i) => (
-                    <tr key={i} className="hover:bg-slate-800/50 transition-colors">
-                      <td className="p-4">{trx.date}</td>
-                      <td className="p-4 font-medium">{trx.label}</td>
-                      <td className="p-4 text-slate-400">{trx.bank}</td>
-                      <td className="p-4 text-right text-rose-400 font-medium">{trx.debit}</td>
-                      <td className="p-4 text-right text-emerald-400 font-medium">{trx.credit}</td>
-                      <td className="p-4">
-                        <div className={`mx-auto w-fit px-2.5 py-1 rounded-full text-xs font-medium bg-${trx.color}-500/10 text-${trx.color}-400 border border-${trx.color}-500/20`}>
-                          {trx.status}
-                        </div>
-                      </td>
+               <table className="w-full text-left text-sm">
+                  <thead className="bg-slate-800/80 text-slate-500 border-b border-slate-700/50">
+                    <tr>
+                      <th className="p-4 font-bold uppercase text-[10px] tracking-tighter">Date & Valeur</th>
+                      <th className="p-4 font-bold uppercase text-[10px] tracking-tighter">Nature de l'opération</th>
+                      <th className="p-4 font-bold uppercase text-[10px] tracking-tighter text-center">Banque</th>
+                      <th className="p-4 font-bold uppercase text-[10px] tracking-tighter text-right">Débit (Sortie)</th>
+                      <th className="p-4 font-bold uppercase text-[10px] tracking-tighter text-right">Crédit (Entrée)</th>
+                      <th className="p-4 font-bold uppercase text-[10px] tracking-tighter text-center">Rapprochement</th>
                     </tr>
-                  ))}
-                </tbody>
-             </table>
-          </div>
-        </motion.div>
-      )}
+                  </thead>
+                  <tbody className="divide-y divide-slate-700/30">
+                    {[
+                      { date: '29 Oct 2024', label: 'Virement Client GLOBAL TECH SA', bank: 'Ecobank', debit: '', credit: '+ 4 500 000 F', status: 'Rapproché', color: 'emerald' },
+                      { date: '28 Oct 2024', label: 'Paiement Facture SENELEC (F110)', bank: 'CBAO', debit: '- 1 250 000 F', credit: '', status: 'En attente', color: 'amber' },
+                      { date: '27 Oct 2024', label: 'Virement Salaire Octobre (MAT-001)', bank: 'Ecobank', debit: '- 850 000 F', credit: '', status: 'Rapproché', color: 'emerald' },
+                      { date: '26 Oct 2024', label: 'Dépôt Espèces (Recette Magasin)', bank: 'SGBS', debit: '', credit: '+ 320 000 F', status: 'En attente', color: 'amber' },
+                    ].map((trx, i) => (
+                      <tr key={i} className="hover:bg-indigo-500/5 transition-colors group">
+                        <td className="p-4">
+                          <div className="flex flex-col">
+                            <span className="text-slate-300 font-medium">{trx.date}</span>
+                            <span className="text-[10px] text-slate-500 uppercase">Val: {trx.date}</span>
+                          </div>
+                        </td>
+                        <td className="p-4 font-bold text-slate-100">{trx.label}</td>
+                        <td className="p-4 text-center">
+                          <span className="px-2 py-1 bg-slate-900 border border-slate-700 rounded text-[10px] text-slate-400 font-bold uppercase">{trx.bank}</span>
+                        </td>
+                        <td className="p-4 text-right text-rose-400 font-black">{trx.debit}</td>
+                        <td className="p-4 text-right text-emerald-400 font-black">{trx.credit}</td>
+                        <td className="p-4">
+                          <div className={`mx-auto w-fit px-2.5 py-1 rounded-full text-[10px] font-black uppercase bg-${trx.color}-500/10 text-${trx.color}-400 border border-${trx.color}-500/20 flex items-center gap-1.5`}>
+                            {trx.status === 'Rapproché' ? <CheckCircle2 size={10} /> : <AlertCircle size={10} />}
+                            {trx.status}
+                          </div>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+               </table>
+            </div>
+          </motion.div>
+        )}
 
-      {/* Rapprochement */}
-      {activeTab === 'rapprochement' && (
-        <motion.div
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="flex flex-col gap-4"
-        >
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="card">
-              <h3 className="font-bold text-lg mb-4 flex items-center gap-2">
-                 <Landmark size={18} className="text-indigo-400" />
-                 Relevé Bancaire
-              </h3>
-              <div className="space-y-3">
-                 {[
-                   { date: '29 Oct', label: 'VIR CLIENT X', amount: '+ 1,500.00', match: true },
-                   { date: '28 Oct', label: 'PRLV EDF', amount: '- 450.00', match: false },
-                   { date: '27 Oct', label: 'CHQ 456789', amount: '- 1,200.00', match: false },
-                 ].map((op, i) => (
-                   <div key={i} className={`flex justify-between items-center p-3 rounded-lg border ${op.match ? 'bg-emerald-500/10 border-emerald-500/30' : 'bg-slate-800 border-slate-700'}`}>
-                      <div>
-                         <p className="text-xs text-slate-400">{op.date}</p>
-                         <p className="font-medium">{op.label}</p>
-                      </div>
-                      <p className={`font-bold ${op.amount.startsWith('+') ? 'text-emerald-400' : 'text-rose-400'}`}>{op.amount}</p>
-                   </div>
-                 ))}
+        {/* Rapprochement */}
+        {activeTab === 'rapprochement' && (
+          <motion.div
+            key="rapprochement"
+            initial={{ opacity: 0, x: -10 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: 10 }}
+            className="flex flex-col gap-6"
+          >
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              {/* Bancaire Section */}
+              <div className="card border-indigo-500/20 bg-indigo-500/5">
+                <div className="flex items-center justify-between mb-6">
+                  <h3 className="font-black text-xs uppercase tracking-widest flex items-center gap-2 text-indigo-400">
+                    <FileText size={16} />
+                    Relevé Bancaire (Banque)
+                  </h3>
+                  <button className="text-[10px] font-bold text-slate-400 hover:text-white uppercase tracking-widest border border-slate-700 px-3 py-1 rounded-lg">
+                    Importer relevé
+                  </button>
+                </div>
+                <div className="space-y-3">
+                   {[
+                     { date: '29 Oct', label: 'VIR CLIENT X', amount: '+ 1 500 000 F', match: true },
+                     { date: '28 Oct', label: 'SENELEC FAC 450', amount: '- 1 250 000 F', match: true },
+                     { date: '27 Oct', label: 'COMMISSION BK', amount: '- 15 000 F', match: false },
+                   ].map((op, i) => (
+                     <div key={i} className={`flex justify-between items-center p-4 rounded-xl border transition-all ${op.match ? 'bg-emerald-500/10 border-emerald-500/30' : 'bg-slate-900 border-slate-800'}`}>
+                        <div className="flex items-center gap-3">
+                           {op.match ? <CheckCircle2 size={16} className="text-emerald-400" /> : <AlertCircle size={16} className="text-amber-400" />}
+                           <div>
+                              <p className="text-[10px] text-slate-500 font-bold uppercase">{op.date}</p>
+                              <p className="font-bold text-slate-200 text-sm">{op.label}</p>
+                           </div>
+                        </div>
+                        <p className={`font-black ${op.amount.startsWith('+') ? 'text-emerald-400' : 'text-rose-400'}`}>{op.amount}</p>
+                     </div>
+                   ))}
+                </div>
+              </div>
+              
+              {/* Comptabilité Section */}
+              <div className="card border-emerald-500/20 bg-emerald-500/5">
+                <div className="flex items-center justify-between mb-6">
+                  <h3 className="font-black text-xs uppercase tracking-widest flex items-center gap-2 text-emerald-400">
+                    <Landmark size={16} />
+                    Grand Livre (Comptabilité)
+                  </h3>
+                  <button className="text-[10px] font-bold text-slate-400 hover:text-white uppercase tracking-widest border border-slate-700 px-3 py-1 rounded-lg">
+                    Voir Journal BK
+                  </button>
+                </div>
+                <div className="space-y-3">
+                   {[
+                     { date: '29 Oct', label: 'Règlement Facture F-2024-100', amount: '+ 1 500 000 F', match: true },
+                     { date: '28 Oct', label: 'Paiement Fournisseur SENELEC', amount: '- 1 250 000 F', match: true },
+                     { date: '26 Oct', label: 'Règlement Facture F-2024-105', amount: '+ 450 000 F', match: false },
+                   ].map((op, i) => (
+                     <div key={i} className={`flex justify-between items-center p-4 rounded-xl border transition-all ${op.match ? 'bg-emerald-500/10 border-emerald-500/30' : 'bg-slate-900 border-slate-800'}`}>
+                        <div className="flex items-center gap-3">
+                           {op.match ? <CheckCircle2 size={16} className="text-emerald-400" /> : <AlertCircle size={16} className="text-amber-400" />}
+                           <div>
+                              <p className="text-[10px] text-slate-500 font-bold uppercase">{op.date}</p>
+                              <p className="font-bold text-slate-200 text-sm">{op.label}</p>
+                           </div>
+                        </div>
+                        <p className={`font-black ${op.amount.startsWith('+') ? 'text-emerald-400' : 'text-rose-400'}`}>{op.amount}</p>
+                     </div>
+                   ))}
+                </div>
               </div>
             </div>
             
-            <div className="card">
-              <h3 className="font-bold text-lg mb-4 flex items-center gap-2">
-                 <Wallet size={18} className="text-emerald-400" />
-                 Écritures Comptables
-              </h3>
-              <div className="space-y-3">
-                 {[
-                   { date: '29 Oct', label: 'Règlement Facture F-2024-100', amount: '+ 1,500.00', match: true },
-                   { date: '26 Oct', label: 'Paiement Fournisseur Y', amount: '- 1,200.00', match: false },
-                 ].map((op, i) => (
-                   <div key={i} className={`flex justify-between items-center p-3 rounded-lg border ${op.match ? 'bg-emerald-500/10 border-emerald-500/30' : 'bg-slate-800 border-slate-700'}`}>
-                      <div>
-                         <p className="text-xs text-slate-400">{op.date}</p>
-                         <p className="font-medium">{op.label}</p>
-                      </div>
-                      <p className={`font-bold ${op.amount.startsWith('+') ? 'text-emerald-400' : 'text-rose-400'}`}>{op.amount}</p>
-                   </div>
-                 ))}
-              </div>
+            <div className="flex flex-col items-center gap-4 bg-slate-800/30 p-8 rounded-3xl border border-slate-700/50 border-dashed">
+               <div className="flex gap-4">
+                  <div className="text-center">
+                    <p className="text-[10px] font-black uppercase text-slate-500 mb-1">Écarts de rapprochement</p>
+                    <p className="text-xl font-black text-rose-400">465 000 F</p>
+                  </div>
+                  <div className="w-px h-10 bg-slate-700" />
+                  <div className="text-center">
+                    <p className="text-[10px] font-black uppercase text-slate-500 mb-1">Taux de matching</p>
+                    <p className="text-xl font-black text-emerald-400">82%</p>
+                  </div>
+               </div>
+               <button className="px-8 py-4 bg-indigo-600 hover:bg-indigo-500 rounded-2xl font-black text-xs uppercase tracking-[0.2em] transition-all shadow-xl shadow-indigo-600/30 flex items-center gap-3">
+                  <RefreshCw size={18} />
+                  Exécuter le Rapprochement Intelligent (IA)
+               </button>
             </div>
-          </div>
-          
-          <div className="flex justify-center mt-4">
-             <button className="px-6 py-3 bg-indigo-600 hover:bg-indigo-500 rounded-xl font-bold transition-all shadow-lg shadow-indigo-500/20 flex items-center gap-2">
-                <ArrowRightLeft size={18} />
-                Lancer le Rapprochement Automatique
-             </button>
-          </div>
-        </motion.div>
-      )}
+          </motion.div>
+        )}
 
-      {/* Prévisions */}
-      {activeTab === 'previsions' && (
-         <motion.div
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="card flex flex-col items-center justify-center h-96 border-dashed"
-         >
-            <div className="w-16 h-16 bg-slate-800 rounded-full flex items-center justify-center mb-4">
-               <TrendingUp size={32} className="text-slate-500" />
+        {/* Petite Caisse */}
+        {activeTab === 'caisse' && (
+          <motion.div
+            key="caisse"
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            className="card flex flex-col items-center justify-center h-96 border-dashed"
+          >
+            <div className="w-20 h-20 bg-slate-800/50 rounded-3xl flex items-center justify-center mb-6 border border-slate-700 shadow-inner">
+               <Wallet size={32} className="text-amber-400" />
             </div>
-            <h3 className="text-xl font-bold mb-2">Prévisions de Trésorerie</h3>
-            <p className="text-slate-400 max-w-md text-center mb-6">
-              Anticipez vos besoins de liquidités. Ce module croise vos factures en attente, vos charges récurrentes et l'historique de votre BFR.
+            <h3 className="text-xl font-black uppercase tracking-[0.1em]">Gestion de la Caisse</h3>
+            <p className="text-slate-500 max-w-sm text-center mt-3 text-sm font-medium">
+              Suivez les entrées et sorties en espèces. Édition automatique du brouillard de caisse et arrêtés journaliers.
             </p>
-            <button className="px-4 py-2 bg-indigo-600 hover:bg-indigo-500 rounded-lg text-sm font-medium transition-colors">
-              Générer le rapport prévisionnel
+            <button className="mt-8 px-8 py-3 bg-indigo-600 hover:bg-indigo-500 rounded-2xl text-[10px] font-black uppercase tracking-[0.2em] transition-all shadow-lg shadow-indigo-500/20">
+              Ouvrir le journal de caisse
             </button>
-         </motion.div>
-      )}
-      
-      {/* Caisse */}
-      {activeTab === 'caisse' && (
-         <motion.div
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="card flex flex-col items-center justify-center h-96 border-dashed"
-         >
-            <div className="w-16 h-16 bg-slate-800 rounded-full flex items-center justify-center mb-4">
-               <Wallet size={32} className="text-slate-500" />
-            </div>
-            <h3 className="text-xl font-bold mb-2">Gestion de la Caisse</h3>
-            <p className="text-slate-400 max-w-md text-center mb-6">
-              Saisissez les mouvements d'espèces, éditez les brouillards de caisse et effectuez vos arrêtés journaliers.
-            </p>
-            <button className="px-4 py-2 bg-indigo-600 hover:bg-indigo-500 rounded-lg text-sm font-medium transition-colors">
-              Ouvrir la caisse du jour
-            </button>
-         </motion.div>
-      )}
+          </motion.div>
+        )}
 
+        {/* Prévisions de Trésorerie */}
+        {activeTab === 'previsions' && (
+          <motion.div
+            key="previsions"
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="h-full"
+          >
+             <CashForecasting />
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 };
+
+const BankCard = ({ bank, acc, balance, type, color, trend, icon }: any) => (
+  <div className={`card group hover:border-${color}-500/50 transition-all cursor-pointer relative overflow-hidden shadow-xl`}>
+    <div className={`absolute top-0 right-0 w-32 h-32 -mr-16 -mt-16 rounded-full bg-${color}-500 opacity-5 group-hover:opacity-10 transition-opacity`}></div>
+    <div className="flex justify-between items-start mb-6">
+       <div className="z-10">
+          <h3 className="font-black text-base text-slate-100 group-hover:text-white transition-colors">{bank}</h3>
+          <p className="text-[10px] text-slate-500 font-mono mt-1 tracking-tighter">{acc}</p>
+       </div>
+       <div className={`p-3 rounded-2xl bg-${color}-500/10 transition-all group-hover:scale-110 shadow-inner`}>
+          {icon}
+       </div>
+    </div>
+    <p className="text-[10px] font-black uppercase text-slate-500 mb-1 tracking-widest">{type}</p>
+    <div className="flex items-end justify-between z-10">
+       <h2 className="text-xl font-black text-slate-100 group-hover:text-indigo-400 transition-all">{balance}</h2>
+       <div className="flex flex-col items-end">
+          <span className={`text-[10px] font-black ${trend.startsWith('+') ? 'text-emerald-400' : 'text-rose-400'} flex items-center gap-1`}>
+             {trend.startsWith('+') ? <TrendingUp size={10} /> : <TrendingDown size={10} />}
+             {trend}
+          </span>
+          <span className="text-[8px] font-bold text-slate-600 uppercase">vs M-1</span>
+       </div>
+    </div>
+    <div className="mt-4 pt-4 border-t border-slate-700/50 flex justify-between items-center opacity-0 group-hover:opacity-100 transition-all">
+       <button className="text-[9px] font-black uppercase text-indigo-400 hover:text-indigo-300 flex items-center gap-1">
+          <Eye size={12} /> Détails
+       </button>
+       <button className="text-[9px] font-black uppercase text-slate-500 hover:text-white flex items-center gap-1">
+          <Calendar size={12} /> Relevés
+       </button>
+    </div>
+  </div>
+);
+
+const AlertItem = ({ type, msg, impact }: any) => (
+  <div className={`flex items-start gap-4 p-4 rounded-2xl border ${
+    type === 'Avertissement' ? 'bg-rose-500/5 border-rose-500/20' : 
+    type === 'Opportunité' ? 'bg-emerald-500/5 border-emerald-500/20' : 
+    'bg-indigo-500/5 border-indigo-500/20'
+  }`}>
+     <div className={`mt-1 p-1.5 rounded-lg ${
+       type === 'Avertissement' ? 'text-rose-400' : 
+       type === 'Opportunité' ? 'text-emerald-400' : 
+       'text-indigo-400'
+     }`}>
+        <AlertCircle size={14} />
+     </div>
+     <div className="flex-1">
+        <p className="text-xs font-bold text-slate-200">{msg}</p>
+        <p className="text-[10px] text-slate-500 mt-1 uppercase font-black tracking-widest">Impact : <span className={impact.startsWith('-') ? 'text-rose-400' : 'text-emerald-400'}>{impact}</span></p>
+     </div>
+  </div>
+);
 
 export default TreasuryModule;
