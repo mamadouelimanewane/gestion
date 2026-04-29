@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
-  Wallet, Landmark, ArrowRightLeft, TrendingUp, 
+  Wallet, Landmark, ArrowRightLeft, TrendingUp, TrendingDown,
   Search, Plus, Filter, Download, ArrowUpRight, 
   ArrowDownRight, CreditCard, ShieldCheck, RefreshCw,
   Eye, Calendar, CheckCircle2, AlertCircle, FileText

@@ -15,7 +15,8 @@ import {
   Search,
   User,
   TrendingUp,
-  Sparkles
+  Sparkles,
+  Zap
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import AccountingModule from './modules/accounting/AccountingModule';

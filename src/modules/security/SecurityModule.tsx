@@ -5,7 +5,7 @@ import {
   Lock, Search, Filter, ShieldAlert,
   Users, UserCheck, Layout, Database,
   Activity, Zap, Terminal, Shield,
-  ChevronRight, RefreshCw, FileText
+  ChevronRight, RefreshCw, FileText, Plus
 } from 'lucide-react';
 
 const SecurityModule = () => {

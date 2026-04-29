@@ -4,7 +4,7 @@ import {
   BarChart3, PieChart, TrendingUp, Download, Filter, 
   FileText, Activity, Layers, Globe, ShieldCheck,
   Zap, Calendar, ChevronRight, Eye, Printer, 
-  ArrowUpRight, ArrowDownRight, Target, BrainCircuit
+  ArrowUpRight, ArrowDownRight, Target, BrainCircuit, Plus
 } from 'lucide-react';
 
 const ReportingModule = () => {

@@ -5,7 +5,7 @@ import {
   Filter, Download, ChevronRight, FileText, Building,
   CheckCircle2, AlertCircle, Eye, Printer, Send,
   Package, ShoppingCart, TrendingDown, ClipboardCheck,
-  User, Mail, Phone, MapPin
+  User, Mail, Phone, MapPin, Globe
 } from 'lucide-react';
 import SupplierPortal from './SupplierPortal';
 
