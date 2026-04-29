@@ -1,82 +1,134 @@
 @import "tailwindcss";
 
-:root {
-  --primary: #6366f1;
-  --primary-hover: #4f46e5;
-  --bg-dark: #0f172a;
-  --bg-card: rgba(30, 41, 59, 0.7);
-  --text-main: #f8fafc;
-  --text-muted: #94a3b8;
-  --accent: #10b981;
-  --danger: #ef4444;
-  --border: rgba(255, 255, 255, 0.1);
-  --glass-bg: rgba(255, 255, 255, 0.03);
-  --glass-blur: blur(12px);
+/* ─── Theme tokens ─────────────────────────────────────────── */
+:root,
+[data-theme="dark"] {
+  --bg-app:       #0b1120;
+  --bg-sidebar:   #0d1526;
+  --bg-header:    rgba(13,21,38,0.6);
+  --bg-card:      rgba(30,41,59,0.55);
+  --bg-card-hover:rgba(30,41,59,0.85);
+  --border:       rgba(255,255,255,0.06);
+  --border-hover: rgba(255,255,255,0.12);
+  --text-main:    #f1f5f9;
+  --text-sub:     #94a3b8;
+  --text-muted:   #475569;
+  --primary:      #6366f1;
+  --primary-hover:#4f46e5;
+  --accent:       #10b981;
+  --danger:       #ef4444;
+  --chart-grid:   #1e293b;
+  --chart-label:  #64748b;
+  --tooltip-bg:   #1e293b;
+  --tooltip-border:#334155;
+  --scrollbar:    rgba(255,255,255,0.08);
+  color-scheme: dark;
 }
 
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+[data-theme="light"] {
+  --bg-app:       #f8faff;
+  --bg-sidebar:   #ffffff;
+  --bg-header:    rgba(255,255,255,0.85);
+  --bg-card:      #ffffff;
+  --bg-card-hover:#f1f5ff;
+  --border:       rgba(0,0,0,0.07);
+  --border-hover: rgba(99,102,241,0.25);
+  --text-main:    #0f172a;
+  --text-sub:     #475569;
+  --text-muted:   #94a3b8;
+  --primary:      #4f46e5;
+  --primary-hover:#4338ca;
+  --accent:       #059669;
+  --danger:       #dc2626;
+  --chart-grid:   #e2e8f0;
+  --chart-label:  #94a3b8;
+  --tooltip-bg:   #ffffff;
+  --tooltip-border:#e2e8f0;
+  --scrollbar:    rgba(0,0,0,0.10);
+  color-scheme: light;
 }
+
+[data-theme="blue"] {
+  --bg-app:       #0a0e1a;
+  --bg-sidebar:   #080d1c;
+  --bg-header:    rgba(8,13,28,0.7);
+  --bg-card:      rgba(15,23,54,0.7);
+  --bg-card-hover:rgba(21,33,70,0.9);
+  --border:       rgba(99,102,241,0.12);
+  --border-hover: rgba(99,102,241,0.30);
+  --text-main:    #e2e8f8;
+  --text-sub:     #8b9dd4;
+  --text-muted:   #3d4f80;
+  --primary:      #818cf8;
+  --primary-hover:#6366f1;
+  --accent:       #34d399;
+  --danger:       #f87171;
+  --chart-grid:   #1a2550;
+  --chart-label:  #5b6fa0;
+  --tooltip-bg:   #0f1838;
+  --tooltip-border:#2a3c70;
+  --scrollbar:    rgba(99,102,241,0.15);
+  color-scheme: dark;
+}
+
+/* ─── Reset ────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 body {
   font-family: 'Inter', system-ui, -apple-system, sans-serif;
-  background-color: var(--bg-dark);
+  background-color: var(--bg-app);
   color: var(--text-main);
   min-height: 100vh;
   overflow-x: hidden;
+  transition: background-color 0.25s, color 0.25s;
 }
 
-/* Glassmorphism utility */
-.glass {
-  background: var(--glass-bg);
-  backdrop-filter: var(--glass-blur);
-  -webkit-backdrop-filter: var(--glass-blur);
-  border: 1px solid var(--border);
-  border-radius: 1rem;
-}
-
+/* ─── Card ─────────────────────────────────────────────────── */
 .card {
   background: var(--bg-card);
   border: 1px solid var(--border);
-  border-radius: 1rem;
-  padding: 1.5rem;
-  transition: all 0.3s ease;
+  border-radius: 0.875rem;
+  padding: 1.25rem;
+  transition: background 0.2s, border-color 0.2s, box-shadow 0.2s;
+  position: relative;
+  overflow: hidden;
 }
-
 .card:hover {
-  transform: translateY(-4px);
-  border-color: var(--primary);
-  box-shadow: 0 10px 30px -10px rgba(99, 102, 241, 0.3);
+  background: var(--bg-card-hover);
+  border-color: var(--border-hover);
+  box-shadow: 0 4px 20px -6px rgba(99,102,241,0.15);
 }
 
-/* Scrollbar Styling */
-::-webkit-scrollbar {
-  width: 8px;
+/* ─── Glass ────────────────────────────────────────────────── */
+.glass {
+  background: var(--bg-card);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--border);
+  border-radius: 1rem;
 }
 
-::-webkit-scrollbar-track {
-  background: var(--bg-dark);
-}
+/* ─── Scrollbar ────────────────────────────────────────────── */
+::-webkit-scrollbar { width: 5px; height: 5px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--scrollbar); border-radius: 99px; }
+::-webkit-scrollbar-thumb:hover { background: var(--primary); }
 
-::-webkit-scrollbar-thumb {
-  background: var(--border);
-  border-radius: 4px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: var(--primary);
-}
-
-/* Typography */
-h1, h2, h3 {
-  font-weight: 700;
-  letter-spacing: -0.025em;
-}
+/* ─── Typography ───────────────────────────────────────────── */
+h1, h2, h3 { font-weight: 700; letter-spacing: -0.02em; }
 
 .text-gradient {
-  background: linear-gradient(to right, #818cf8, #c084fc);
+  background: linear-gradient(to right, var(--primary), #c084fc);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+}
+
+/* ─── Recharts overrides using CSS vars ────────────────────── */
+.recharts-cartesian-grid-horizontal line,
+.recharts-cartesian-grid-vertical line { stroke: var(--chart-grid) !important; }
+.recharts-text { fill: var(--chart-label) !important; }
+.recharts-tooltip-wrapper .recharts-default-tooltip {
+  background: var(--tooltip-bg) !important;
+  border: 1px solid var(--tooltip-border) !important;
+  border-radius: 8px !important;
 }

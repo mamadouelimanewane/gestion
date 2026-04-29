@@ -153,8 +153,8 @@ const sageMenus = [
 const AccountingModule = () => {
   const [activeMenu, setActiveMenu] = useState<string | null>(null);
   const [activeSubMenu, setActiveSubMenu] = useState<string | null>(null);
-  const [currentViewId, setCurrentViewId] = useState<string>('dashboard');
-  const [currentViewLabel, setCurrentViewLabel] = useState<string>('Tableau de bord de pilotage');
+  const [currentViewId, setCurrentViewId] = useState<string>('s-plancomptable');
+  const [currentViewLabel, setCurrentViewLabel] = useState<string>('Plan comptable (Hiérarchisé)');
 
   const handleMenuClick = (menuTitle: string) => {
     setActiveMenu(activeMenu === menuTitle ? null : menuTitle);
