@@ -1,126 +1,70 @@
 @import "tailwindcss";
 
-/* ─── Theme tokens ─────────────────────────────────────────── */
-[data-theme="dark"] {
-  --bg-app:       #0f172a;
-  --bg-sidebar:   #1e293b;
-  --bg-header:    rgba(30,41,59,0.7);
-  --bg-card:      #1e293b;
-  --bg-card-hover:#334155;
-  --border:       rgba(255,255,255,0.08);
-  --border-hover: rgba(255,255,255,0.15);
-  --text-main:    #f8fafc;
-  --text-sub:     #cbd5e1;
-  --text-muted:   #64748b;
-  --primary:      #818cf8;
-  --primary-hover:#6366f1;
-  --accent:       #34d399;
-  --danger:       #f87171;
-  --chart-grid:   #334155;
-  --chart-label:  #94a3b8;
-  --tooltip-bg:   #1e293b;
-  --tooltip-border:#475569;
-  --scrollbar:    rgba(255,255,255,0.1);
-  color-scheme: dark;
-}
-
-:root,
-[data-theme="light"] {
-  --bg-app:       #f8faff;
+:root {
+  /* SAP Fiori (Morning Horizon) Inspired Theme */
+  --bg-app:       #f4f5f6;
   --bg-sidebar:   #ffffff;
-  --bg-header:    rgba(255,255,255,0.85);
+  --bg-header:    #354a5f;
   --bg-card:      #ffffff;
-  --bg-card-hover:#f1f5ff;
-  --border:       rgba(0,0,0,0.07);
-  --border-hover: rgba(99,102,241,0.25);
-  --text-main:    #0f172a;
-  --text-sub:     #475569;
-  --text-muted:   #94a3b8;
-  --primary:      #4f46e5;
-  --primary-hover:#4338ca;
-  --accent:       #059669;
-  --danger:       #dc2626;
-  --chart-grid:   #e2e8f0;
-  --chart-label:  #94a3b8;
+  --bg-card-hover:#f8f9fa;
+  --border:       #d9d9d9;
+  --border-hover: #b8b8b8;
+  --text-main:    #1d2d3e;
+  --text-sub:     #556b82;
+  --text-muted:   #748ca5;
+  --text-header:  #ffffff;
+  --primary:      #0a6ed1;
+  --primary-hover:#0854a0;
+  --accent:       #107e3e;
+  --danger:       #bb0000;
+  --warning:      #e9730c;
+  --chart-grid:   #e5e5e5;
+  --chart-label:  #556b82;
   --tooltip-bg:   #ffffff;
-  --tooltip-border:#e2e8f0;
-  --scrollbar:    rgba(0,0,0,0.10);
+  --tooltip-border:#d9d9d9;
+  --scrollbar:    #cccccc;
   color-scheme: light;
-}
-
-[data-theme="blue"] {
-  --bg-app:       #0a0e1a;
-  --bg-sidebar:   #080d1c;
-  --bg-header:    rgba(8,13,28,0.7);
-  --bg-card:      rgba(15,23,54,0.7);
-  --bg-card-hover:rgba(21,33,70,0.9);
-  --border:       rgba(99,102,241,0.12);
-  --border-hover: rgba(99,102,241,0.30);
-  --text-main:    #e2e8f8;
-  --text-sub:     #8b9dd4;
-  --text-muted:   #3d4f80;
-  --primary:      #818cf8;
-  --primary-hover:#6366f1;
-  --accent:       #34d399;
-  --danger:       #f87171;
-  --chart-grid:   #1a2550;
-  --chart-label:  #5b6fa0;
-  --tooltip-bg:   #0f1838;
-  --tooltip-border:#2a3c70;
-  --scrollbar:    rgba(99,102,241,0.15);
-  color-scheme: dark;
 }
 
 /* ─── Reset ────────────────────────────────────────────────── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 body {
-  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  font-family: '72', 'Inter', system-ui, -apple-system, sans-serif;
   background-color: var(--bg-app);
   color: var(--text-main);
   min-height: 100vh;
   overflow-x: hidden;
-  transition: background-color 0.25s, color 0.25s;
 }
 
-/* ─── Card ─────────────────────────────────────────────────── */
+/* ─── SAP Fiori Card ───────────────────────────────────────── */
 .card {
   background: var(--bg-card);
   border: 1px solid var(--border);
-  border-radius: 0.875rem;
+  border-radius: 0.375rem; /* SAP Fiori standard smaller radius */
   padding: 1.25rem;
-  transition: background 0.2s, border-color 0.2s, box-shadow 0.2s;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05); /* Subtle shadow */
+  transition: box-shadow 0.2s, border-color 0.2s;
   position: relative;
   overflow: hidden;
 }
 .card:hover {
-  background: var(--bg-card-hover);
   border-color: var(--border-hover);
-  box-shadow: 0 4px 20px -6px rgba(99,102,241,0.15);
-}
-
-/* ─── Glass ────────────────────────────────────────────────── */
-.glass {
-  background: var(--bg-card);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid var(--border);
-  border-radius: 1rem;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
 }
 
 /* ─── Scrollbar ────────────────────────────────────────────── */
-::-webkit-scrollbar { width: 5px; height: 5px; }
+::-webkit-scrollbar { width: 6px; height: 6px; }
 ::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb { background: var(--scrollbar); border-radius: 99px; }
-::-webkit-scrollbar-thumb:hover { background: var(--primary); }
+::-webkit-scrollbar-thumb:hover { background: var(--text-sub); }
 
 /* ─── Typography ───────────────────────────────────────────── */
-h1, h2, h3 { font-weight: 700; letter-spacing: -0.02em; }
+h1, h2, h3 { font-weight: 600; letter-spacing: -0.01em; color: var(--text-main); }
 
 .text-gradient {
-  background: linear-gradient(to right, var(--primary), #c084fc);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  color: var(--primary); /* Remove gradient, SAP uses solid blue */
+  font-weight: 700;
 }
 
 /* ─── Recharts overrides using CSS vars ────────────────────── */
@@ -130,5 +74,12 @@ h1, h2, h3 { font-weight: 700; letter-spacing: -0.02em; }
 .recharts-tooltip-wrapper .recharts-default-tooltip {
   background: var(--tooltip-bg) !important;
   border: 1px solid var(--tooltip-border) !important;
-  border-radius: 8px !important;
+  border-radius: 4px !important;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1) !important;
+  color: var(--text-main) !important;
+}
+
+/* ─── Buttons ──────────────────────────────────────────────── */
+button {
+  font-family: inherit;
 }
