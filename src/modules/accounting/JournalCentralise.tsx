@@ -15,56 +15,56 @@ const JournalCentralise = () => {
   const totalCredit = data.reduce((sum, item) => sum + item.credit, 0);
 
   return (
-    <div className="card h-full flex flex-col">
-      <div className="flex justify-between items-center mb-6">
+    <div className="flex flex-col h-full gap-8">
+      <div className="flex justify-between items-center bg-white p-6 rounded-xl border border-[#cbd5e1] shadow-sm">
         <div className="flex items-center gap-3">
-          <div className="p-2 bg-indigo-500/20 text-indigo-400 rounded-lg">
+          <div className="p-3 bg-blue-50 text-[#005eb8] rounded-2xl border border-blue-100 shadow-inner">
             <List size={24} />
           </div>
           <div>
-            <h3 className="text-xl font-bold text-white">Journal Centralisé</h3>
-            <p className="text-sm text-slate-400">Récapitulatif mensuel par code journal</p>
+            <h3 className="text-xl font-bold text-[#0f172a] uppercase tracking-tight">Journal Centralisé</h3>
+            <p className="text-[11px] text-[#64748b] font-bold uppercase tracking-widest">Récapitulatif mensuel par code journal</p>
           </div>
         </div>
-        <div className="flex gap-2">
-          <button className="btn btn-secondary flex items-center gap-2">
+        <div className="flex gap-3">
+          <button className="flex items-center gap-2 px-4 py-2 bg-[#f1f5f9] border border-[#cbd5e1] rounded-lg text-[11px] font-bold text-[#64748b] hover:text-[#0f172a] transition-all shadow-sm">
             <Filter size={16} /> Période
           </button>
-          <button className="btn btn-primary flex items-center gap-2">
+          <button className="flex items-center gap-2 px-6 py-2 bg-[#005eb8] hover:bg-[#004080] text-white rounded-lg text-[11px] font-bold uppercase tracking-widest transition-all shadow-md">
             <Download size={16} /> Exporter PDF
           </button>
         </div>
       </div>
 
-      <div className="flex-1 overflow-auto rounded-xl border border-slate-700/50">
-        <table className="w-full text-left text-sm whitespace-nowrap">
-          <thead className="bg-slate-800/80 sticky top-0 z-10 backdrop-blur-md">
+      <div className="bg-white rounded-xl border border-[#cbd5e1] overflow-hidden shadow-sm flex-1">
+        <table className="w-full text-left whitespace-nowrap">
+          <thead className="bg-[#f8fafc] border-b border-[#cbd5e1]">
             <tr>
-              <th className="p-4 font-medium text-slate-300">Période (Mois)</th>
-              <th className="p-4 font-medium text-slate-300">Journal</th>
-              <th className="p-4 font-medium text-slate-300 text-right">Total Débit</th>
-              <th className="p-4 font-medium text-slate-300 text-right">Total Crédit</th>
+              <th className="p-6 text-[10px] font-bold uppercase tracking-widest text-[#64748b]">Période (Mois)</th>
+              <th className="p-6 text-[10px] font-bold uppercase tracking-widest text-[#64748b]">Journal</th>
+              <th className="p-6 text-[10px] font-bold uppercase tracking-widest text-[#64748b] text-right">Total Débit</th>
+              <th className="p-6 text-[10px] font-bold uppercase tracking-widest text-[#64748b] text-right">Total Crédit</th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-slate-700/50">
+          <tbody className="divide-y divide-[#f1f5f9]">
             {data.map((item, idx) => (
-              <tr key={idx} className="hover:bg-slate-800/30 transition-colors">
-                <td className="p-4 text-slate-300">{item.mois}</td>
-                <td className="p-4 font-medium text-slate-200">{item.journal}</td>
-                <td className="p-4 text-right font-medium text-emerald-400">
+              <tr key={idx} className="hover:bg-blue-50/30 transition-colors">
+                <td className="p-6 text-xs font-bold text-[#334155] uppercase">{item.mois}</td>
+                <td className="p-6 font-bold text-[#005eb8] uppercase text-xs tracking-tight">{item.journal}</td>
+                <td className="p-6 text-right font-bold text-[#107e3e] text-sm">
                   {item.debit.toLocaleString()} F CFA
                 </td>
-                <td className="p-4 text-right font-medium text-emerald-400">
+                <td className="p-6 text-right font-bold text-[#107e3e] text-sm">
                   {item.credit.toLocaleString()} F CFA
                 </td>
               </tr>
             ))}
           </tbody>
-          <tfoot className="bg-slate-800/90 font-bold sticky bottom-0">
+          <tfoot className="bg-[#f8fafc] border-t border-[#cbd5e1] font-bold">
             <tr>
-              <td colSpan={2} className="p-4 text-right text-slate-300 uppercase">TOTAUX GÉNÉRAUX</td>
-              <td className="p-4 text-right text-indigo-400">{totalDebit.toLocaleString()} F CFA</td>
-              <td className="p-4 text-right text-indigo-400">{totalCredit.toLocaleString()} F CFA</td>
+              <td colSpan={2} className="p-6 text-right text-[#0f172a] uppercase text-xs tracking-widest">TOTAUX GÉNÉRAUX</td>
+              <td className="p-6 text-right text-[#005eb8] text-sm">{totalDebit.toLocaleString()} F CFA</td>
+              <td className="p-6 text-right text-[#005eb8] text-sm">{totalCredit.toLocaleString()} F CFA</td>
             </tr>
           </tfoot>
         </table>

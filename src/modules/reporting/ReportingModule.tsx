@@ -4,7 +4,8 @@ import {
   BarChart3, PieChart, TrendingUp, Download, Filter, 
   FileText, Activity, Layers, Globe, ShieldCheck,
   Zap, Calendar, ChevronRight, Eye, Printer, 
-  ArrowUpRight, ArrowDownRight, Target, BrainCircuit, Plus
+  ArrowUpRight, ArrowDownRight, Target, BrainCircuit, Plus,
+  Sparkles, FileSearch, PieChart as PieChartIcon
 } from 'lucide-react';
 
 const ReportingModule = () => {
@@ -24,39 +25,37 @@ const ReportingModule = () => {
   };
 
   return (
-    <div className="flex flex-col h-full gap-6">
+    <div className="flex flex-col h-full gap-8">
       {/* Header & Tabs */}
-      <div className="flex flex-col gap-4">
-        <div className="flex items-center justify-between">
-          <div className="flex bg-slate-800/50 p-1 rounded-xl border border-slate-700/50 w-fit">
-            {tabs.map((tab) => (
-              <button
-                key={tab.id}
-                onClick={() => setActiveTab(tab.id)}
-                className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
-                  activeTab === tab.id
-                    ? 'bg-indigo-600 text-white shadow-md'
-                    : 'text-slate-400 hover:text-slate-200 hover:bg-slate-700/50'
-                }`}
-              >
-                <tab.icon size={16} />
-                {tab.label}
-              </button>
-            ))}
-          </div>
-          <div className="flex items-center gap-3">
-             <button 
-               onClick={handleAiAnalysis}
-               className="flex items-center gap-2 px-4 py-2 bg-slate-800 border border-slate-700 rounded-lg text-sm font-bold text-indigo-400 hover:bg-indigo-500/10 transition-all"
-             >
-                <BrainCircuit size={18} className={isAiLoading ? 'animate-pulse' : ''} />
-                {isAiLoading ? 'Analyse en cours...' : 'Insights IA'}
-             </button>
-             <button className="flex items-center gap-2 px-4 py-2 bg-indigo-600 hover:bg-indigo-500 rounded-lg text-sm font-bold transition-all shadow-lg shadow-indigo-500/20">
-                <Download size={16} />
-                Rapport Annuel
-             </button>
-          </div>
+      <div className="flex flex-col lg:flex-row items-center justify-between gap-6 bg-white p-6 rounded-xl border border-[#cbd5e1] shadow-sm">
+        <div className="flex bg-[#f1f5f9] p-1 rounded-lg border border-[#cbd5e1] shadow-inner overflow-x-auto no-scrollbar">
+          {tabs.map((tab) => (
+            <button
+              key={tab.id}
+              onClick={() => setActiveTab(tab.id)}
+              className={`flex items-center gap-3 px-6 py-2.5 rounded text-[11px] font-bold uppercase tracking-widest transition-all whitespace-nowrap ${
+                activeTab === tab.id
+                  ? 'bg-white text-[#005eb8] shadow-sm border border-[#cbd5e1]'
+                  : 'text-[#64748b] hover:text-[#0f172a] hover:bg-white/50'
+              }`}
+            >
+              <tab.icon size={18} />
+              <span>{tab.label}</span>
+            </button>
+          ))}
+        </div>
+        <div className="flex items-center gap-4">
+           <button 
+             onClick={handleAiAnalysis}
+             className="flex items-center gap-3 px-6 py-2.5 bg-white border border-[#cbd5e1] rounded-lg text-[11px] font-bold uppercase tracking-widest text-[#005eb8] hover:bg-blue-50 transition-all shadow-sm group"
+           >
+              <BrainCircuit size={20} className={isAiLoading ? 'animate-spin' : 'group-hover:scale-110 transition-transform'} />
+              {isAiLoading ? 'Analyse en cours...' : 'Intelligence Joule IA'}
+           </button>
+           <button className="flex items-center gap-3 px-8 py-2.5 bg-[#005eb8] hover:bg-[#004080] text-white rounded-lg text-[11px] font-bold uppercase tracking-widest transition-all shadow-lg">
+              <Download size={20} />
+              Rapport Annuel
+           </button>
         </div>
       </div>
 
@@ -68,51 +67,53 @@ const ReportingModule = () => {
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
-            className="flex flex-col gap-6"
+            className="flex flex-col gap-8"
           >
             {/* KPI Cards Grid */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-              <KpiCard title="Chiffre d'Affaires" value="1 245 800 000 F" trend="+15.2%" color="emerald" sub="Vs Année N-1" />
-              <KpiCard title="Excédent Brut (EBE)" value="452 300 000 F" trend="+8.4%" color="indigo" sub="Performance Opé" />
-              <KpiCard title="Marge de Manœuvre" value="128 400 000 F" trend="-2.1%" color="amber" sub="Trésorerie Libre" />
-              <KpiCard title="Health Score ERP" value="94 / 100" trend="OPTIMAL" color="emerald" sub="Intégrité Data" />
+              <KpiCard title="Chiffre d'Affaires" value="1 245 800 000 F" trend="+15.2%" color="green" sub="Vs Année N-1" icon={<BarChart3 size={20} />} />
+              <KpiCard title="Excédent Brut (EBE)" value="452 300 000 F" trend="+8.4%" color="blue" sub="Performance Opé" icon={<Activity size={20} />} />
+              <KpiCard title="Marge de Manœuvre" value="128 400 000 F" trend="-2.1%" color="orange" sub="Trésorerie Libre" icon={<TrendingUp size={20} />} />
+              <KpiCard title="Health Score ERP" value="94 / 100" trend="OPTIMAL" color="green" sub="Intégrité Data" icon={<ShieldCheck size={20} />} />
             </div>
 
             {/* Charts & Graphs */}
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-               <div className="lg:col-span-2 card bg-slate-800/30 border-slate-700/50 p-6 flex flex-col gap-6">
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+               <div className="lg:col-span-2 bg-white rounded-xl border border-[#cbd5e1] p-8 flex flex-col gap-8 shadow-sm">
                   <div className="flex justify-between items-center">
                      <div>
-                        <h3 className="font-black text-sm uppercase tracking-widest text-white">Évolution des Flux Financiers</h3>
-                        <p className="text-xs text-slate-500 font-medium mt-1">Comparatif Encaissements vs Décaissements (12 mois)</p>
+                        <h3 className="font-bold text-[13px] uppercase tracking-[0.2em] text-[#0f172a]">Évolution des Flux Financiers</h3>
+                        <p className="text-[11px] text-[#64748b] font-bold uppercase tracking-widest mt-1 opacity-70">Comparatif Encaissements vs Décaissements (12 mois)</p>
                      </div>
-                     <div className="flex gap-2">
-                        <div className="flex items-center gap-2 px-3 py-1 bg-emerald-500/10 border border-emerald-500/20 rounded-lg text-[10px] font-bold text-emerald-400">Entrées</div>
-                        <div className="flex items-center gap-2 px-3 py-1 bg-rose-500/10 border border-rose-500/20 rounded-lg text-[10px] font-bold text-rose-400">Sorties</div>
+                     <div className="flex gap-4">
+                        <div className="flex items-center gap-2 px-3 py-1 bg-green-50 border border-green-100 rounded text-[10px] font-bold text-[#107e3e] uppercase">Entrées</div>
+                        <div className="flex items-center gap-2 px-3 py-1 bg-red-50 border border-red-100 rounded text-[10px] font-bold text-[#dc2626] uppercase">Sorties</div>
                      </div>
                   </div>
-                  <div className="h-72 bg-slate-900/50 rounded-2xl border border-slate-800 flex items-center justify-center relative overflow-hidden group">
-                     <div className="absolute inset-0 opacity-10 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-indigo-500 via-transparent to-transparent"></div>
-                     <BarChart3 size={64} className="text-slate-800 group-hover:text-indigo-900 transition-colors duration-700" />
-                     <p className="absolute text-[10px] font-black uppercase text-slate-600 tracking-widest">Visualisation Interactive des Données</p>
+                  <div className="h-80 bg-[#f8fafc] rounded-xl border border-[#cbd5e1] flex items-center justify-center relative overflow-hidden group shadow-inner">
+                     <BarChart3 size={64} className="text-[#94a3b8] group-hover:text-[#005eb8] transition-all duration-700 transform group-hover:scale-110" />
+                     <div className="absolute bottom-6 flex items-center gap-3">
+                        <Activity size={14} className="text-[#005eb8] animate-pulse" />
+                        <p className="text-[10px] font-bold uppercase text-[#64748b] tracking-[0.3em]">Moteur Graphique Joule Analytics</p>
+                     </div>
                   </div>
                </div>
 
-               <div className="card bg-slate-800/30 border-slate-700/50 p-6 flex flex-col gap-6">
-                  <h3 className="font-black text-sm uppercase tracking-widest text-white">Structure des Coûts</h3>
-                  <div className="flex-1 flex flex-col justify-center gap-6">
-                     <div className="relative w-40 h-40 mx-auto">
-                        <div className="absolute inset-0 border-[12px] border-slate-800 rounded-full"></div>
-                        <div className="absolute inset-0 border-[12px] border-indigo-500 rounded-full border-t-transparent border-r-transparent rotate-45 shadow-[0_0_15px_rgba(99,102,241,0.3)]"></div>
+               <div className="bg-white rounded-xl border border-[#cbd5e1] p-8 flex flex-col gap-8 shadow-sm">
+                  <h3 className="font-bold text-[13px] uppercase tracking-[0.2em] text-[#0f172a]">Structure des Coûts</h3>
+                  <div className="flex-1 flex flex-col justify-center gap-8">
+                     <div className="relative w-48 h-48 mx-auto group">
+                        <div className="absolute inset-0 border-[14px] border-[#f1f5f9] rounded-full shadow-inner transition-transform group-hover:scale-105"></div>
+                        <div className="absolute inset-0 border-[14px] border-[#005eb8] rounded-full border-t-transparent border-r-transparent rotate-45 group-hover:rotate-[225deg] transition-all duration-1000 ease-in-out"></div>
                         <div className="absolute inset-0 flex flex-col items-center justify-center">
-                           <p className="text-2xl font-black text-white">65%</p>
-                           <p className="text-[8px] font-bold text-slate-500 uppercase">Salaires</p>
+                           <p className="text-3xl font-bold text-[#0f172a] tracking-tighter">65%</p>
+                           <p className="text-[10px] font-bold text-[#64748b] uppercase tracking-widest mt-1">Salaires</p>
                         </div>
                      </div>
-                     <div className="space-y-3">
-                        <ChartLegend color="indigo" label="Masse Salariale" value="65%" />
-                        <ChartLegend color="emerald" label="Charges Fixes" value="20%" />
-                        <ChartLegend color="amber" label="Autres" value="15%" />
+                     <div className="space-y-4">
+                        <ChartLegend color="blue" label="Masse Salariale" value="65%" />
+                        <ChartLegend color="green" label="Charges Fixes" value="20%" />
+                        <ChartLegend color="orange" label="Autres" value="15%" />
                      </div>
                   </div>
                </div>
@@ -124,43 +125,43 @@ const ReportingModule = () => {
         {activeTab === 'etats' && (
           <motion.div
             key="etats"
-            initial={{ opacity: 0, scale: 0.95 }}
+            initial={{ opacity: 0, scale: 0.98 }}
             animate={{ opacity: 1, scale: 1 }}
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
           >
              <ReportCard 
                title="Bilan Actif/Passif" 
                desc="Conforme au Système Minimal de Trésorerie & Système Normal SYSCOHADA." 
-               icon={<FileText size={24} />} 
-               color="indigo" 
+               icon={<FileSearch size={28} />} 
+               color="blue" 
              />
              <ReportCard 
                title="Compte de Résultat" 
                desc="Analyse détaillée des marges, de la valeur ajoutée et du résultat net." 
-               icon={<Activity size={24} />} 
-               color="emerald" 
+               icon={<PieChartIcon size={28} />} 
+               color="green" 
              />
              <ReportCard 
                title="Tableau de Flux (TFT)" 
                desc="Flux d'exploitation, d'investissement et de financement." 
-               icon={<TrendingUp size={24} />} 
-               color="rose" 
+               icon={<TrendingUp size={28} />} 
+               color="orange" 
              />
              <ReportCard 
                title="Soldes Intermédiaires" 
                desc="Visualisation des SIG : Production, VA, EBE, REX." 
-               icon={<Layers size={24} />} 
-               color="amber" 
+               icon={<Layers size={28} />} 
+               color="blue" 
              />
              <ReportCard 
                title="État de la TVA" 
                desc="Récapitulatif annuel de la TVA déductible et collectée par mois." 
-               icon={<Globe size={24} />} 
-               color="indigo" 
+               icon={<Globe size={28} />} 
+               color="green" 
              />
-             <div className="card border-dashed flex flex-col items-center justify-center p-8 opacity-50 hover:opacity-100 transition-opacity">
-                <Plus size={32} className="text-slate-600 mb-2" />
-                <p className="text-[10px] font-black uppercase text-slate-500 tracking-widest text-center">Nouveau Rapport<br/>Personnalisé</p>
+             <div className="bg-white border-2 border-dashed border-[#cbd5e1] rounded-xl flex flex-col items-center justify-center p-12 opacity-50 hover:opacity-100 hover:border-[#005eb8] hover:bg-blue-50/20 transition-all cursor-pointer group">
+                <Plus size={48} className="text-[#94a3b8] group-hover:text-[#005eb8] mb-4 transition-transform group-hover:scale-110" />
+                <p className="text-[12px] font-bold uppercase text-[#64748b] tracking-[0.2em] text-center group-hover:text-[#0f172a]">Nouveau Rapport<br/>Personnalisé</p>
              </div>
           </motion.div>
         )}
@@ -171,32 +172,41 @@ const ReportingModule = () => {
             key="analytique"
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            className="flex flex-col gap-6"
+            className="flex flex-col gap-8"
           >
-             <div className="card bg-indigo-500/5 border-indigo-500/20 p-8 flex items-center justify-between">
-                <div className="space-y-4 max-w-xl">
-                   <div className="flex items-center gap-3 text-indigo-400">
-                      <Layers size={32} />
-                      <h3 className="text-xl font-black uppercase tracking-widest">Axe Analytique par Projet</h3>
+             <div className="bg-white border border-[#cbd5e1] rounded-xl p-10 flex items-center justify-between shadow-sm relative overflow-hidden group">
+                <div className="absolute top-0 right-0 w-96 h-96 bg-blue-50 rounded-full -mr-48 -mt-48 blur-3xl opacity-50 group-hover:scale-110 transition-transform"></div>
+                <div className="space-y-6 max-w-2xl relative z-10">
+                   <div className="flex items-center gap-4 text-[#005eb8]">
+                      <div className="p-4 bg-blue-50 border border-blue-100 rounded-2xl shadow-inner">
+                         <Layers size={40} />
+                      </div>
+                      <h3 className="text-3xl font-bold uppercase tracking-tighter">Axe Analytique par Projet</h3>
                    </div>
-                   <p className="text-slate-400 text-sm leading-relaxed font-medium">
+                   <p className="text-[#64748b] text-sm leading-relaxed font-bold uppercase tracking-wide opacity-80">
                       Visualisez la rentabilité nette de chaque projet en croisant les factures de ventes, 
                       les achats de consommables et les heures passées par vos employés.
                    </p>
-                   <button className="px-6 py-2 bg-indigo-600 hover:bg-indigo-500 rounded-xl text-xs font-black uppercase tracking-widest transition-all">
-                      Configurer les Clés de Répartition
-                   </button>
-                </div>
-                <div className="hidden lg:block w-48 h-48 bg-slate-900 rounded-full border-4 border-slate-800 shadow-2xl relative overflow-hidden">
-                   <div className="absolute inset-0 flex items-center justify-center text-indigo-500/20 rotate-12">
-                      <Target size={120} />
+                   <div className="flex gap-4">
+                      <button className="px-8 py-4 bg-[#005eb8] hover:bg-[#004080] text-white rounded-xl text-[11px] font-bold uppercase tracking-[0.2em] transition-all shadow-lg flex items-center gap-3">
+                         <Target size={18} /> Configurer les Répartitions
+                      </button>
+                      <button className="px-8 py-4 bg-white border border-[#cbd5e1] text-[#64748b] hover:text-[#0f172a] rounded-xl text-[11px] font-bold uppercase tracking-[0.2em] transition-all shadow-sm">
+                         Voir Documentation
+                      </button>
                    </div>
+                </div>
+                <div className="hidden lg:block w-64 h-64 bg-[#f8fafc] rounded-full border border-[#cbd5e1] shadow-inner relative overflow-hidden group-hover:scale-105 transition-transform">
+                   <div className="absolute inset-0 flex items-center justify-center text-[#005eb8]/10 rotate-12">
+                      <Target size={180} />
+                   </div>
+                   <div className="absolute inset-0 bg-gradient-to-tr from-[#005eb8]/5 to-transparent"></div>
                 </div>
              </div>
 
-             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <ProjectKpi name="Projet : Construction Immeuble A" budget="150M F" actual="112M F" status="Optimal" />
-                <ProjectKpi name="Projet : Maintenance Flotte" budget="45M F" actual="42M F" status="Vigilance" />
+             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <ProjectKpi name="Construction Immeuble A (Dakar Plateau)" budget="150 000 000" actual="112 500 000" status="Optimal" />
+                <ProjectKpi name="Maintenance Flotte Logistique (Zone Franche)" budget="45 000 000" actual="42 800 000" status="Vigilance" />
              </div>
           </motion.div>
         )}
@@ -205,19 +215,22 @@ const ReportingModule = () => {
         {activeTab === 'kpi' && (
           <motion.div
             key="kpi"
-            initial={{ opacity: 0, scale: 0.95 }}
+            initial={{ opacity: 0, scale: 0.98 }}
             animate={{ opacity: 1, scale: 1 }}
-            className="card flex flex-col items-center justify-center h-96 border-dashed"
+            className="bg-white border border-[#cbd5e1] rounded-xl flex flex-col items-center justify-center p-20 shadow-sm relative overflow-hidden"
           >
-             <div className="w-20 h-20 bg-slate-800/50 rounded-3xl flex items-center justify-center mb-6 border border-slate-700 shadow-inner">
-                <Zap size={32} className="text-amber-400 animate-pulse" />
+             <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500"></div>
+             <div className="w-28 h-28 bg-[#f8fafc] rounded-[2.5rem] flex items-center justify-center mb-8 border border-[#cbd5e1] shadow-inner relative group">
+                <Zap size={48} className="text-orange-500 group-hover:scale-110 transition-transform animate-pulse" />
+                <Sparkles size={24} className="absolute -top-2 -right-2 text-blue-500 animate-bounce" />
              </div>
-             <h3 className="text-xl font-black uppercase tracking-[0.1em]">Reporting Prédictif (IA)</h3>
-             <p className="text-slate-500 max-w-sm text-center mt-3 text-sm font-medium">
-               Utilisez l'Intelligence Artificielle pour prédire vos besoins de trésorerie à 6 mois et détecter les anomalies de facturation avant qu'elles ne deviennent critiques.
+             <h3 className="text-3xl font-bold uppercase tracking-tighter text-[#0f172a]">Reporting Prédictif Joule AI</h3>
+             <p className="text-[#64748b] max-w-lg text-center mt-6 text-[12px] font-bold uppercase tracking-widest leading-relaxed opacity-70">
+               Utilisez l'Intelligence Artificielle générative pour prédire vos besoins de trésorerie à 6 mois et détecter les anomalies de facturation avant qu'elles ne deviennent critiques.
              </p>
-             <button className="mt-8 px-8 py-3 bg-indigo-600 hover:bg-indigo-500 rounded-2xl text-[10px] font-black uppercase tracking-[0.2em] shadow-lg shadow-indigo-500/20 transition-all">
-               Lancer l'Analyse Prédictive
+             <button className="mt-12 px-12 py-5 bg-[#005eb8] hover:bg-[#004080] text-white rounded-[2rem] text-[11px] font-bold uppercase tracking-[0.3em] shadow-xl shadow-blue-500/20 transition-all flex items-center gap-4 group">
+               <BrainCircuit size={20} className="group-hover:rotate-12 transition-transform" />
+               Lancer l'Analyse Prédictive GPRO
              </button>
           </motion.div>
         )}
@@ -226,71 +239,79 @@ const ReportingModule = () => {
   );
 };
 
-const KpiCard = ({ title, value, trend, color, sub }: any) => (
-  <div className="card group hover:border-indigo-500/30 transition-all cursor-pointer relative overflow-hidden shadow-xl">
-    <div className={`absolute top-0 right-0 w-24 h-24 -mr-12 -mt-12 rounded-full bg-${color}-500 opacity-5 group-hover:opacity-10 transition-opacity`}></div>
-    <p className="text-[10px] font-black text-slate-500 uppercase tracking-widest leading-none mb-2">{title}</p>
-    <h3 className="text-xl font-black text-white group-hover:text-indigo-400 transition-colors">{value}</h3>
-    <div className="flex items-center justify-between mt-3">
-       <span className={`text-[10px] font-black px-2 py-1 rounded-lg bg-${color}-500/10 text-${color}-400 border border-${color}-500/20`}>
+const KpiCard = ({ title, value, trend, color, sub, icon }: any) => (
+  <div className="bg-white border border-[#cbd5e1] rounded-xl p-8 group hover:border-[#005eb8] transition-all cursor-pointer relative overflow-hidden shadow-sm">
+    <div className={`absolute top-0 right-0 w-24 h-24 -mr-12 -mt-12 rounded-full ${color === 'green' ? 'bg-[#107e3e]' : color === 'blue' ? 'bg-[#005eb8]' : 'bg-orange-500'} opacity-0 group-hover:opacity-5 transition-opacity`}></div>
+    <div className="flex justify-between items-start mb-4">
+       <p className="text-[10px] font-bold text-[#64748b] uppercase tracking-[0.2em] leading-none">{title}</p>
+       <div className={`p-2.5 rounded-lg border shadow-inner ${color === 'green' ? 'bg-green-50 text-[#107e3e] border-green-100' : color === 'blue' ? 'bg-blue-50 text-[#005eb8] border-blue-100' : 'bg-orange-50 text-orange-600 border-orange-100'}`}>
+          {icon}
+       </div>
+    </div>
+    <h3 className="text-2xl font-bold text-[#0f172a] group-hover:text-[#005eb8] transition-colors tracking-tighter">{value}</h3>
+    <div className="flex items-center justify-between mt-6">
+       <span className={`text-[10px] font-bold px-3 py-1 rounded border tracking-widest ${color === 'green' ? 'bg-green-50 text-[#107e3e] border-green-200' : color === 'blue' ? 'bg-blue-50 text-[#005eb8] border-blue-200' : 'bg-orange-50 text-orange-600 border-orange-200'}`}>
           {trend}
        </span>
-       <p className="text-[9px] font-bold text-slate-600 uppercase tracking-tighter">{sub}</p>
+       <p className="text-[9px] font-bold text-[#94a3b8] uppercase tracking-widest italic">{sub}</p>
     </div>
   </div>
 );
 
 const ChartLegend = ({ color, label, value }: any) => (
-  <div className="flex items-center justify-between group cursor-pointer">
-     <div className="flex items-center gap-2">
-        <div className={`w-2.5 h-2.5 rounded-full bg-${color}-500 group-hover:scale-125 transition-transform shadow-[0_0_8px_rgba(var(--tw-color-${color}-500),0.5)]`} />
-        <span className="text-xs text-slate-400 group-hover:text-slate-200 transition-colors">{label}</span>
+  <div className="flex items-center justify-between group cursor-pointer border-b border-transparent hover:border-[#f1f5f9] pb-1 transition-all">
+     <div className="flex items-center gap-3">
+        <div className={`w-3 h-3 rounded-full ${color === 'blue' ? 'bg-[#005eb8]' : color === 'green' ? 'bg-[#107e3e]' : 'bg-orange-500'} group-hover:scale-125 transition-transform shadow-sm`} />
+        <span className="text-[11px] font-bold uppercase tracking-widest text-[#64748b] group-hover:text-[#0f172a] transition-colors">{label}</span>
      </div>
-     <span className="text-xs font-black text-white">{value}</span>
+     <span className="text-[12px] font-bold text-[#0f172a] tracking-tight">{value}</span>
   </div>
 );
 
 const ReportCard = ({ title, desc, icon, color }: any) => (
-  <div className="card group hover:border-slate-600 cursor-pointer transition-all hover:-translate-y-1">
-     <div className={`w-12 h-12 rounded-2xl bg-${color}-500/10 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform shadow-inner`}>
-        <div className={`text-${color}-400`}>{icon}</div>
+  <div className="bg-white border border-[#cbd5e1] rounded-xl p-8 group hover:border-[#005eb8] cursor-pointer transition-all hover:-translate-y-2 shadow-sm">
+     <div className={`w-14 h-14 rounded-2xl border shadow-inner flex items-center justify-center mb-8 group-hover:scale-110 transition-transform ${
+       color === 'blue' ? 'bg-blue-50 text-[#005eb8] border-blue-100' : color === 'green' ? 'bg-green-50 text-[#107e3e] border-green-100' : 'bg-orange-50 text-orange-600 border-orange-100'
+     }`}>
+        {icon}
      </div>
-     <h3 className="font-black text-white group-hover:text-indigo-400 transition-colors uppercase text-sm tracking-widest">{title}</h3>
-     <p className="text-xs text-slate-500 font-medium mt-3 leading-relaxed">{desc}</p>
-     <div className="mt-8 flex justify-between items-center opacity-0 group-hover:opacity-100 transition-all">
-        <button className="flex items-center gap-1.5 text-[10px] font-black uppercase text-indigo-400">
-           <Eye size={12} /> Aperçu
+     <h3 className="font-bold text-[#0f172a] group-hover:text-[#005eb8] transition-colors uppercase text-sm tracking-[0.2em]">{title}</h3>
+     <p className="text-[11px] text-[#64748b] font-bold uppercase tracking-widest mt-4 leading-relaxed opacity-70">{desc}</p>
+     <div className="mt-10 flex justify-between items-center opacity-0 group-hover:opacity-100 transition-all transform group-hover:translate-y-0 translate-y-2">
+        <button className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.2em] text-[#005eb8] hover:underline">
+           <Eye size={16} /> Aperçu
         </button>
-        <button className="flex items-center gap-1.5 text-[10px] font-black uppercase text-slate-500 hover:text-white">
-           <Download size={12} /> PDF
+        <button className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.2em] text-[#64748b] hover:text-[#0f172a]">
+           <Printer size={16} /> Imprimer
         </button>
      </div>
   </div>
 );
 
 const ProjectKpi = ({ name, budget, actual, status }: any) => (
-  <div className="card border-slate-700/50 p-6 flex flex-col gap-4">
+  <div className="bg-white border border-[#cbd5e1] rounded-xl p-8 flex flex-col gap-6 shadow-sm group hover:border-[#005eb8] transition-all">
      <div className="flex justify-between items-start">
-        <h4 className="font-black text-white text-sm">{name}</h4>
-        <span className={`px-2 py-0.5 rounded text-[9px] font-black uppercase ${
-          status === 'Optimal' ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20' : 'bg-amber-500/10 text-amber-400 border border-amber-500/20'
+        <h4 className="font-bold text-[#0f172a] text-xs uppercase tracking-widest leading-relaxed max-w-[200px]">{name}</h4>
+        <span className={`px-3 py-1 rounded border text-[9px] font-bold uppercase tracking-widest ${
+          status === 'Optimal' ? 'bg-green-50 text-[#107e3e] border-green-200' : 'bg-orange-50 text-orange-600 border-orange-200'
         }`}>{status}</span>
      </div>
-     <div className="space-y-1.5">
-        <div className="flex justify-between text-[10px] font-bold uppercase tracking-widest text-slate-500">
+     <div className="space-y-3">
+        <div className="flex justify-between text-[10px] font-bold uppercase tracking-[0.2em] text-[#64748b]">
            <span>Consommation Budget</span>
-           <span>{(parseInt(actual) / parseInt(budget) * 100).toFixed(1)}%</span>
+           <span className={status === 'Optimal' ? 'text-[#107e3e]' : 'text-orange-600'}>{(parseInt(actual.replace(/\s/g, '')) / parseInt(budget.replace(/\s/g, '')) * 100).toFixed(1)}%</span>
         </div>
-        <div className="w-full h-1.5 bg-slate-800 rounded-full overflow-hidden">
-           <div 
-             className={`h-full ${status === 'Optimal' ? 'bg-emerald-500' : 'bg-amber-500'}`} 
-             style={{ width: `${(parseInt(actual) / parseInt(budget) * 100)}%` }} 
+        <div className="w-full h-2.5 bg-[#f1f5f9] rounded-full overflow-hidden shadow-inner">
+           <motion.div 
+             initial={{ width: 0 }}
+             animate={{ width: `${(parseInt(actual.replace(/\s/g, '')) / parseInt(budget.replace(/\s/g, '')) * 100)}%` }} 
+             className={`h-full shadow-lg ${status === 'Optimal' ? 'bg-[#107e3e]' : 'bg-orange-500'}`} 
            />
         </div>
      </div>
-     <div className="flex justify-between text-[10px] font-black uppercase text-slate-400 mt-2">
-        <span>Prévu: <span className="text-white">{budget}</span></span>
-        <span>Réel: <span className="text-white">{actual}</span></span>
+     <div className="flex justify-between text-[10px] font-bold uppercase tracking-[0.2em] text-[#94a3b8] mt-2">
+        <span>Prévu: <span className="text-[#0f172a] ml-1">{budget} F</span></span>
+        <span>Réel: <span className="text-[#005eb8] ml-1">{actual} F</span></span>
      </div>
   </div>
 );

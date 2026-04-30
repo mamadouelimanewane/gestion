@@ -4,7 +4,8 @@ import {
   Package, ArrowRightLeft, AlertTriangle, ClipboardList, 
   Search, Plus, Filter, Download, ArrowUpRight, 
   ArrowDownRight, Barcode, Warehouse, Eye,
-  ChevronRight, History, Settings, Trash2, Edit3, Wrench
+  ChevronRight, History, Settings, Trash2, Edit3, Wrench,
+  XCircle, MapPin, Boxes, Activity, Info, MoreVertical
 } from 'lucide-react';
 import PlantMaintenance from './PlantMaintenance';
 
@@ -21,37 +22,42 @@ const InventoryModule = () => {
     { id: 'maintenance', label: 'Maintenance (PM)', icon: Wrench },
   ];
 
+  const articles = [
+    { ref: 'ART-GEN-001', name: 'Groupe Électrogène 50KVA', family: 'Matériel Lourd', qty: 12, min: 5, cump: '4 500 000', value: '54 000 000', status: 'En stock', color: 'green' },
+    { ref: 'ART-INF-089', name: 'Serveur Dell PowerEdge R740', family: 'Informatique', qty: 3, min: 10, cump: '2 850 000', value: '8 550 000', status: 'Alerte', color: 'orange' },
+    { ref: 'ART-CONS-45', name: 'Câble Réseau Cat6 (305m)', family: 'Consommables', qty: 45, min: 20, cump: '35 000', value: '1 575 000', status: 'En stock', color: 'green' },
+    { ref: 'ART-CONS-12', name: 'Huile Moteur 5L (Synthétique)', family: 'Maintenance', qty: 0, min: 5, cump: '25 000', value: '0', status: 'Rupture', color: 'red' },
+  ];
+
   return (
-    <div className="flex flex-col h-full gap-6">
+    <div className="flex flex-col h-full gap-8">
       {/* Header & Tabs */}
-      <div className="flex flex-col gap-4">
-        <div className="flex items-center justify-between">
-          <div className="flex bg-slate-800/50 p-1 rounded-xl border border-slate-700/50 w-fit">
-            {tabs.map((tab) => (
-              <button
-                key={tab.id}
-                onClick={() => setActiveTab(tab.id)}
-                className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
-                  activeTab === tab.id
-                    ? 'bg-indigo-600 text-white shadow-md'
-                    : 'text-slate-400 hover:text-slate-200 hover:bg-slate-700/50'
-                }`}
-              >
-                <tab.icon size={16} />
-                {tab.label}
-              </button>
-            ))}
-          </div>
-          <div className="flex items-center gap-3">
-             <button className="flex items-center gap-2 px-4 py-2 bg-slate-800 border border-slate-700 rounded-lg text-sm font-bold text-slate-300 hover:text-white transition-all">
-                <Barcode size={18} />
-                Scanner
-             </button>
-             <button className="flex items-center gap-2 px-4 py-2 bg-indigo-600 hover:bg-indigo-500 rounded-lg text-sm font-bold transition-all shadow-lg shadow-indigo-500/20">
-                <Plus size={16} />
-                Nouvel Article
-             </button>
-          </div>
+      <div className="flex flex-col lg:flex-row items-center justify-between gap-6 bg-white p-6 rounded-xl border border-[#cbd5e1] shadow-sm">
+        <div className="flex bg-[#f1f5f9] p-1 rounded-lg border border-[#cbd5e1] shadow-inner overflow-x-auto no-scrollbar">
+          {tabs.map((tab) => (
+            <button
+              key={tab.id}
+              onClick={() => setActiveTab(tab.id)}
+              className={`flex items-center gap-3 px-6 py-2.5 rounded text-[11px] font-bold uppercase tracking-widest transition-all whitespace-nowrap ${
+                activeTab === tab.id
+                  ? 'bg-white text-[#005eb8] shadow-sm border border-[#cbd5e1]'
+                  : 'text-[#64748b] hover:text-[#0f172a] hover:bg-white/50'
+              }`}
+            >
+              <tab.icon size={18} />
+              <span>{tab.label}</span>
+            </button>
+          ))}
+        </div>
+        <div className="flex items-center gap-4">
+           <button className="flex items-center gap-3 px-6 py-2.5 bg-white border border-[#cbd5e1] rounded-lg text-[11px] font-bold uppercase tracking-widest text-[#64748b] hover:text-[#005eb8] hover:bg-blue-50 transition-all shadow-sm">
+              <Barcode size={20} />
+              Scanner Code-Barres
+           </button>
+           <button className="flex items-center gap-3 px-8 py-2.5 bg-[#005eb8] hover:bg-[#004080] text-white rounded-lg text-[11px] font-bold uppercase tracking-widest transition-all shadow-lg">
+              <Plus size={20} />
+              Nouvel Article
+           </button>
         </div>
       </div>
 
@@ -63,89 +69,91 @@ const InventoryModule = () => {
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
-            className="flex flex-col gap-4"
+            className="flex flex-col gap-6 h-full"
           >
             {/* Filter Bar */}
-            <div className="flex justify-between items-center bg-slate-800/30 p-4 rounded-xl border border-slate-700/50">
-              <div className="flex gap-4">
-                <div className="relative">
-                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500" size={16} />
+            <div className="flex justify-between items-center bg-white p-6 rounded-xl border border-[#cbd5e1] shadow-sm">
+              <div className="flex gap-4 items-center">
+                <div className="relative group">
+                  <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-[#94a3b8] group-focus-within:text-[#005eb8] transition-colors" size={18} />
                   <input
                     type="text"
-                    placeholder="Rechercher par référence, désignation..."
-                    className="pl-10 pr-4 py-2 bg-slate-900 border border-slate-700 rounded-lg text-sm focus:outline-none focus:border-indigo-500 transition-all w-80"
+                    placeholder="Chercher par référence, désignation, famille..."
+                    className="w-[500px] bg-[#f8fafc] border border-[#cbd5e1] rounded-lg pl-12 pr-6 py-3 text-xs font-bold text-[#334155] placeholder:text-[#94a3b8] uppercase tracking-tight outline-none focus:border-[#005eb8] focus:bg-white transition-all shadow-inner"
                   />
                 </div>
-                <button className="flex items-center gap-2 px-4 py-2 bg-slate-800 border border-slate-700 rounded-lg text-sm text-slate-400 hover:text-white">
-                  <Filter size={16} />
-                  Trier par Famille
+                <button className="flex items-center gap-3 px-6 py-3 bg-white border border-[#cbd5e1] rounded-lg text-[11px] font-bold text-[#64748b] uppercase tracking-widest hover:bg-[#f1f5f9] transition-all shadow-sm">
+                  <Filter size={18} />
+                  Familles
                 </button>
               </div>
-              <div className="flex gap-2">
-                 <div className="flex items-center gap-2 px-3 py-1.5 bg-emerald-500/10 border border-emerald-500/20 rounded-lg">
-                    <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-                    <span className="text-[10px] font-black uppercase text-emerald-400">Sync. Entrepôts OK</span>
-                 </div>
+              <div className="flex items-center gap-4 px-6 py-3 bg-green-50 border border-green-100 rounded-xl shadow-inner">
+                 <div className="w-2.5 h-2.5 rounded-full bg-[#107e3e] animate-pulse" />
+                 <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#107e3e]">Stock Cloud Synchronisé</span>
               </div>
             </div>
 
             {/* Articles Table */}
-            <div className="bg-slate-800/30 rounded-2xl border border-slate-700/50 overflow-hidden shadow-xl">
-              <table className="w-full text-left text-sm">
-                <thead className="bg-slate-800/80 text-slate-500 border-b border-slate-700/50 font-bold uppercase text-[10px] tracking-widest">
-                  <tr>
-                    <th className="p-4">Référence</th>
-                    <th className="p-4">Désignation</th>
-                    <th className="p-4">Famille</th>
-                    <th className="p-4 text-right">Stock Total</th>
-                    <th className="p-4 text-right">CUMP</th>
-                    <th className="p-4 text-right">Valeur Stock</th>
-                    <th className="p-4 text-center">Status</th>
-                    <th className="p-4"></th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-slate-700/30">
-                  {[
-                    { ref: 'ART-GEN-001', name: 'Groupe Électrogène 50KVA', family: 'Matériel Lourd', qty: 12, cump: '4 500 000 F', value: '54 000 000 F', status: 'En stock', color: 'emerald' },
-                    { ref: 'ART-INF-089', name: 'Serveur Dell PowerEdge R740', family: 'Informatique', qty: 3, cump: '2 850 000 F', value: '8 550 000 F', status: 'Alerte', color: 'amber' },
-                    { ref: 'ART-CONS-45', name: 'Câble Réseau Cat6 (305m)', family: 'Consommables', qty: 45, cump: '35 000 F', value: '1 575 000 F', status: 'En stock', color: 'emerald' },
-                    { ref: 'ART-CONS-12', name: 'Huile Moteur 5L (Synthétique)', family: 'Maintenance', qty: 0, cump: '25 000 F', value: '0 F', status: 'Rupture', color: 'rose' },
-                    { ref: 'ART-OFF-001', name: 'Fauteuil Bureau Ergonomique', family: 'Mobilier', qty: 124, cump: '85 000 F', value: '10 540 000 F', status: 'En stock', color: 'emerald' },
-                  ].map((item, i) => (
-                    <tr 
-                      key={i} 
-                      className="group hover:bg-indigo-500/5 transition-colors cursor-pointer"
-                      onClick={() => setSelectedItem(item)}
-                    >
-                      <td className="p-4 font-mono text-indigo-400 text-xs font-bold">{item.ref}</td>
-                      <td className="p-4">
-                         <div className="flex flex-col">
-                            <span className="font-bold text-slate-100 group-hover:text-indigo-400 transition-colors">{item.name}</span>
-                            <span className="text-[10px] text-slate-500">Dernier mouvement: 12/10/2024</span>
-                         </div>
-                      </td>
-                      <td className="p-4">
-                         <span className="px-2 py-0.5 bg-slate-800 border border-slate-700 rounded text-[10px] text-slate-400 font-bold uppercase tracking-tighter">
-                            {item.family}
-                         </span>
-                      </td>
-                      <td className="p-4 text-right font-black text-slate-200">{item.qty} unités</td>
-                      <td className="p-4 text-right text-slate-400 font-medium">{item.cump}</td>
-                      <td className="p-4 text-right font-black text-white">{item.value}</td>
-                      <td className="p-4 text-center">
-                        <div className={`mx-auto w-fit px-2.5 py-1 rounded-full text-[10px] font-black uppercase bg-${item.color}-500/10 text-${item.color}-400 border border-${item.color}-500/20`}>
-                          {item.status}
-                        </div>
-                      </td>
-                      <td className="p-4">
-                         <button className="p-2 text-slate-600 group-hover:text-indigo-400 transition-all">
-                            <ChevronRight size={18} />
-                         </button>
-                      </td>
+            <div className="bg-white rounded-xl border border-[#cbd5e1] overflow-hidden shadow-sm flex-1 flex flex-col">
+              <div className="overflow-auto flex-1">
+                <table className="w-full text-left whitespace-nowrap border-collapse">
+                  <thead className="bg-[#f8fafc] border-b-2 border-[#cbd5e1] sticky top-0 z-10 shadow-sm">
+                    <tr>
+                      <th className="px-8 py-5 text-[10px] font-bold uppercase tracking-[0.2em] text-[#64748b]">Référence SKU</th>
+                      <th className="px-8 py-5 text-[10px] font-bold uppercase tracking-[0.2em] text-[#64748b]">Désignation de l'Article</th>
+                      <th className="px-8 py-5 text-[10px] font-bold uppercase tracking-[0.2em] text-[#64748b]">Famille Logistique</th>
+                      <th className="px-8 py-5 text-[10px] font-bold uppercase tracking-[0.2em] text-[#64748b] text-right">Stock Actuel</th>
+                      <th className="px-8 py-5 text-[10px] font-bold uppercase tracking-[0.2em] text-[#64748b] text-right">CUMP (F)</th>
+                      <th className="px-8 py-5 text-[10px] font-bold uppercase tracking-[0.2em] text-[#64748b] text-right">Valeur Stock</th>
+                      <th className="px-8 py-5 text-[10px] font-bold uppercase tracking-[0.2em] text-[#64748b] text-center">Statut</th>
+                      <th className="px-8 py-5"></th>
                     </tr>
-                  ))}
-                </tbody>
-              </table>
+                  </thead>
+                  <tbody className="divide-y divide-[#f1f5f9]">
+                    {articles.map((item, i) => (
+                      <tr key={i} className="group hover:bg-blue-50/30 transition-all cursor-pointer" onClick={() => setSelectedItem(item)}>
+                        <td className="px-8 py-5">
+                           <span className="font-mono font-bold text-sm text-[#005eb8] tracking-tighter uppercase">{item.ref}</span>
+                        </td>
+                        <td className="px-8 py-5">
+                           <div className="flex flex-col">
+                              <span className="text-xs font-bold text-[#334155] uppercase tracking-tight group-hover:text-[#005eb8] transition-colors">{item.name}</span>
+                              <span className="text-[10px] text-[#94a3b8] font-bold uppercase tracking-widest mt-1 opacity-70">Localisation: DKR-A12</span>
+                           </div>
+                        </td>
+                        <td className="px-8 py-5">
+                           <span className="px-3 py-1 bg-[#f8fafc] border border-[#cbd5e1] rounded text-[9px] font-bold uppercase tracking-widest text-[#64748b]">
+                              {item.family}
+                           </span>
+                        </td>
+                        <td className={`px-8 py-5 text-right font-bold text-base tracking-tighter ${item.qty <= item.min ? 'text-[#dc2626]' : 'text-[#0f172a]'}`}>
+                           {item.qty}
+                        </td>
+                        <td className="px-8 py-5 text-right font-bold text-[#64748b] text-xs">
+                           {item.cump}
+                        </td>
+                        <td className="px-8 py-5 text-right font-bold text-[#0f172a] text-sm tracking-tighter">
+                           {item.value}
+                        </td>
+                        <td className="px-8 py-5 text-center">
+                           <span className={`px-3 py-1 rounded border text-[9px] font-bold uppercase tracking-widest ${
+                              item.color === 'green' ? 'bg-green-50 text-[#107e3e] border-green-200' :
+                              item.color === 'orange' ? 'bg-orange-50 text-orange-600 border-orange-200' :
+                              'bg-red-50 text-[#dc2626] border-red-200'
+                           }`}>
+                              {item.status}
+                           </span>
+                        </td>
+                        <td className="px-8 py-5 text-right">
+                           <button className="p-2.5 bg-white border border-[#cbd5e1] rounded-lg text-[#94a3b8] hover:text-[#0f172a] shadow-sm transition-all">
+                              <MoreVertical size={18} />
+                           </button>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
             </div>
           </motion.div>
         )}
@@ -154,61 +162,69 @@ const InventoryModule = () => {
         {activeTab === 'mouvements' && (
           <motion.div
             key="mouvements"
-            initial={{ opacity: 0, x: -10 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: 10 }}
-            className="flex flex-col gap-6"
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            className="flex flex-col gap-8 h-full"
           >
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-               <MouvementCard title="Entrées Magasin" value="125" trend="+12%" icon={<ArrowDownRight size={24} />} color="emerald" />
-               <MouvementCard title="Sorties / Livraisons" value="84" trend="+5%" icon={<ArrowUpRight size={24} />} color="rose" />
-               <MouvementCard title="Transferts Inter-Dépôts" value="12" trend="0%" icon={<ArrowRightLeft size={24} />} color="indigo" />
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+               <MouvementCard title="Entrées Magasin (M-1)" value="125" trend="+12%" icon={<ArrowDownRight size={24} />} color="green" />
+               <MouvementCard title="Sorties / Livraisons" value="84" trend="+5%" icon={<ArrowUpRight size={24} />} color="red" />
+               <MouvementCard title="Transferts Inter-Dépôts" value="12" trend="0%" icon={<ArrowRightLeft size={24} />} color="blue" />
             </div>
 
-            <div className="bg-slate-800/30 rounded-2xl border border-slate-700/50 overflow-hidden shadow-xl">
-               <div className="p-5 border-b border-slate-700/50 flex justify-between items-center bg-slate-800/50">
-                  <h3 className="font-black text-xs uppercase tracking-widest flex items-center gap-2">
-                    <History size={18} className="text-indigo-400" />
-                    Journal des Flux de Stock
-                  </h3>
-                  <button className="px-4 py-2 bg-indigo-600 hover:bg-indigo-500 rounded-xl text-xs font-black uppercase tracking-widest transition-all">
-                    Saisir un Bon de Sortie
+            <div className="bg-white rounded-xl border border-[#cbd5e1] overflow-hidden shadow-sm flex-1 flex flex-col">
+               <div className="p-6 border-b border-[#cbd5e1] flex justify-between items-center bg-[#f8fafc]">
+                  <div className="flex items-center gap-4">
+                     <div className="w-10 h-10 bg-blue-50 text-[#005eb8] rounded-xl flex items-center justify-center border border-blue-100 shadow-inner">
+                        <History size={20} />
+                     </div>
+                     <h3 className="text-[12px] font-bold uppercase tracking-[0.2em] text-[#0f172a]">Journal des Flux de Stock en Temps Réel</h3>
+                  </div>
+                  <button className="px-6 py-2.5 bg-[#005eb8] hover:bg-[#004080] text-white rounded-lg text-[10px] font-bold uppercase tracking-widest transition-all shadow-md flex items-center gap-3">
+                     <Plus size={16} /> Saisir un Bon de Sortie
                   </button>
                </div>
-               <table className="w-full text-left text-sm">
-                  <thead className="bg-slate-800/80 text-slate-500 border-b border-slate-700/50 font-bold uppercase text-[10px]">
-                    <tr>
-                      <th className="p-4">Date & Heure</th>
-                      <th className="p-4">Nature du flux</th>
-                      <th className="p-4">Article</th>
-                      <th className="p-4 text-center">Entrepôt</th>
-                      <th className="p-4 text-right">Quantité</th>
-                      <th className="p-4">Réf. Document</th>
-                    </tr>
-                  </thead>
-                  <tbody className="divide-y divide-slate-700/30">
-                    {[
-                      { date: '12/10 14:30', type: 'Entrée (Achat)', color: 'emerald', item: 'Groupe Électrogène 50KVA', wh: 'MAGASIN DAKAR', qty: '+5', doc: 'BE-2024-045' },
-                      { date: '12/10 11:15', type: 'Sortie (Chantier)', color: 'rose', item: 'Câble Réseau Cat6', wh: 'DEPOT THIES', qty: '-12', doc: 'BS-2024-892' },
-                      { date: '11/10 16:45', type: 'Transfert Interne', color: 'indigo', item: 'Serveur Dell R740', wh: 'DAKAR → SAINT-LOUIS', qty: '1', doc: 'TR-102' },
-                    ].map((m, i) => (
-                      <tr key={i} className="hover:bg-slate-800/50 transition-colors">
-                        <td className="p-4 text-slate-400 font-mono text-xs">{m.date}</td>
-                        <td className="p-4">
-                           <div className={`w-fit px-2 py-0.5 rounded bg-${m.color}-500/10 text-${m.color}-400 text-[10px] font-black uppercase border border-${m.color}-500/20`}>
-                              {m.type}
-                           </div>
-                        </td>
-                        <td className="p-4 font-bold text-slate-200">{m.item}</td>
-                        <td className="p-4 text-center">
-                           <span className="text-[10px] font-bold text-slate-500">{m.wh}</span>
-                        </td>
-                        <td className={`p-4 text-right font-black text-${m.color}-400`}>{m.qty}</td>
-                        <td className="p-4 text-indigo-400 font-mono text-xs">{m.doc}</td>
+               <div className="overflow-auto flex-1">
+                 <table className="w-full text-left whitespace-nowrap">
+                    <thead className="bg-[#f8fafc] text-[#64748b] border-b border-[#cbd5e1] font-bold uppercase text-[10px] tracking-widest sticky top-0 z-10 shadow-sm">
+                      <tr>
+                        <th className="px-8 py-4">Horodatage</th>
+                        <th className="px-8 py-4">Nature du flux</th>
+                        <th className="px-8 py-4">Article / Désignation</th>
+                        <th className="px-8 py-4 text-center">Entrepôt / Zone</th>
+                        <th className="px-8 py-4 text-right">Quantité</th>
+                        <th className="px-8 py-4 text-right">Réf. Document</th>
                       </tr>
-                    ))}
-                  </tbody>
-               </table>
+                    </thead>
+                    <tbody className="divide-y divide-[#f1f5f9]">
+                      {[
+                        { date: '12/10 14:30', type: 'Entrée (Achat)', color: 'green', item: 'Groupe Électrogène 50KVA', wh: 'MAGASIN DAKAR', qty: '+5', doc: 'BE-2024-045' },
+                        { date: '12/10 11:15', type: 'Sortie (Chantier)', color: 'red', item: 'Câble Réseau Cat6 (305m)', wh: 'DEPOT THIES', qty: '-12', doc: 'BS-2024-892' },
+                        { date: '11/10 16:45', type: 'Transfert Interne', color: 'blue', item: 'Serveur Dell PowerEdge R740', wh: 'DAKAR → SAINT-LOUIS', qty: '1', doc: 'TR-102' },
+                      ].map((m, i) => (
+                        <tr key={i} className="hover:bg-blue-50/30 transition-all group cursor-pointer">
+                          <td className="px-8 py-5 text-[#64748b] font-mono font-bold text-xs uppercase tracking-tighter">{m.date}</td>
+                          <td className="px-8 py-5">
+                             <div className={`w-fit px-3 py-1 rounded border text-[9px] font-bold uppercase tracking-widest ${
+                                m.color === 'green' ? 'bg-green-50 text-[#107e3e] border-green-200' :
+                                m.color === 'red' ? 'bg-red-50 text-[#dc2626] border-red-200' :
+                                'bg-blue-50 text-[#005eb8] border-blue-200'
+                             }`}>
+                                {m.type}
+                             </div>
+                          </td>
+                          <td className="px-8 py-5 font-bold text-[#334155] text-xs uppercase tracking-tight group-hover:text-[#005eb8] transition-colors">{m.item}</td>
+                          <td className="px-8 py-5 text-center">
+                             <span className="text-[10px] font-bold text-[#64748b] uppercase tracking-widest opacity-80">{m.wh}</span>
+                          </td>
+                          <td className={`px-8 py-5 text-right font-black text-sm tracking-tighter ${m.color === 'green' ? 'text-[#107e3e]' : m.color === 'red' ? 'text-[#dc2626]' : 'text-[#005eb8]'}`}>{m.qty}</td>
+                          <td className="px-8 py-5 text-[#005eb8] font-mono font-bold text-xs text-right tracking-widest">{m.doc}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                 </table>
+               </div>
             </div>
           </motion.div>
         )}
@@ -217,16 +233,16 @@ const InventoryModule = () => {
         {activeTab === 'depots' && (
           <motion.div
             key="depots"
-            initial={{ opacity: 0, scale: 0.95 }}
+            initial={{ opacity: 0, scale: 0.98 }}
             animate={{ opacity: 1, scale: 1 }}
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
           >
-             <WarehouseCard name="Magasin Central - Dakar" manager="Amadou Diop" items={850} capacity={85} />
-             <WarehouseCard name="Dépôt Régional - Thiès" manager="Fatou Fall" items={230} capacity={45} />
-             <WarehouseCard name="Plateforme - Saint-Louis" manager="Omar Sy" items={112} capacity={20} />
-             <div className="card border-dashed flex flex-col items-center justify-center p-8 opacity-50 hover:opacity-100 transition-opacity">
-                <Plus size={32} className="text-slate-600 mb-2" />
-                <p className="text-xs font-black uppercase text-slate-500 tracking-widest">Ajouter un Dépôt</p>
+             <WarehouseCard name="Magasin Central - Dakar Plateau" manager="Amadou Diop" items={850} capacity={85} color="blue" />
+             <WarehouseCard name="Dépôt Régional - Thiès Escale" manager="Fatou Fall" items={230} capacity={45} color="green" />
+             <WarehouseCard name="Plateforme Logistique - Saint-Louis" manager="Omar Sy" items={112} capacity={20} color="green" />
+             <div className="bg-white border-2 border-dashed border-[#cbd5e1] rounded-xl flex flex-col items-center justify-center p-12 opacity-50 hover:opacity-100 hover:border-[#005eb8] hover:bg-blue-50/20 transition-all cursor-pointer group">
+                <Plus size={48} className="text-[#94a3b8] group-hover:text-[#005eb8] mb-4 transition-transform group-hover:scale-110" />
+                <p className="text-[12px] font-bold uppercase text-[#64748b] tracking-[0.2em] text-center group-hover:text-[#0f172a]">Enregistrer un Nouvel Entrepôt</p>
              </div>
           </motion.div>
         )}
@@ -237,46 +253,47 @@ const InventoryModule = () => {
             key="alertes"
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            className="flex flex-col gap-4"
+            className="flex flex-col gap-8 h-full"
           >
-            <div className="card border-rose-500/30 bg-rose-500/5">
-               <div className="flex items-center gap-3 text-rose-400 mb-6">
-                  <div className="p-3 bg-rose-500/10 rounded-2xl">
-                    <AlertTriangle size={24} />
+            <div className="bg-red-50 border border-red-100 p-10 rounded-xl shadow-sm relative overflow-hidden group flex-1">
+               <div className="absolute top-0 right-0 w-96 h-96 bg-red-100/50 rounded-full -mr-48 -mt-48 blur-3xl group-hover:scale-110 transition-transform"></div>
+               <div className="flex items-center gap-6 text-[#dc2626] mb-12 relative z-10">
+                  <div className="p-5 bg-white border border-red-100 rounded-[2rem] shadow-xl shadow-red-500/10">
+                    <AlertTriangle size={48} className="animate-bounce" />
                   </div>
                   <div>
-                    <h3 className="font-black text-lg">Seuils Critiques Atteints</h3>
-                    <p className="text-xs text-rose-500/70 font-medium">Réapprovisionnement suggéré pour maintenir le flux</p>
+                    <h3 className="font-bold text-4xl uppercase tracking-tighter">Seuils Critiques Atteints</h3>
+                    <p className="text-[12px] text-[#dc2626] font-bold uppercase tracking-[0.2em] opacity-80 mt-2">Réapprovisionnement suggéré pour maintenir la continuité d'exploitation</p>
                   </div>
                </div>
                
-               <div className="space-y-3">
-                  {[
-                    { item: 'Huile Moteur 5L (Synthétique)', wh: 'Magasin Dakar', qty: 0, min: 5, status: 'Rupture' },
-                    { item: 'Serveur Dell PowerEdge R740', wh: 'Saint-Louis', qty: 3, min: 10, status: 'Critique' },
-                    { item: 'Câble Réseau Cat6 (305m)', wh: 'Thiès', qty: 15, min: 50, status: 'Alerte' },
-                  ].map((alert, i) => (
-                    <div key={i} className="flex items-center justify-between p-4 bg-slate-900 border border-slate-800 rounded-2xl hover:border-rose-500/30 transition-all">
-                      <div className="flex items-center gap-4">
-                         <div className="w-12 h-12 bg-slate-800 rounded-xl flex items-center justify-center text-rose-400 shadow-inner">
-                            <Package size={20} />
+               <div className="space-y-4 relative z-10 max-w-5xl mx-auto">
+                  {articles.filter(a => a.qty <= a.min).map((alert, i) => (
+                    <div key={i} className="flex items-center justify-between p-6 bg-white border border-red-100 rounded-2xl hover:border-red-500 transition-all shadow-md group/item">
+                      <div className="flex items-center gap-8">
+                         <div className="w-16 h-16 bg-red-50 rounded-xl flex items-center justify-center text-[#dc2626] border border-red-100 shadow-inner group-hover/item:scale-110 transition-transform">
+                            <Package size={32} />
                          </div>
-                         <div>
-                           <p className="font-bold text-slate-100 text-sm">{alert.item}</p>
-                           <p className="text-[10px] text-slate-500 uppercase font-black tracking-widest">{alert.wh}</p>
+                         <div className="space-y-1">
+                           <p className="font-bold text-[#0f172a] text-lg uppercase tracking-tight">{alert.name}</p>
+                           <div className="flex items-center gap-4 text-[11px] font-bold text-[#64748b] uppercase tracking-widest">
+                              <span className="flex items-center gap-2"><MapPin size={14} /> {alert.family}</span>
+                              <span className="w-1 h-1 bg-[#cbd5e1] rounded-full" />
+                              <span className="flex items-center gap-2"><Warehouse size={14} /> MAGASIN DKR</span>
+                           </div>
                          </div>
                       </div>
-                      <div className="flex items-center gap-8">
+                      <div className="flex items-center gap-12">
                          <div className="text-right">
-                            <p className="text-[10px] text-slate-500 font-bold uppercase">Stock</p>
-                            <p className="font-black text-rose-400 text-lg leading-none">{alert.qty}</p>
+                            <p className="text-[10px] text-[#64748b] font-bold uppercase tracking-widest mb-1">Stock Reel</p>
+                            <p className="font-black text-[#dc2626] text-3xl tracking-tighter">{alert.qty}</p>
                          </div>
-                         <div className="text-right">
-                            <p className="text-[10px] text-slate-500 font-bold uppercase">Min</p>
-                            <p className="font-bold text-slate-400">{alert.min}</p>
+                         <div className="text-right border-l border-[#f1f5f9] pl-12">
+                            <p className="text-[10px] text-[#94a3b8] font-bold uppercase tracking-widest mb-1">Seuil Min</p>
+                            <p className="font-bold text-[#64748b] text-xl tracking-tight">{alert.min}</p>
                          </div>
-                         <button className="px-5 py-2 bg-rose-600 hover:bg-rose-500 text-white rounded-xl text-xs font-black uppercase tracking-widest shadow-lg shadow-rose-600/20 transition-all">
-                            Commander
+                         <button className="px-8 py-4 bg-[#dc2626] hover:bg-red-700 text-white rounded-xl text-[11px] font-bold uppercase tracking-[0.2em] shadow-xl shadow-red-500/20 transition-all flex items-center gap-3">
+                            <Plus size={18} /> Commander en Urgence
                          </button>
                       </div>
                     </div>
@@ -290,20 +307,31 @@ const InventoryModule = () => {
         {activeTab === 'inventaires' && (
            <motion.div
             key="inventaires"
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="card flex flex-col items-center justify-center h-96 border-dashed"
+            initial={{ opacity: 0, scale: 0.98 }}
+            animate={{ opacity: 1, scale: 1 }}
+            className="bg-white border border-[#cbd5e1] rounded-xl flex flex-col items-center justify-center p-24 shadow-sm relative overflow-hidden h-full"
            >
-              <div className="w-20 h-20 bg-slate-800 rounded-3xl flex items-center justify-center mb-6 shadow-inner border border-slate-700">
-                 <ClipboardList size={32} className="text-indigo-400" />
+              <div className="absolute top-0 right-0 w-96 h-96 bg-blue-50 rounded-full -mr-48 -mt-48 blur-3xl opacity-50"></div>
+              <div className="w-28 h-28 bg-[#f8fafc] rounded-[2.5rem] flex items-center justify-center mb-10 shadow-inner border border-[#cbd5e1] relative group">
+                 <ClipboardList size={54} className="text-[#005eb8] group-hover:scale-110 transition-transform" />
+                 <div className="absolute -bottom-2 -right-2 bg-white border border-blue-100 p-2 rounded-xl shadow-lg">
+                    <Activity size={24} className="text-[#005eb8] animate-pulse" />
+                 </div>
               </div>
-              <h3 className="text-xl font-black uppercase tracking-[0.1em]">Campagnes d'Inventaire</h3>
-              <p className="text-slate-500 max-w-sm text-center mt-3 text-sm font-medium">
-                Gerez vos inventaires tournants ou de fin d'exercice. Calculez les ecarts et generez les ecritures de regularisation auto.
+              <h3 className="text-3xl font-bold uppercase tracking-tighter text-[#0f172a]">Campagnes d'Inventaire Tournant</h3>
+              <p className="text-[#64748b] max-w-lg text-center mt-6 text-[12px] font-bold uppercase tracking-widest leading-relaxed opacity-70">
+                Gérez vos inventaires cycliques ou de fin d'exercice avec validation multi-niveaux. Calculez les écarts de stock et générez les écritures de régularisation comptables automatiquement.
               </p>
-              <button className="mt-8 px-8 py-3 bg-indigo-600 hover:bg-indigo-500 rounded-2xl text-[10px] font-black uppercase tracking-[0.2em] shadow-lg shadow-indigo-500/20 transition-all">
-                Démarrer un nouvel inventaire
-              </button>
+              <div className="flex gap-4 mt-12">
+                 <button className="px-10 py-5 bg-[#005eb8] hover:bg-[#004080] text-white rounded-[2rem] text-[11px] font-bold uppercase tracking-[0.2em] shadow-xl shadow-blue-500/20 transition-all flex items-center gap-4 group">
+                   <Plus size={22} className="group-hover:rotate-90 transition-transform" />
+                   Démarrer un nouvel inventaire
+                 </button>
+                 <button className="px-10 py-5 bg-white border border-[#cbd5e1] text-[#64748b] hover:text-[#0f172a] rounded-[2rem] text-[11px] font-bold uppercase tracking-[0.2em] transition-all flex items-center gap-4">
+                   <History size={20} />
+                   Historique des Campagnes
+                 </button>
+              </div>
            </motion.div>
         )}
 
@@ -317,75 +345,93 @@ const InventoryModule = () => {
       {/* Item Detail Drawer */}
       <AnimatePresence>
         {selectedItem && (
-          <div className="fixed inset-0 z-[100] flex justify-end">
+          <div className="fixed inset-0 z-[110] flex justify-end">
             <motion.div 
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               onClick={() => setSelectedItem(null)}
-              className="absolute inset-0 bg-slate-950/60 backdrop-blur-sm"
+              className="absolute inset-0 bg-[#0f172a]/40 backdrop-blur-sm"
             />
             <motion.div 
               initial={{ x: '100%' }}
               animate={{ x: 0 }}
               exit={{ x: '100%' }}
-              className="relative w-full max-w-lg bg-slate-900 border-l border-slate-700 shadow-2xl h-full p-8 flex flex-col overflow-y-auto"
+              className="relative w-full max-w-2xl bg-white border-l border-[#cbd5e1] shadow-2xl h-full flex flex-col overflow-hidden"
             >
-              <div className="flex flex-col items-center text-center mb-10">
-                <div className="w-24 h-24 rounded-3xl bg-indigo-600/10 border border-indigo-500/30 flex items-center justify-center mb-6 shadow-2xl">
-                  <Package size={48} className="text-indigo-400" />
-                </div>
-                <h3 className="text-2xl font-black text-white">{selectedItem.name}</h3>
-                <p className="text-indigo-400 font-mono text-sm mt-1">{selectedItem.ref}</p>
-                
-                <div className="flex gap-2 mt-6">
-                  <span className="px-4 py-1 bg-slate-800 border border-slate-700 rounded-full text-[10px] font-black uppercase tracking-[0.1em] text-slate-300">
-                    {selectedItem.family}
-                  </span>
-                  <span className={`px-4 py-1 bg-${selectedItem.color}-500/10 border border-${selectedItem.color}-500/20 rounded-full text-[10px] font-black uppercase tracking-[0.1em] text-${selectedItem.color}-400`}>
-                    {selectedItem.status}
-                  </span>
-                </div>
-              </div>
+               {/* Drawer Header */}
+               <div className="p-10 border-b border-[#cbd5e1] flex justify-between items-start bg-[#f8fafc] sticky top-0 z-10">
+                  <div className="flex items-center gap-8">
+                    <div className="w-24 h-24 rounded-[2.5rem] bg-white border border-blue-100 flex items-center justify-center shadow-xl shadow-blue-500/10 group overflow-hidden">
+                       <Package size={54} className="text-[#005eb8] group-hover:scale-110 transition-transform" />
+                    </div>
+                    <div>
+                      <div className={`w-fit px-3 py-1 rounded border text-[9px] font-bold uppercase mb-4 tracking-widest ${
+                        selectedItem.color === 'green' ? 'bg-green-50 text-[#107e3e] border-green-200' : 
+                        selectedItem.color === 'red' ? 'bg-red-50 text-[#dc2626] border-red-200' : 'bg-orange-50 text-orange-600 border-orange-200'
+                      }`}>
+                        Statut : {selectedItem.status}
+                      </div>
+                      <h3 className="text-4xl font-bold text-[#0f172a] uppercase tracking-tighter leading-none">{selectedItem.name}</h3>
+                      <p className="text-[12px] text-[#005eb8] font-bold uppercase mt-3 tracking-[0.3em] font-mono">{selectedItem.ref}</p>
+                    </div>
+                  </div>
+                  <button onClick={() => setSelectedItem(null)} className="p-3 hover:bg-white border border-transparent hover:border-[#cbd5e1] rounded-2xl transition-all shadow-sm text-[#94a3b8] hover:text-[#0f172a]">
+                    <XCircle size={24} />
+                  </button>
+               </div>
 
-              <div className="grid grid-cols-2 gap-4 mb-8">
-                 <div className="p-4 bg-slate-800/50 rounded-2xl border border-slate-700/50 text-center">
-                    <p className="text-[10px] font-black uppercase text-slate-500 mb-1">Stock Disponible</p>
-                    <p className="text-2xl font-black text-white">{selectedItem.qty}</p>
-                 </div>
-                 <div className="p-4 bg-slate-800/50 rounded-2xl border border-slate-700/50 text-center">
-                    <p className="text-[10px] font-black uppercase text-slate-500 mb-1">CUMP</p>
-                    <p className="text-2xl font-black text-indigo-400">{selectedItem.cump.split(' ')[0]} <span className="text-xs font-bold text-slate-500">F</span></p>
-                 </div>
-              </div>
+               {/* Drawer Body */}
+               <div className="flex-1 overflow-y-auto p-12 space-y-12">
+                  <div className="grid grid-cols-2 gap-8">
+                     <div className="p-10 bg-[#f8fafc] rounded-3xl border border-[#cbd5e1] text-center shadow-inner group cursor-pointer hover:bg-white transition-all">
+                        <p className="text-[10px] font-bold uppercase text-[#64748b] tracking-[0.3em] mb-4">Stock Disponible Total</p>
+                        <p className={`text-5xl font-black tracking-tighter ${selectedItem.qty <= selectedItem.min ? 'text-[#dc2626]' : 'text-[#0f172a]'}`}>{selectedItem.qty}</p>
+                        <p className="text-[10px] font-bold text-[#94a3b8] uppercase mt-2 tracking-widest">Unités Logistiques</p>
+                     </div>
+                     <div className="p-10 bg-[#0f172a] rounded-3xl border border-[#0f172a] text-center shadow-xl relative overflow-hidden">
+                        <div className="absolute -bottom-4 -right-4 w-24 h-24 bg-white/5 rounded-full blur-2xl"></div>
+                        <p className="text-[10px] font-bold uppercase text-slate-400 tracking-[0.3em] mb-4">CUMP (Valeur Unitaire)</p>
+                        <p className="text-4xl font-black text-white tracking-tighter">{selectedItem.cump} <span className="text-xs font-bold text-blue-300">F</span></p>
+                        <div className="mt-4 flex items-center justify-center gap-2">
+                           <TrendingUp size={14} className="text-green-400" />
+                           <span className="text-[9px] font-bold text-green-400 uppercase tracking-widest">+2.5% Vs M-1</span>
+                        </div>
+                     </div>
+                  </div>
 
-              <div className="space-y-8">
-                 <InfoSection title="Localisation du Stock">
-                    <whRow name="Magasin Dakar" qty="8 unités" />
-                    <whRow name="Dépôt Thiès" qty="4 unités" />
-                 </InfoSection>
+                  <div className="space-y-12">
+                     <InfoSection title="Localisation & Stockage par Zone">
+                        <div className="space-y-4">
+                           <WarehouseRow name="Magasin Central Dakar (Plateau)" qty="8 unités" color="blue" />
+                           <WarehouseRow name="Dépôt Thiès (Zone Industrielle)" qty="4 unités" color="green" />
+                        </div>
+                     </InfoSection>
 
-                 <InfoSection title="Paramètres d'Appro">
-                    <PropRow label="Stock de Sécurité" value="5 unités" />
-                    <PropRow label="Stock Alerte" value="10 unités" />
-                    <PropRow label="Délai Fournisseur" value="15 jours" />
-                 </InfoSection>
+                     <InfoSection title="Paramètres de Réapprovisionnement">
+                        <div className="grid grid-cols-1 gap-6">
+                           <DetailPropRow label="Stock de Sécurité Critique" value="5 unités" icon={<ShieldAlert size={18} />} />
+                           <DetailPropRow label="Seuil d'Alerte Commande" value="10 unités" icon={<Clock size={18} />} />
+                           <DetailPropRow label="Délai Moyen Fournisseur" value="15 Jours Calendaires" icon={<Boxes size={18} />} />
+                        </div>
+                     </InfoSection>
 
-                 <div className="flex gap-3">
-                    <button className="flex-1 py-3 bg-slate-800 border border-slate-700 rounded-2xl text-[10px] font-black uppercase tracking-widest text-slate-400 hover:text-white transition-all">
-                       <Edit3 size={14} className="inline mr-2" /> Éditer
-                    </button>
-                    <button className="flex-1 py-3 bg-rose-600/10 border border-rose-500/20 rounded-2xl text-[10px] font-black uppercase tracking-widest text-rose-500 hover:bg-rose-600 hover:text-white transition-all">
-                       <Trash2 size={14} className="inline mr-2" /> Supprimer
-                    </button>
-                 </div>
-              </div>
+                     <div className="flex gap-4">
+                        <button className="flex-1 py-4 bg-white border border-[#cbd5e1] rounded-2xl text-[11px] font-bold uppercase tracking-[0.2em] text-[#64748b] hover:text-[#005eb8] hover:border-[#005eb8] transition-all shadow-sm flex items-center justify-center gap-3">
+                           <Edit3 size={18} /> Modifier l'Article
+                        </button>
+                        <button className="flex-1 py-4 bg-red-50 border border-red-200 rounded-2xl text-[11px] font-bold uppercase tracking-[0.2em] text-[#dc2626] hover:bg-[#dc2626] hover:text-white transition-all shadow-sm flex items-center justify-center gap-3">
+                           <Trash2 size={18} /> Supprimer
+                        </button>
+                     </div>
+                  </div>
+               </div>
 
-              <button 
+               <button 
                 onClick={() => setSelectedItem(null)}
-                className="mt-12 py-4 text-slate-500 hover:text-white transition-colors text-xs font-black uppercase tracking-[0.2em] border-t border-slate-800/50"
+                className="mt-auto py-8 bg-[#f8fafc] text-[#64748b] hover:text-[#0f172a] transition-all text-[11px] font-bold uppercase tracking-[0.3em] border-t border-[#cbd5e1] hover:bg-[#f1f5f9]"
               >
-                Fermer la fiche
+                Fermer la Fiche Article
               </button>
             </motion.div>
           </div>
@@ -396,67 +442,76 @@ const InventoryModule = () => {
 };
 
 const MouvementCard = ({ title, value, trend, icon, color }: any) => (
-  <div className="card">
-    <div className="flex justify-between items-start mb-4">
+  <div className="bg-white border border-[#cbd5e1] rounded-xl p-8 group hover:border-[#005eb8] transition-all cursor-pointer relative overflow-hidden shadow-sm">
+    <div className={`absolute top-0 right-0 w-24 h-24 -mr-12 -mt-12 rounded-full ${color === 'green' ? 'bg-[#107e3e]' : color === 'red' ? 'bg-[#dc2626]' : 'bg-[#005eb8]'} opacity-0 group-hover:opacity-5 transition-opacity`}></div>
+    <div className="flex justify-between items-start mb-6">
        <div>
-          <p className="text-[10px] font-black uppercase text-slate-500 tracking-widest">{title}</p>
-          <h3 className="text-2xl font-black mt-1 text-white">{value}</h3>
+          <p className="text-[10px] font-bold text-[#64748b] uppercase tracking-[0.2em] leading-none mb-3">{title}</p>
+          <h3 className="text-3xl font-bold tracking-tighter text-[#0f172a]">{value}</h3>
        </div>
-       <div className={`p-3 rounded-2xl bg-${color}-500/10 text-${color}-400`}>
+       <div className={`p-4 rounded-2xl border shadow-inner transition-transform group-hover:scale-110 ${
+         color === 'green' ? 'bg-green-50 text-[#107e3e] border-green-100' : color === 'red' ? 'bg-red-50 text-[#dc2626] border-red-100' : 'bg-blue-50 text-[#005eb8] border-blue-100'
+       }`}>
           {icon}
        </div>
     </div>
-    <div className="flex items-center gap-2">
-       <span className={`text-[10px] font-black ${color === 'rose' ? 'text-rose-400' : 'text-emerald-400'}`}>
-          {trend} {trend !== '0%' && 'vs M-1'}
+    <div className="flex items-center gap-3">
+       <span className={`text-[10px] font-bold uppercase tracking-widest px-2 py-1 rounded border ${color === 'red' ? 'bg-red-50 text-[#dc2626] border-red-100' : 'bg-green-50 text-[#107e3e] border-green-100'}`}>
+          {trend} {trend !== '0%' && 'Vs M-1'}
        </span>
-       <div className="flex-1 h-1 bg-slate-800 rounded-full overflow-hidden">
-          <div className={`bg-${color}-500 h-full`} style={{ width: '65%' }} />
+       <div className="flex-1 h-2.5 bg-[#f1f5f9] rounded-full overflow-hidden shadow-inner">
+          <motion.div initial={{ width: 0 }} animate={{ width: '65%' }} className={`${color === 'red' ? 'bg-[#dc2626]' : 'bg-[#107e3e]'} h-full shadow-lg`} />
        </div>
     </div>
   </div>
 );
 
-const WarehouseCard = ({ name, manager, items, capacity }: any) => (
-  <div className="card group hover:border-indigo-500/30 transition-all cursor-pointer">
-     <div className="flex items-start justify-between mb-6">
-        <div className="p-3 bg-indigo-500/10 rounded-2xl text-indigo-400 group-hover:scale-110 transition-transform">
-           <Warehouse size={24} />
+const WarehouseCard = ({ name, manager, items, capacity, color }: any) => (
+  <div className="bg-white border border-[#cbd5e1] rounded-xl p-8 group hover:border-[#005eb8] transition-all cursor-pointer shadow-sm relative overflow-hidden">
+     <div className="flex items-start justify-between mb-8">
+        <div className={`p-5 rounded-2xl border shadow-inner group-hover:scale-110 transition-transform ${color === 'blue' ? 'bg-blue-50 text-[#005eb8] border-blue-100' : 'bg-green-50 text-[#107e3e] border-green-100'}`}>
+           <Warehouse size={32} />
         </div>
         <div className="text-right">
-           <p className="text-[10px] font-black uppercase text-slate-500 tracking-tighter">Taux d'occupation</p>
-           <p className={`text-sm font-black ${capacity > 80 ? 'text-rose-400' : 'text-emerald-400'}`}>{capacity}%</p>
+           <p className="text-[10px] font-bold uppercase text-[#94a3b8] tracking-widest mb-1">Occupation</p>
+           <p className={`text-2xl font-black tracking-tighter ${capacity > 80 ? 'text-[#dc2626]' : 'text-[#107e3e]'}`}>{capacity}%</p>
         </div>
      </div>
-     <h4 className="font-black text-slate-100 group-hover:text-indigo-400 transition-colors">{name}</h4>
-     <p className="text-[10px] text-slate-500 font-bold uppercase mt-1">Gérant: {manager}</p>
+     <h4 className="text-lg font-bold text-[#0f172a] group-hover:text-[#005eb8] transition-colors uppercase tracking-tight leading-tight">{name}</h4>
+     <p className="text-[11px] text-[#64748b] font-bold uppercase tracking-[0.2em] mt-3 opacity-70 italic">Manager: {manager}</p>
      
-     <div className="mt-6 flex justify-between items-center text-[10px] font-black uppercase tracking-widest text-slate-400">
-        <span>{items} Références</span>
-        <button className="p-2 hover:bg-slate-700 rounded-lg">
-           <Settings size={14} />
+     <div className="mt-8 flex justify-between items-center text-[11px] font-bold uppercase tracking-[0.2em] text-[#64748b] border-t border-[#f1f5f9] pt-4">
+        <span className="flex items-center gap-2 text-[#005eb8]"><Boxes size={14} /> {items} Références</span>
+        <button className="p-2.5 hover:bg-[#f8fafc] rounded-xl transition-all border border-transparent hover:border-[#cbd5e1]">
+           <Settings size={18} className="text-[#94a3b8]" />
         </button>
      </div>
   </div>
 );
 
-const whRow = ({ name, qty }: any) => (
-  <div className="flex justify-between items-center py-2 border-b border-slate-800/50">
-     <span className="text-xs text-slate-300 font-medium">{name}</span>
-     <span className="text-xs font-black text-white">{qty}</span>
+const WarehouseRow = ({ name, qty, color }: any) => (
+  <div className="flex justify-between items-center p-5 bg-[#f8fafc] border border-[#cbd5e1] rounded-2xl hover:bg-white hover:border-[#005eb8] transition-all group cursor-pointer shadow-inner">
+     <div className="flex items-center gap-4">
+        <MapPin size={18} className={`text-${color === 'blue' ? '[#005eb8]' : '[#107e3e]'} group-hover:scale-110 transition-transform`} />
+        <span className="text-[11px] font-bold uppercase tracking-widest text-[#64748b] group-hover:text-[#0f172a] transition-colors">{name}</span>
+     </div>
+     <span className="text-sm font-black text-[#0f172a] tracking-tight">{qty}</span>
   </div>
 );
 
-const PropRow = ({ label, value }: any) => (
-  <div className="flex justify-between items-center py-1">
-     <span className="text-[11px] text-slate-500 font-medium">{label}</span>
-     <span className="text-[11px] font-bold text-slate-200">{value}</span>
+const DetailPropRow = ({ icon, label, value }: any) => (
+  <div className="flex items-center justify-between p-4 border-b border-[#f1f5f9] last:border-0 group">
+     <div className="flex items-center gap-4">
+        <div className="text-[#94a3b8] group-hover:text-[#005eb8] transition-colors">{icon}</div>
+        <span className="text-[11px] font-bold uppercase tracking-widest text-[#64748b]">{label}</span>
+     </div>
+     <span className="text-[11px] font-black text-[#0f172a] uppercase tracking-widest">{value}</span>
   </div>
 );
 
 const InfoSection = ({ title, children }: any) => (
-  <div className="space-y-3">
-    <h4 className="text-[10px] font-black uppercase text-indigo-400 tracking-[0.2em] mb-4 border-b border-indigo-500/10 pb-2">{title}</h4>
+  <div className="space-y-6">
+    <h4 className="text-[11px] font-bold uppercase text-[#005eb8] tracking-[0.3em] mb-6 border-b border-blue-50 pb-3">{title}</h4>
     {children}
   </div>
 );

@@ -1,303 +1,372 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { 
-  ChevronRight, Settings, FileText, Database, 
-  Activity, BarChart2, Sparkles, Leaf, 
-  ShieldCheck, Zap, Building2, LayoutDashboard,
-  Printer, BookOpen, Factory, PieChart, Box,
-  Truck, ShoppingCart, Globe, ShieldAlert
+import {
+  ChevronDown, Settings, Database, Activity, BarChart2,
+  Sparkles, ShieldCheck, LayoutDashboard, Printer,
+  PieChart, CheckCircle2, ChevronRight
 } from 'lucide-react';
-import ChartOfAccounts from './ChartOfAccounts';
-import JournalEntry from './JournalEntry';
-import PlanTiers from './PlanTiers';
-import CodesJournaux from './CodesJournaux';
-import Balance from './Balance';
-import BilanResultat from './BilanResultat';
-import TauxTaxes from './TauxTaxes';
+
+import ChartOfAccounts    from './ChartOfAccounts';
+import JournalEntry       from './JournalEntry';
+import PlanTiers          from './PlanTiers';
+import CodesJournaux      from './CodesJournaux';
+import Balance            from './Balance';
+import BilanResultat      from './BilanResultat';
+import TauxTaxes          from './TauxTaxes';
 import InterrogationLettrage from './InterrogationLettrage';
 import RapprochementBancaire from './RapprochementBancaire';
-import GrandLivre from './GrandLivre';
-import Brouillard from './Brouillard';
-import PlanAnalytique from './PlanAnalytique';
-import JournalCentralise from './JournalCentralise';
-import ClotureJournaux from './ClotureJournaux';
-import Banques from './Banques';
-import ReglementTiers from './ReglementTiers';
-import ModelesSaisie from './ModelesSaisie';
+import GrandLivre         from './GrandLivre';
+import Brouillard         from './Brouillard';
+import PlanAnalytique     from './PlanAnalytique';
+import JournalCentralise  from './JournalCentralise';
+import ClotureJournaux    from './ClotureJournaux';
+import Banques            from './Banques';
+import ReglementTiers     from './ReglementTiers';
+import ModelesSaisie      from './ModelesSaisie';
 import RechercheEcritures from './RechercheEcritures';
-import RappelReleve from './RappelReleve';
+import RappelReleve       from './RappelReleve';
 import ReevaluationDevise from './ReevaluationDevise';
 import BasculementExercice from './BasculementExercice';
-import LibellesAuto from './LibellesAuto';
+import LibellesAuto       from './LibellesAuto';
 import JournauxAnalytiques from './JournauxAnalytiques';
-import PostesBudgetaires from './PostesBudgetaires';
-import Reimputation from './Reimputation';
-import ParametresSociete from './ParametresSociete';
-import ImportExport from './ImportExport';
-import BalanceAgee from './BalanceAgee';
-import Echeancier from './Echeancier';
-import DashboardPilotage from './DashboardPilotage';
-import FixedAssets from './FixedAssets';
-import CustomerDunning from './CustomerDunning';
+import PostesBudgetaires  from './PostesBudgetaires';
+import Reimputation       from './Reimputation';
+import ParametresSociete  from './ParametresSociete';
+import ImportExport       from './ImportExport';
+import BalanceAgee        from './BalanceAgee';
+import Echeancier         from './Echeancier';
+import DashboardPilotage  from './DashboardPilotage';
+import FixedAssets        from './FixedAssets';
+import CustomerDunning    from './CustomerDunning';
 import AutoPaymentProgram from './AutoPaymentProgram';
-import UniversalJournal from './UniversalJournal';
-import ESGDashboard from '../reporting/ESGDashboard';
-import TaxEDIModule from './TaxEDIModule';
-import AIBudgetPlanner from './AIBudgetPlanner';
-import LeaseManagement from './LeaseManagement';
-import ReportingHub from './ReportingHub';
-import IndustrialCosting from './IndustrialCosting';
-import LogisticsModule from './LogisticsModule';
+import UniversalJournal   from './UniversalJournal';
+import ESGDashboard       from '../reporting/ESGDashboard';
+import TaxEDIModule       from './TaxEDIModule';
+import AIBudgetPlanner    from './AIBudgetPlanner';
+import LeaseManagement    from './LeaseManagement';
+import ReportingHub       from './ReportingHub';
+import IndustrialCosting  from './IndustrialCosting';
+import LogisticsModule    from './LogisticsModule';
 import GroupConsolidation from './GroupConsolidation';
 
-// --- Menu Data Structure (Sage 100 Clone + SAP Innovations) ---
-const sageMenus = [
+interface MenuItem {
+  id: string;
+  label: string;
+  type?: never;
+}
+interface SeparatorItem { type: 'separator'; id?: never; label?: never; }
+type AnyItem = MenuItem | SeparatorItem;
+
+interface MenuGroup {
+  title: string;
+  icon: React.ReactNode;
+  items: AnyItem[];
+}
+
+const sageMenus: MenuGroup[] = [
   {
-    title: 'Fichier',
-    icon: <FileText size={16} />,
+    title: 'Pilotage',
+    icon: <LayoutDashboard size={15} />,
     items: [
-      { id: 'dashboard', label: 'Tableau de bord de pilotage' },
-      { id: 'esg-dashboard', label: 'Performance ESG & Durabilité' },
-      { id: 'ai-planner', label: 'Planification Budgétaire IA' },
+      { id: 'dashboard',  label: 'Dashboard CFO' },
+      { id: 'esg-dashboard', label: 'Performance ESG' },
+      { id: 'ai-planner', label: 'Planification IA' },
       { type: 'separator' },
-      { id: 'f-nouveau', label: 'Nouveau' },
-      { id: 'f-ouvrir', label: 'Ouvrir...' },
-      { id: 'f-params', label: 'Paramètres société' },
-      { id: 'f-import', label: 'Import/Export S/4HANA' }
+      { id: 'f-params',   label: 'Paramètres Société' },
+      { id: 'f-import',   label: 'Import / Export Données' },
     ]
   },
   {
-    title: 'Structure',
-    icon: <Database size={16} />,
+    title: 'Référentiels',
+    icon: <Database size={15} />,
     items: [
-      { id: 's-plancomptable', label: 'Plan comptable (Hiérarchisé)' },
-      { id: 's-plananalytique', label: 'Plan analytique' },
-      { id: 's-plantiers', label: 'Plan tiers (Limites Crédit)' },
+      { id: 's-plancomptable',  label: 'Plan Comptable (SYSCOHADA)' },
+      { id: 's-plananalytique', label: 'Plan Analytique (CO)' },
+      { id: 's-plantiers',      label: 'Référentiel Tiers' },
       { type: 'separator' },
-      { id: 's-tauxtaxes', label: 'Taux de taxes' },
-      { id: 's-codesjournaux', label: 'Codes journaux' },
-      { id: 's-banques', label: 'Banques' },
+      { id: 's-tauxtaxes',      label: 'Taux & Codes de Taxes' },
+      { id: 's-codesjournaux',  label: 'Codes Journaux' },
+      { id: 's-banques',        label: 'Gestion Banques' },
       { type: 'separator' },
-      { id: 's-immos', label: 'Immobilisations (FI-AA)' },
-      { id: 's-leases', label: 'Gestion des Baux (IFRS 16)' },
-      { id: 's-postesbudgetaires', label: 'Postes budgétaires' }
+      { id: 's-immos',          label: 'Immobilisations (FI-AA)' },
+      { id: 's-leases',         label: 'IFRS 16 / Leases' },
     ]
   },
   {
-    title: 'Traitement',
-    icon: <Activity size={16} />,
+    title: 'Opérations',
+    icon: <Activity size={15} />,
     items: [
-      { id: 't-saisieecritures', label: 'Saisie au kilomètre (F-02)' },
-      { id: 't-interlettrage', label: 'Interrogation et lettrage' },
+      { id: 't-saisieecritures', label: 'Saisie au Kilomètre' },
+      { id: 't-interlettrage',   label: 'Lettrage & Interrogation' },
       { type: 'separator' },
-      { id: 't-rapproauto', label: 'Rapprochement automatique' },
-      { id: 't-autopayment', label: 'Paiement automatique (F110)' },
-      { id: 't-relances', label: 'Relances & Circularisation' },
-      { id: 't-reevaluation', label: 'Réévaluation de devises' },
+      { id: 't-rapproauto',      label: 'Rapprochement Bancaire' },
+      { id: 't-autopayment',     label: 'Paiements Auto (F110)' },
+      { id: 't-relances',        label: 'Relances & Circularisation' },
       { type: 'separator' },
-      { id: 't-cloture', label: 'Clôture des journaux' },
-      { id: 't-nouvelexercice', label: 'Basculement d\'exercice' }
+      { id: 't-cloture',         label: 'Clôture Périodique' },
+      { id: 't-nouvelexercice',  label: 'Basculement d\'Exercice' },
     ]
   },
   {
-    title: 'Logistique & Ventes',
-    icon: <Box size={16} />,
+    title: 'Analytique',
+    icon: <PieChart size={15} />,
     items: [
-      { id: 'mm-inventory', label: 'Stocks & Entrepôts (MM)' },
-      { id: 'mm-procurement', label: 'Achats & Approvisionnement' },
-      { id: 'sd-sales', label: 'Ventes & Distribution (SD)' },
-      { type: 'separator' },
-      { id: 'mm-valuation', label: 'Valorisation des Stocks (MR21)' }
-    ]
-  },
-  {
-    title: 'Contrôle de Gestion',
-    icon: <PieChart size={16} />,
-    items: [
-      { id: 'co-industrial', label: 'Coûts Industriels (CO-PC)' },
-      { id: 'co-centers', label: 'Centres de Coûts (KS03)' },
+      { id: 'co-industrial',    label: 'Coûts Industriels (CO-PC)' },
       { id: 'co-profitability', label: 'Analyse de Rentabilité' },
-      { id: 'co-allocation', label: 'Cycles d\'Imputation' }
+      { id: 'co-allocation',    label: 'Cycles d\'Allocation' },
     ]
   },
   {
-    title: 'Groupe & Audit',
-    icon: <Globe size={16} />,
+    title: 'Reporting',
+    icon: <BarChart2 size={15} />,
     items: [
-      { id: 'grc-consolidation', label: 'Consolidation Groupe (IFRS)' },
-      { id: 'grc-audit', label: 'Audit Interne & GRC' },
-      { id: 'grc-compliance', label: 'Conformité OHADA/SOX' },
+      { id: 'e-reporting-hub', label: 'Reporting Hub (PDF/Excel)' },
       { type: 'separator' },
-      { id: 'grc-intercos', label: 'Réconciliation Intercos' }
+      { id: 'e-universal',     label: 'Journal Universel (ACDOCA)' },
+      { id: 'e-tax-edi',       label: 'Déclaration Fiscale (EDI)' },
+      { id: 'e-grandlivre',    label: 'Grand-Livre des Comptes' },
+      { id: 'e-balance',       label: 'Balance de Vérification' },
+      { id: 'e-bilan',         label: 'Bilan & Résultat OHADA' },
     ]
   },
-  {
-    title: 'Etat',
-    icon: <BarChart2 size={16} />,
-    items: [
-      { id: 'e-reporting-hub', label: 'Centre d\'Éditions (Aperçu PDF)' },
-      { type: 'separator' },
-      { id: 'e-universal', label: 'Journal Universel (ACDOCA)' },
-      { id: 'e-tax-edi', label: 'Déclaration Fiscale (EDI SIPS)' },
-      { id: 'e-brouillard', label: 'Brouillard de saisie' },
-      { type: 'separator' },
-      { id: 'e-grandlivre', label: 'Grand-livre des comptes' },
-      { id: 'e-balance', label: 'Balance des comptes' },
-      { id: 'e-bilan', label: 'Bilan / Compte de résultat' },
-      { type: 'separator' },
-      { id: 'e-balanceagee', label: 'Balance âgée clients' }
-    ]
-  }
 ];
 
+const HANDLED_IDS = [
+  'dashboard','esg-dashboard','ai-planner','f-params','f-import',
+  's-plancomptable','s-plananalytique','s-plantiers','s-immos','s-leases',
+  's-tauxtaxes','s-codesjournaux','s-banques',
+  't-saisieecritures','t-interlettrage','t-rapproauto','t-autopayment',
+  't-relances','t-cloture','t-nouvelexercice',
+  'co-industrial','co-profitability',
+  'e-reporting-hub','e-universal','e-tax-edi','e-grandlivre','e-balance','e-bilan',
+];
+
+/* ─── Dropdown Button ────────────────────────────────────────── */
+const MenuDropdown = ({ menu, activeMenu, currentViewId, onMenuClick, onItemClick }: {
+  menu: MenuGroup;
+  activeMenu: string | null;
+  currentViewId: string;
+  onMenuClick: (title: string) => void;
+  onItemClick: (item: MenuItem) => void;
+}) => {
+  const isOpen = activeMenu === menu.title;
+  const hasActive = menu.items.some(i => !i.type && i.id === currentViewId);
+
+  return (
+    <div style={{ position: 'relative' }}>
+      <button
+        onClick={() => onMenuClick(menu.title)}
+        style={{
+          display: 'flex', alignItems: 'center', gap: '0.375rem',
+          padding: '0.375rem 0.75rem',
+          borderRadius: 6,
+          background: isOpen ? 'var(--clr-primary)' : hasActive ? 'var(--clr-primary-lt)' : 'transparent',
+          border: isOpen ? 'none' : hasActive ? '1px solid var(--clr-primary-mid)' : '1px solid var(--clr-border)',
+          color: isOpen ? '#fff' : hasActive ? 'var(--clr-primary)' : 'var(--clr-text-body)',
+          fontSize: '0.8125rem', fontWeight: 500,
+          cursor: 'pointer', whiteSpace: 'nowrap',
+          transition: 'all 0.15s',
+        }}
+      >
+        {menu.icon}
+        {menu.title}
+        <ChevronDown size={13} style={{ transform: isOpen ? 'rotate(180deg)' : 'rotate(0)', transition: 'transform 0.2s' }} />
+      </button>
+
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            initial={{ opacity: 0, y: -6, scale: 0.97 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: -6, scale: 0.97 }}
+            transition={{ duration: 0.15 }}
+            className="erp-dropdown"
+            style={{ position: 'absolute', top: 'calc(100% + 6px)', left: 0, minWidth: 230, zIndex: 200 }}
+          >
+            {menu.items.map((item, idx) => {
+              if (item.type === 'separator') return <div key={idx} className="erp-dropdown-sep" />;
+              const mi = item as MenuItem;
+              const isActive = currentViewId === mi.id;
+              return (
+                <button
+                  key={mi.id}
+                  onClick={() => onItemClick(mi)}
+                  className={`erp-dropdown-item ${isActive ? 'active' : ''}`}
+                >
+                  {isActive
+                    ? <CheckCircle2 size={13} style={{ color: 'var(--clr-primary)', flexShrink: 0 }} />
+                    : <ChevronRight size={13} style={{ color: 'var(--clr-text-muted)', flexShrink: 0 }} />
+                  }
+                  {mi.label}
+                </button>
+              );
+            })}
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
+  );
+};
+
+/* ─── Main Module ────────────────────────────────────────────── */
 const AccountingModule = () => {
   const [activeMenu, setActiveMenu] = useState<string | null>(null);
-  const [activeSubMenu, setActiveSubMenu] = useState<string | null>(null);
-  const [currentViewId, setCurrentViewId] = useState<string>('s-plancomptable');
-  const [currentViewLabel, setCurrentViewLabel] = useState<string>('Plan comptable (Hiérarchisé)');
+  const [currentViewId, setCurrentViewId] = useState<string>('dashboard');
+  const [currentViewLabel, setCurrentViewLabel] = useState<string>('Dashboard de Pilotage CFO');
 
-  const handleMenuClick = (menuTitle: string) => {
-    setActiveMenu(activeMenu === menuTitle ? null : menuTitle);
-    setActiveSubMenu(null);
+  const handleMenuClick = (title: string) => {
+    setActiveMenu(activeMenu === title ? null : title);
   };
 
-  const handleItemClick = (item: any) => {
-    if (item.subItems) {
-      setActiveSubMenu(activeSubMenu === item.id ? null : item.id);
-    } else {
-      setCurrentViewId(item.id);
-      setCurrentViewLabel(item.label);
-      setActiveMenu(null);
-      setActiveSubMenu(null);
-    }
-  };
-
-  const closeMenus = () => {
+  const handleItemClick = (item: MenuItem) => {
+    setCurrentViewId(item.id);
+    setCurrentViewLabel(item.label);
     setActiveMenu(null);
-    setActiveSubMenu(null);
   };
 
   return (
-    <div className="flex flex-col h-full gap-4 relative">
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', paddingBottom: '2rem', position: 'relative' }}>
+
+      {/* Backdrop */}
       {activeMenu && (
-        <div 
-          className="fixed inset-0 z-40 bg-transparent" 
-          onClick={closeMenus}
-        ></div>
+        <div
+          style={{ position: 'fixed', inset: 0, zIndex: 190 }}
+          onClick={() => setActiveMenu(null)}
+        />
       )}
 
-      {/* Barre de menu type SAP / Sage */}
-      <div className="flex items-center gap-1 bg-slate-800/80 backdrop-blur-md p-1 rounded-xl border border-slate-700/50 shadow-sm z-50">
-        {sageMenus.map((menu, mIdx) => (
-          <div key={mIdx} className="relative">
-            <button
-              onClick={() => handleMenuClick(menu.title)}
-              className={`flex items-center gap-2 px-4 py-2 rounded-lg text-xs font-black uppercase tracking-widest transition-all ${
-                activeMenu === menu.title 
-                  ? 'bg-indigo-600 text-white shadow-md' 
-                  : 'text-slate-400 hover:bg-slate-700/50 hover:text-white'
-              }`}
-            >
-              {menu.icon}
-              {menu.title}
-            </button>
+      {/* Toolbar */}
+      <div style={{
+        display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+        background: 'var(--clr-surface)',
+        border: '1px solid var(--clr-border)',
+        borderRadius: 10,
+        padding: '0.625rem 0.875rem',
+        position: 'relative', zIndex: 195,
+      }}>
+        {/* Menus */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.375rem', flexWrap: 'wrap' }}>
+          {sageMenus.map((menu) => (
+            <MenuDropdown
+              key={menu.title}
+              menu={menu}
+              activeMenu={activeMenu}
+              currentViewId={currentViewId}
+              onMenuClick={handleMenuClick}
+              onItemClick={handleItemClick}
+            />
+          ))}
+        </div>
 
-            <AnimatePresence>
-              {activeMenu === menu.title && (
-                <motion.div
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: 10 }}
-                  transition={{ duration: 0.15 }}
-                  className="absolute top-full left-0 mt-2 w-72 bg-slate-900 border border-slate-700 rounded-2xl shadow-2xl shadow-black/60 overflow-hidden py-1 z-50"
-                >
-                  {menu.items.map((item: any, iIdx) => {
-                    if (item.type === 'separator') {
-                      return <div key={iIdx} className="h-[1px] bg-slate-800 my-1"></div>;
-                    }
-
-                    return (
-                      <div key={item.id} className="relative group">
-                        <button
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            handleItemClick(item);
-                          }}
-                          className={`w-full text-left px-5 py-3 text-[10px] font-bold uppercase tracking-wider flex items-center justify-between transition-colors ${
-                            activeSubMenu === item.id || currentViewId === item.id
-                              ? 'bg-indigo-600/20 text-indigo-400 border-l-4 border-indigo-600' 
-                              : 'text-slate-400 hover:bg-slate-800 hover:text-white'
-                          }`}
-                        >
-                          <div className="flex items-center gap-2">
-                             {(item.id === 'ai-planner' || item.id === 'dashboard' || item.id === 's-leases' || item.id === 'e-reporting-hub' || item.id.startsWith('co-') || item.id.startsWith('mm-') || item.id.startsWith('sd-') || item.id.startsWith('grc-')) && <Sparkles size={12} className="text-amber-400" />}
-                             {item.label}
-                          </div>
-                          {item.subItems && <ChevronRight size={14} className="text-slate-600" />}
-                        </button>
-                      </div>
-                    );
-                  })}
-                </motion.div>
-              )}
-            </AnimatePresence>
+        {/* Status Badges */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', flexShrink: 0 }}>
+          <div style={{
+            display: 'flex', alignItems: 'center', gap: '0.375rem',
+            padding: '0.3rem 0.625rem', borderRadius: 6,
+            background: 'var(--clr-success-lt)', border: '1px solid var(--clr-success-mid)',
+            fontSize: '0.75rem', fontWeight: 500, color: 'var(--clr-success)',
+          }}>
+            <CheckCircle2 size={13} />
+            Exercice 2024 — Ouvert
           </div>
-        ))}
+          <div style={{
+            display: 'flex', alignItems: 'center', gap: '0.375rem',
+            padding: '0.3rem 0.625rem', borderRadius: 6,
+            background: 'var(--clr-primary-lt)', border: '1px solid var(--clr-primary-mid)',
+            fontSize: '0.75rem', fontWeight: 500, color: 'var(--clr-primary)',
+          }}>
+            <ShieldCheck size={13} />
+            SYSCOHADA v2.4
+          </div>
+          <button className="btn-secondary" style={{ padding: '0.3rem 0.5rem' }}>
+            <Printer size={14} />
+          </button>
+          <button className="btn-secondary" style={{ padding: '0.3rem 0.5rem' }}>
+            <Settings size={14} />
+          </button>
+        </div>
       </div>
 
-      {/* Main View Area */}
-      <div className="flex-1 bg-transparent rounded-xl">
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={currentViewId}
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: -20 }}
-            transition={{ duration: 0.3 }}
-            className="h-full"
-          >
-            {currentViewId === 'dashboard' && <DashboardPilotage />}
-            {currentViewId === 'esg-dashboard' && <ESGDashboard />}
-            {currentViewId === 'ai-planner' && <AIBudgetPlanner />}
-            {currentViewId === 's-plancomptable' && <ChartOfAccounts />}
-            {currentViewId === 's-plantiers' && <PlanTiers />}
-            {currentViewId === 's-immos' && <FixedAssets />}
-            {currentViewId === 's-leases' && <LeaseManagement />}
-            {currentViewId === 't-saisieecritures' && <JournalEntry />}
-            {currentViewId === 't-relances' && <RappelReleve />}
-            {currentViewId === 't-autopayment' && <AutoPaymentProgram />}
-            {currentViewId === 't-reevaluation' && <ReevaluationDevise />}
-            {currentViewId === 'mm-inventory' && <LogisticsModule />}
-            {currentViewId === 'mm-procurement' && <LogisticsModule />}
-            {currentViewId === 'sd-sales' && <LogisticsModule />}
-            {currentViewId === 'co-industrial' && <IndustrialCosting />}
-            {currentViewId === 'grc-consolidation' && <GroupConsolidation />}
-            {currentViewId === 'grc-audit' && <GroupConsolidation />}
-            {currentViewId === 'e-reporting-hub' && <ReportingHub />}
-            {currentViewId === 'e-universal' && <UniversalJournal />}
-            {currentViewId === 'e-tax-edi' && <TaxEDIModule />}
-            {currentViewId === 'e-balance' && <Balance />}
-            {currentViewId === 'e-bilan' && <BilanResultat />}
-            {currentViewId === 'e-grandlivre' && <GrandLivre />}
-            {currentViewId === 'e-brouillard' && <Brouillard />}
-            {currentViewId === 'e-balanceagee' && <BalanceAgee />}
-            
-            {/* Fallback for other IDs */}
-            {!['dashboard', 'esg-dashboard', 'ai-planner', 's-plancomptable', 's-plantiers', 's-immos', 's-leases', 't-saisieecritures', 't-relances', 't-autopayment', 't-reevaluation', 'mm-inventory', 'mm-procurement', 'sd-sales', 'co-industrial', 'grc-consolidation', 'grc-audit', 'e-reporting-hub', 'e-universal', 'e-tax-edi', 'e-balance', 'e-bilan', 'e-grandlivre', 'e-brouillard', 'e-balanceagee'].includes(currentViewId) && (
-              <div className="card h-full border-dashed flex flex-col items-center justify-center text-slate-500 bg-slate-800/10 p-20 text-center">
-                <div className="p-6 bg-slate-800/50 rounded-3xl mb-6 ring-1 ring-slate-700 shadow-inner">
-                   <Settings size={48} className="text-slate-600 animate-spin-slow" />
-                </div>
-                <h3 className="text-xl font-black text-white uppercase tracking-tighter mb-2">{currentViewLabel}</h3>
-                <p className="text-xs max-w-md text-slate-500 font-bold uppercase tracking-widest leading-relaxed">
-                   Ce module est actuellement en cours de synchronisation avec le noyau SAP S/4HANA. 
-                   La version SYSCOHADA certifiée sera disponible dans la prochaine mise à jour.
+      {/* Sub-title bar */}
+      <div style={{
+        display: 'flex', alignItems: 'center', gap: '0.5rem',
+        padding: '0 0.25rem',
+      }}>
+        <span style={{ fontSize: '0.75rem', color: 'var(--clr-text-muted)' }}>FI / CO</span>
+        <ChevronRight size={12} style={{ color: 'var(--clr-text-muted)' }} />
+        <span style={{ fontSize: '0.8rem', fontWeight: 600, color: 'var(--clr-text-body)' }}>{currentViewLabel}</span>
+      </div>
+
+      {/* View */}
+      <AnimatePresence mode="wait">
+        <motion.div
+          key={currentViewId}
+          initial={{ opacity: 0, y: 8 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -8 }}
+          transition={{ duration: 0.2 }}
+        >
+          {currentViewId === 'dashboard'          && <DashboardPilotage />}
+          {currentViewId === 'esg-dashboard'      && <ESGDashboard />}
+          {currentViewId === 'ai-planner'         && <AIBudgetPlanner />}
+          {currentViewId === 'f-params'           && <ParametresSociete />}
+          {currentViewId === 'f-import'           && <ImportExport />}
+          {currentViewId === 's-plancomptable'    && <ChartOfAccounts />}
+          {currentViewId === 's-plananalytique'   && <PlanAnalytique />}
+          {currentViewId === 's-plantiers'        && <PlanTiers />}
+          {currentViewId === 's-immos'            && <FixedAssets />}
+          {currentViewId === 's-leases'           && <LeaseManagement />}
+          {currentViewId === 's-tauxtaxes'        && <TauxTaxes />}
+          {currentViewId === 's-codesjournaux'    && <CodesJournaux />}
+          {currentViewId === 's-banques'          && <Banques />}
+          {currentViewId === 't-saisieecritures'  && <JournalEntry />}
+          {currentViewId === 't-interlettrage'    && <InterrogationLettrage />}
+          {currentViewId === 't-rapproauto'       && <RapprochementBancaire />}
+          {currentViewId === 't-autopayment'      && <AutoPaymentProgram />}
+          {currentViewId === 't-relances'         && <RappelReleve />}
+          {currentViewId === 't-cloture'          && <ClotureJournaux />}
+          {currentViewId === 't-nouvelexercice'   && <BasculementExercice />}
+          {currentViewId === 'co-industrial'      && <IndustrialCosting />}
+          {currentViewId === 'co-profitability'   && <IndustrialCosting />}
+          {currentViewId === 'e-reporting-hub'    && <ReportingHub />}
+          {currentViewId === 'e-universal'        && <UniversalJournal />}
+          {currentViewId === 'e-tax-edi'          && <TaxEDIModule />}
+          {currentViewId === 'e-grandlivre'       && <GrandLivre />}
+          {currentViewId === 'e-balance'          && <Balance />}
+          {currentViewId === 'e-bilan'            && <BilanResultat />}
+
+          {!HANDLED_IDS.includes(currentViewId) && (
+            <div className="erp-card" style={{
+              display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
+              minHeight: 360, padding: '3rem', textAlign: 'center', gap: '1rem',
+            }}>
+              <div style={{
+                width: 56, height: 56, borderRadius: 12,
+                background: 'var(--clr-primary-lt)', color: 'var(--clr-primary)',
+                display: 'flex', alignItems: 'center', justifyContent: 'center',
+              }}>
+                <Settings size={28} />
+              </div>
+              <div>
+                <h3 style={{ fontSize: '1.125rem', fontWeight: 600, color: 'var(--clr-text-h)', marginBottom: '0.5rem' }}>
+                  {currentViewLabel}
+                </h3>
+                <p style={{ fontSize: '0.875rem', color: 'var(--clr-text-muted)', maxWidth: 480 }}>
+                  Ce module est en cours de déploiement. La version certifiée SYSCOHADA 2024 sera disponible lors du prochain cycle de maintenance.
                 </p>
               </div>
-            )}
-          </motion.div>
-        </AnimatePresence>
-      </div>
+              <div style={{
+                display: 'inline-flex', alignItems: 'center', gap: '0.375rem',
+                padding: '0.375rem 0.875rem', borderRadius: 6,
+                background: 'var(--clr-warning-lt)', border: '1px solid var(--clr-warning-mid)',
+                fontSize: '0.75rem', fontWeight: 500, color: 'var(--clr-warning)',
+              }}>
+                Déploiement en cours — Priorité maximale
+              </div>
+            </div>
+          )}
+        </motion.div>
+      </AnimatePresence>
     </div>
   );
 };

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { Download, Filter, FileText } from 'lucide-react';
+import { Download, Filter, FileText, PieChart, TrendingUp, ShieldCheck, Zap, Printer, Share2, Layers, BookOpen, ChevronRight } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
 
 const BilanResultat = () => {
   const [activeTab, setActiveTab] = useState('bilan-actif');
@@ -14,7 +15,7 @@ const BilanResultat = () => {
     { poste: 'CRÉANCES CLIENTS ET COMPTES RATTACHÉS', brut: 3200000, amort: 150000, net: 3050000, netPrec: 2900000 },
     { poste: 'TOTAL ACTIF CIRCULANT', brut: 7700000, amort: 350000, net: 7350000, netPrec: 6700000, isTotal: true },
 
-    { poste: 'TRÉSORERIE ACTIF (Banque & Caisse)', brut: 2800000, amort: 0, net: 2800000, netPrec: 1500000 },
+    { poste: 'TRÉSORERIE ACTIF (BANQUE & CAISSE)', brut: 2800000, amort: 0, net: 2800000, netPrec: 1500000 },
     { poste: 'TOTAL GÉNÉRAL ACTIF', brut: 28500000, amort: 4350000, net: 24150000, netPrec: 22500000, isGrandTotal: true },
   ];
 
@@ -52,96 +53,136 @@ const BilanResultat = () => {
     { poste: 'RÉSULTAT NET', montant: 3250000, montantPrec: 2800000, isGrandTotal: true },
   ];
 
-  const formatCfa = (val: number) => val.toLocaleString('fr-FR') + ' F CFA';
+  const formatCfa = (val: number) => val.toLocaleString('fr-FR') + ' F';
 
   return (
-    <div className="card h-full flex flex-col">
-      <div className="flex justify-between items-center mb-6">
-        <div className="flex gap-2 p-1 bg-slate-800 rounded-lg">
-          <button 
-            onClick={() => setActiveTab('bilan-actif')}
-            className={`px-4 py-2 rounded-md text-sm font-medium transition-all ${activeTab === 'bilan-actif' ? 'bg-indigo-600 text-white' : 'text-slate-400 hover:text-white'}`}
-          >
-            Bilan (Actif)
-          </button>
-          <button 
-            onClick={() => setActiveTab('bilan-passif')}
-            className={`px-4 py-2 rounded-md text-sm font-medium transition-all ${activeTab === 'bilan-passif' ? 'bg-indigo-600 text-white' : 'text-slate-400 hover:text-white'}`}
-          >
-            Bilan (Passif)
-          </button>
-          <button 
-            onClick={() => setActiveTab('compte-resultat')}
-            className={`px-4 py-2 rounded-md text-sm font-medium transition-all ${activeTab === 'compte-resultat' ? 'bg-indigo-600 text-white' : 'text-slate-400 hover:text-white'}`}
-          >
-            Compte de Résultat
-          </button>
+    <div className="flex flex-col h-full gap-8 overflow-auto pb-12">
+      {/* Header (Morning Horizon) */}
+      <div className="flex flex-col lg:flex-row justify-between items-center bg-white border border-[#cbd5e1] p-8 rounded-xl shadow-sm relative overflow-hidden group">
+        <div className="absolute top-0 right-0 w-64 h-64 bg-blue-50 rounded-full -mr-32 -mt-32 blur-3xl opacity-50 group-hover:scale-110 transition-transform"></div>
+        <div className="flex items-center gap-6 relative z-10">
+           <div className="w-16 h-16 rounded-2xl bg-[#005eb8] flex items-center justify-center text-white shadow-lg shadow-blue-500/20 group-hover:rotate-6 transition-transform">
+              <PieChart size={32} />
+           </div>
+           <div>
+              <h3 className="text-3xl font-bold text-[#0f172a] uppercase tracking-tighter leading-none mb-1">États Financiers de Synthèse</h3>
+              <p className="text-[11px] text-[#64748b] font-bold uppercase tracking-[0.2em] italic opacity-80">Bilan & Compte de Résultat • Normes SYSCOHADA • Exercice 2024</p>
+           </div>
         </div>
-        <div className="flex gap-2">
-          <button className="btn btn-secondary flex items-center gap-2">
-            <Filter size={16} /> Exercice 2024
-          </button>
-          <button className="btn btn-primary flex items-center gap-2">
-            <FileText size={16} /> Imprimer Liasse Fiscale
-          </button>
+        <div className="flex gap-4 relative z-10 mt-6 lg:mt-0">
+           <div className="flex p-1 bg-[#f8fafc] rounded-xl border border-[#cbd5e1] shadow-inner">
+             {['bilan-actif', 'bilan-passif', 'compte-resultat'].map((tab) => (
+               <button
+                 key={tab}
+                 onClick={() => setActiveTab(tab)}
+                 className={`px-6 py-2.5 rounded-lg text-[10px] font-black uppercase tracking-widest transition-all ${
+                   activeTab === tab 
+                     ? 'bg-white text-[#005eb8] shadow-md border border-blue-50' 
+                     : 'text-[#64748b] hover:text-[#0f172a]'
+                 }`}
+               >
+                 {tab.replace('-', ' ')}
+               </button>
+             ))}
+           </div>
+           <button className="flex items-center gap-3 px-10 py-3 bg-[#005eb8] hover:bg-[#004080] text-white rounded-xl text-[11px] font-bold uppercase tracking-[0.3em] transition-all shadow-xl shadow-blue-500/20">
+              <FileText size={18} /> Éditer Liasse
+           </button>
         </div>
       </div>
 
-      <div className="flex-1 overflow-auto rounded-xl border border-slate-700/50">
-        <table className="w-full text-left text-sm whitespace-nowrap">
-          <thead className="bg-slate-800/80 sticky top-0 z-10 backdrop-blur-md">
-            {activeTab === 'bilan-actif' && (
-              <tr>
-                <th className="p-4 font-medium text-slate-300 w-1/3">RUBRIQUES (ACTIF)</th>
-                <th className="p-4 font-medium text-slate-300 text-right">BRUT</th>
-                <th className="p-4 font-medium text-slate-300 text-right">AMORT & PROV</th>
-                <th className="p-4 font-bold text-white text-right">NET (Exercice N)</th>
-                <th className="p-4 font-medium text-slate-400 text-right">NET (Exercice N-1)</th>
-              </tr>
-            )}
-            {activeTab === 'bilan-passif' && (
-              <tr>
-                <th className="p-4 font-medium text-slate-300 w-1/2">RUBRIQUES (PASSIF)</th>
-                <th className="p-4 font-bold text-white text-right">NET (Exercice N)</th>
-                <th className="p-4 font-medium text-slate-400 text-right">NET (Exercice N-1)</th>
-              </tr>
-            )}
-            {activeTab === 'compte-resultat' && (
-              <tr>
-                <th className="p-4 font-medium text-slate-300 w-1/2">POSTES DU COMPTE DE RÉSULTAT</th>
-                <th className="p-4 font-bold text-white text-right">MONTANT (Exercice N)</th>
-                <th className="p-4 font-medium text-slate-400 text-right">MONTANT (Exercice N-1)</th>
-              </tr>
-            )}
-          </thead>
-          <tbody className="divide-y divide-slate-700/50">
-            {activeTab === 'bilan-actif' && actifData.map((row, idx) => (
-              <tr key={idx} className={`${row.isGrandTotal ? 'bg-indigo-900/40 font-bold text-lg' : row.isTotal ? 'bg-slate-800/60 font-bold' : 'hover:bg-slate-800/30'}`}>
-                <td className="p-4 text-slate-200">{row.poste}</td>
-                <td className="p-4 text-right text-slate-400">{row.brut !== undefined ? formatCfa(row.brut) : ''}</td>
-                <td className="p-4 text-right text-slate-400">{row.amort !== undefined ? formatCfa(row.amort) : ''}</td>
-                <td className={`p-4 text-right ${row.isGrandTotal ? 'text-indigo-300' : 'text-emerald-400'}`}>{formatCfa(row.net)}</td>
-                <td className="p-4 text-right text-slate-500">{formatCfa(row.netPrec)}</td>
-              </tr>
-            ))}
+      {/* Main Table Container */}
+      <div className="bg-white rounded-xl border border-[#cbd5e1] overflow-hidden shadow-sm flex flex-col flex-1 min-h-[600px]">
+         <div className="bg-[#f8fafc] px-10 py-6 border-b border-[#cbd5e1] flex justify-between items-center sticky top-0 z-20 shadow-sm">
+           <div className="flex items-center gap-4">
+              <div className="w-10 h-10 bg-blue-50 text-[#005eb8] rounded-xl flex items-center justify-center border border-blue-100 shadow-inner">
+                 <Layers size={20} />
+              </div>
+              <h3 className="text-[12px] font-bold uppercase tracking-[0.2em] text-[#0f172a]">
+                 {activeTab === 'bilan-actif' ? 'Tableau Actif du Bilan' : activeTab === 'bilan-passif' ? 'Tableau Passif du Bilan' : 'Compte de Résultat de l\'Exercice'}
+              </h3>
+           </div>
+           <div className="flex gap-6">
+              <div className="flex items-center gap-3 px-6 py-2 bg-white border border-[#cbd5e1] rounded-xl shadow-sm">
+                 <div className="w-2.5 h-2.5 rounded-full bg-[#107e3e] shadow-sm animate-pulse"></div>
+                 <span className="text-[10px] font-black uppercase text-[#107e3e] tracking-widest">Postes Équilibrés</span>
+              </div>
+              <button className="p-2.5 bg-white border border-[#cbd5e1] rounded-xl text-[#64748b] hover:text-[#005eb8] shadow-sm">
+                 <Printer size={18} />
+              </button>
+           </div>
+        </div>
 
-            {activeTab === 'bilan-passif' && passifData.map((row, idx) => (
-              <tr key={idx} className={`${row.isGrandTotal ? 'bg-indigo-900/40 font-bold text-lg' : row.isTotal ? 'bg-slate-800/60 font-bold' : 'hover:bg-slate-800/30'}`}>
-                <td className="p-4 text-slate-200">{row.poste}</td>
-                <td className={`p-4 text-right ${row.isGrandTotal ? 'text-indigo-300' : 'text-rose-400'}`}>{formatCfa(row.net)}</td>
-                <td className="p-4 text-right text-slate-500">{formatCfa(row.netPrec)}</td>
+        <div className="overflow-auto flex-1">
+          <table className="w-full text-left whitespace-nowrap border-collapse">
+            <thead className="bg-[#f8fafc] border-b-2 border-[#cbd5e1] text-[10px] font-bold uppercase text-[#64748b] tracking-[0.2em] sticky top-[72px] z-20 shadow-sm">
+              <tr>
+                <th className="px-10 py-6 w-1/2">Rubriques & Libellés des Postes</th>
+                {activeTab === 'bilan-actif' ? (
+                  <>
+                    <th className="px-10 py-6 text-right border-x border-[#f1f5f9]">Brut</th>
+                    <th className="px-10 py-6 text-right border-r border-[#f1f5f9]">Amort. & Prov.</th>
+                    <th className="px-10 py-6 text-right border-r border-[#f1f5f9] bg-blue-50/30 text-[#005eb8]">Net (N)</th>
+                  </>
+                ) : (
+                  <th className="px-10 py-6 text-right border-x border-[#f1f5f9] bg-blue-50/30 text-[#005eb8]">Montant Net (N)</th>
+                )}
+                <th className="px-10 py-6 text-right text-[#94a3b8]">Net (N-1)</th>
               </tr>
-            ))}
+            </thead>
+            <tbody className="divide-y divide-[#f1f5f9]">
+              {activeTab === 'bilan-actif' && actifData.map((row, idx) => (
+                <tr key={idx} className={`group transition-all ${row.isGrandTotal ? 'bg-[#0f172a] text-white shadow-xl' : row.isTotal ? 'bg-[#f8fafc] font-black' : 'hover:bg-blue-50/20'}`}>
+                  <td className={`px-10 py-6 ${row.isGrandTotal ? 'text-white' : 'text-[#334155]'} font-bold uppercase tracking-tight text-xs`}>{row.poste}</td>
+                  <td className="px-10 py-6 text-right text-[#64748b] font-bold text-xs">{row.brut !== undefined ? formatCfa(row.brut) : ''}</td>
+                  <td className="px-10 py-6 text-right text-[#64748b] font-bold text-xs">{row.amort !== undefined ? formatCfa(row.amort) : ''}</td>
+                  <td className={`px-10 py-6 text-right font-black ${row.isGrandTotal ? 'text-[#4ade80] text-xl' : row.isTotal ? 'text-[#0f172a] text-sm' : 'text-[#107e3e] text-sm'} tracking-tighter`}>{formatCfa(row.net)}</td>
+                  <td className={`px-10 py-6 text-right font-bold text-xs ${row.isGrandTotal ? 'text-slate-500' : 'text-[#94a3b8]'} tracking-tighter`}>{formatCfa(row.netPrec)}</td>
+                </tr>
+              ))}
 
-            {activeTab === 'compte-resultat' && resultatData.map((row, idx) => (
-              <tr key={idx} className={`${row.isGrandTotal ? 'bg-emerald-900/40 font-bold text-lg' : row.isTotal ? 'bg-slate-800/60 font-bold' : 'hover:bg-slate-800/30'}`}>
-                <td className="p-4 text-slate-200">{row.poste}</td>
-                <td className={`p-4 text-right ${row.isGrandTotal ? 'text-emerald-400' : row.montant < 0 ? 'text-rose-400' : 'text-slate-300'}`}>{formatCfa(row.montant)}</td>
-                <td className="p-4 text-right text-slate-500">{formatCfa(row.montantPrec)}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+              {activeTab === 'bilan-passif' && passifData.map((row, idx) => (
+                <tr key={idx} className={`group transition-all ${row.isGrandTotal ? 'bg-[#0f172a] text-white shadow-xl' : row.isTotal ? 'bg-[#f8fafc] font-black' : 'hover:bg-blue-50/20'}`}>
+                  <td className={`px-10 py-6 ${row.isGrandTotal ? 'text-white' : 'text-[#334155]'} font-bold uppercase tracking-tight text-xs`}>{row.poste}</td>
+                  <td className={`px-10 py-6 text-right font-black ${row.isGrandTotal ? 'text-[#f87171] text-xl' : row.isTotal ? 'text-[#0f172a] text-sm' : 'text-[#dc2626] text-sm'} tracking-tighter`}>{formatCfa(row.net)}</td>
+                  <td className={`px-10 py-6 text-right font-bold text-xs ${row.isGrandTotal ? 'text-slate-500' : 'text-[#94a3b8]'} tracking-tighter`}>{formatCfa(row.netPrec)}</td>
+                </tr>
+              ))}
+
+              {activeTab === 'compte-resultat' && resultatData.map((row, idx) => (
+                <tr key={idx} className={`group transition-all ${row.isGrandTotal ? 'bg-[#107e3e] text-white shadow-xl' : row.isTotal ? 'bg-[#f8fafc] font-black' : 'hover:bg-blue-50/20'}`}>
+                  <td className={`px-10 py-6 ${row.isGrandTotal ? 'text-white' : 'text-[#334155]'} font-bold uppercase tracking-tight text-xs`}>{row.poste}</td>
+                  <td className={`px-10 py-6 text-right font-black ${row.isGrandTotal ? 'text-white text-2xl' : row.montant < 0 ? 'text-[#dc2626]' : 'text-[#0f172a]'} text-sm tracking-tighter`}>{formatCfa(row.montant)}</td>
+                  <td className={`px-10 py-6 text-right font-bold text-xs ${row.isGrandTotal ? 'text-green-100' : 'text-[#94a3b8]'} tracking-tighter`}>{formatCfa(row.montantPrec)}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      {/* Footer System Integrity (Morning Horizon) */}
+      <div className="flex flex-col lg:flex-row justify-between items-center bg-[#f8fafc] border border-[#cbd5e1] p-8 rounded-xl shadow-inner gap-8">
+         <div className="flex items-center gap-6">
+            <div className="w-12 h-12 bg-white rounded-xl flex items-center justify-center border border-[#cbd5e1] shadow-sm text-[#107e3e]">
+               <ShieldCheck size={28} />
+            </div>
+            <div className="flex flex-col">
+               <span className="text-[12px] font-black text-[#0f172a] uppercase tracking-[0.2em]">Consolidation Légale Certifiée</span>
+               <p className="text-[10px] font-bold text-[#64748b] uppercase tracking-widest mt-1 opacity-70 italic">
+                  Généré le {new Date().toLocaleDateString('fr-FR')} • Conforme au référentiel SYSCOHADA Révisé • Audit de cohérence Passif/Actif Validé.
+               </p>
+            </div>
+         </div>
+         <div className="flex gap-10">
+            <button className="flex items-center gap-3 text-[#64748b] hover:text-[#005eb8] text-[10px] font-bold uppercase tracking-[0.3em] transition-all group">
+               <TrendingUp size={20} className="group-hover:scale-110 transition-transform" /> Analyse EBE
+            </button>
+            <button className="flex items-center gap-3 text-[#005eb8] hover:text-[#004080] text-[10px] font-bold uppercase tracking-[0.4em] transition-all group border-l border-[#cbd5e1] pl-10">
+               <Share2 size={20} className="group-hover:rotate-12 transition-transform" /> Envoyer Expert
+               <ChevronRight size={16} className="opacity-30 group-hover:opacity-100 group-hover:translate-x-1 transition-all" />
+            </button>
+         </div>
       </div>
     </div>
   );

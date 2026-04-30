@@ -32,32 +32,32 @@ const AdminModule = () => {
   };
 
   return (
-    <div className="flex flex-col h-full gap-6">
+    <div className="flex flex-col h-full gap-8">
       {/* Header & Tabs */}
-      <div className="flex flex-col gap-4">
+      <div className="flex flex-col gap-6 bg-white p-6 rounded-xl border border-[#cbd5e1] shadow-sm">
         <div className="flex items-center justify-between">
-          <div className="flex bg-slate-800/50 p-1 rounded-xl border border-slate-700/50 w-fit">
+          <div className="flex bg-[#f1f5f9] p-1 rounded-lg border border-[#cbd5e1] w-fit">
             {tabs.map((tab) => (
               <button
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id)}
-                className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
+                className={`flex items-center gap-2 px-4 py-2 rounded text-[11px] font-bold uppercase tracking-wider transition-all ${
                   activeTab === tab.id
-                    ? 'bg-indigo-600 text-white shadow-md'
-                    : 'text-slate-400 hover:text-slate-200 hover:bg-slate-700/50'
+                    ? 'bg-white text-[#005eb8] shadow-sm border border-[#cbd5e1]'
+                    : 'text-[#64748b] hover:text-[#0f172a]'
                 }`}
               >
-                <tab.icon size={16} />
-                <span className="text-[10px] font-black uppercase tracking-widest">{tab.label}</span>
+                <tab.icon size={14} />
+                <span>{tab.label}</span>
               </button>
             ))}
           </div>
-          <div className="flex items-center gap-3">
-             <div className="flex items-center gap-2 px-3 py-1.5 bg-emerald-500/10 border border-emerald-500/20 rounded-lg">
-                <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-                <span className="text-[10px] font-black uppercase text-emerald-400 tracking-widest">Système Optimal</span>
+          <div className="flex items-center gap-4">
+             <div className="flex items-center gap-2 px-3 py-1.5 bg-green-50 border border-green-100 rounded-lg">
+                <div className="w-1.5 h-1.5 rounded-full bg-[#107e3e] animate-pulse" />
+                <span className="text-[10px] font-bold uppercase text-[#107e3e] tracking-widest">Système Optimal</span>
              </div>
-             <button className="p-2 bg-slate-800 border border-slate-700 rounded-lg text-slate-400 hover:text-white transition-all">
+             <button className="p-2 bg-white border border-[#cbd5e1] rounded-lg text-[#64748b] hover:text-[#0f172a] transition-all shadow-sm">
                 <Bell size={18} />
              </button>
           </div>
@@ -97,12 +97,12 @@ const AdminModule = () => {
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
-            className="grid grid-cols-1 lg:grid-cols-3 gap-6"
+            className="grid grid-cols-1 lg:grid-cols-3 gap-8"
           >
-             <div className="lg:col-span-2 card bg-slate-800/30 border-slate-700/50 p-8 flex flex-col gap-8">
+             <div className="lg:col-span-2 bg-white border border-[#cbd5e1] rounded-xl p-8 flex flex-col gap-8 shadow-sm">
                 <div>
-                   <h3 className="font-black text-sm uppercase tracking-widest text-white mb-2">Identité de la Structure</h3>
-                   <p className="text-xs text-slate-500 font-medium italic">Ces informations sont obligatoires pour la liasse fiscale et les factures.</p>
+                   <h3 className="font-bold text-sm uppercase tracking-widest text-[#0f172a] mb-2">Identité de la Structure</h3>
+                   <p className="text-[11px] text-[#64748b] font-bold uppercase tracking-wider italic">Ces informations sont obligatoires pour la liasse fiscale et les factures.</p>
                 </div>
                 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -115,11 +115,11 @@ const AdminModule = () => {
                    <InputField label="Email Officiel" value="contact@antigravity.sn" />
                 </div>
 
-                <div className="mt-4 pt-8 border-t border-slate-700/50 flex justify-end gap-3">
-                   <button className="px-6 py-2.5 bg-slate-800 border border-slate-700 rounded-xl text-xs font-black uppercase tracking-widest text-slate-400 hover:text-white transition-all">Annuler</button>
+                <div className="mt-4 pt-8 border-t border-[#f1f5f9] flex justify-end gap-3">
+                   <button className="px-6 py-2.5 bg-[#f1f5f9] border border-[#cbd5e1] rounded-lg text-[11px] font-bold uppercase tracking-widest text-[#64748b] hover:text-[#0f172a] transition-all">Annuler</button>
                    <button 
                      onClick={handleSave}
-                     className="px-8 py-2.5 bg-indigo-600 hover:bg-indigo-500 rounded-xl text-xs font-black uppercase tracking-widest transition-all shadow-lg shadow-indigo-600/20 flex items-center gap-2"
+                     className="px-8 py-2.5 bg-[#005eb8] hover:bg-[#004080] rounded-lg text-[11px] font-bold uppercase tracking-widest transition-all shadow-lg flex items-center gap-2 text-white"
                    >
                       {isSaving ? <Activity size={16} className="animate-spin" /> : <Save size={16} />}
                       {isSaving ? 'Synchronisation...' : 'Enregistrer'}
@@ -127,25 +127,25 @@ const AdminModule = () => {
                 </div>
              </div>
 
-             <div className="flex flex-col gap-6">
-                <div className="card bg-slate-800/30 border-slate-700/50 p-8 flex flex-col items-center justify-center text-center">
-                   <div className="w-32 h-32 rounded-3xl bg-slate-900 border-2 border-slate-800 flex items-center justify-center mb-6 relative group cursor-pointer overflow-hidden shadow-inner">
-                      <Building size={48} className="text-slate-700 group-hover:scale-110 transition-transform" />
-                      <div className="absolute inset-0 bg-indigo-600/80 flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 transition-all">
-                         <Cloud size={24} className="mb-1" />
-                         <span className="text-[10px] font-black uppercase">Upload</span>
+             <div className="flex flex-col gap-8">
+                <div className="bg-white border border-[#cbd5e1] rounded-xl p-8 flex flex-col items-center justify-center text-center shadow-sm">
+                   <div className="w-32 h-32 rounded-2xl bg-[#f8fafc] border border-[#cbd5e1] flex items-center justify-center mb-6 relative group cursor-pointer overflow-hidden shadow-inner">
+                      <Building size={48} className="text-[#cbd5e1] group-hover:scale-110 transition-transform" />
+                      <div className="absolute inset-0 bg-[#005eb8]/90 flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 transition-all text-white">
+                         <Cloud size={24} className="mb-2" />
+                         <span className="text-[10px] font-bold uppercase tracking-widest">Upload</span>
                       </div>
                    </div>
-                   <h4 className="font-black text-white uppercase text-xs tracking-widest">Logo Institutionnel</h4>
-                   <p className="text-[10px] text-slate-500 font-bold mt-2 leading-relaxed">Format PNG/SVG transparent<br/>recommandé pour vos documents.</p>
+                   <h4 className="font-bold text-[#0f172a] uppercase text-[11px] tracking-widest">Logo Institutionnel</h4>
+                   <p className="text-[10px] text-[#64748b] font-bold mt-2 leading-relaxed uppercase tracking-wider">Format PNG/SVG transparent<br/>recommandé pour vos documents.</p>
                 </div>
 
-                <div className="card bg-indigo-600/5 border-indigo-600/20 p-6">
-                   <div className="flex items-center gap-3 text-indigo-400 mb-4">
-                      <Globe size={18} />
-                      <h4 className="font-black text-xs uppercase tracking-widest">Localisation ERP</h4>
+                <div className="bg-blue-50 border border-blue-100 p-8 rounded-xl shadow-sm">
+                   <div className="flex items-center gap-3 text-[#005eb8] mb-6">
+                      <Globe size={20} />
+                      <h4 className="font-bold text-xs uppercase tracking-widest">Localisation ERP</h4>
                    </div>
-                   <div className="space-y-3">
+                   <div className="space-y-4">
                       <SettingRow label="Devise de Tenue" value="F CFA (XOF)" />
                       <SettingRow label="Fuseau Horaire" value="GMT +00:00" />
                       <SettingRow label="Référentiel" value="SYSCOHADA Révisé" />
@@ -174,15 +174,15 @@ const AdminModule = () => {
             key="exercices"
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
           >
-             <ExoCard year="2024" status="En cours" color="emerald" active />
+             <ExoCard year="2024" status="En cours" color="green" active />
              <ExoCard year="2023" status="Clôturé" color="slate" />
-             <div className="card border-dashed flex flex-col items-center justify-center p-12 opacity-50 hover:opacity-100 transition-opacity">
-                <div className="w-16 h-16 bg-slate-800 rounded-3xl flex items-center justify-center mb-4">
-                   <Plus size={32} className="text-slate-600" />
+             <div className="bg-white border border-dashed border-[#cbd5e1] rounded-xl flex flex-col items-center justify-center p-12 opacity-50 hover:opacity-100 transition-all cursor-pointer shadow-sm">
+                <div className="w-16 h-16 bg-[#f1f5f9] rounded-2xl flex items-center justify-center mb-4 border border-[#cbd5e1] shadow-inner">
+                   <Plus size={32} className="text-[#94a3b8]" />
                 </div>
-                <p className="text-xs font-black uppercase text-slate-500 tracking-widest">Ouvrir Exercice 2025</p>
+                <p className="text-[11px] font-bold uppercase text-[#64748b] tracking-widest">Ouvrir Exercice 2025</p>
              </div>
           </motion.div>
         )}
@@ -193,38 +193,42 @@ const AdminModule = () => {
             key="audit"
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            className="bg-slate-800/30 rounded-3xl border border-slate-700/50 overflow-hidden shadow-2xl"
+            className="bg-white rounded-xl border border-[#cbd5e1] overflow-hidden shadow-sm"
           >
-             <div className="p-6 border-b border-slate-700/50 flex justify-between items-center">
-                <h3 className="font-black text-xs uppercase tracking-widest flex items-center gap-2">
-                   <History size={18} className="text-amber-400" />
+             <div className="p-6 border-b border-[#f1f5f9] flex justify-between items-center bg-[#f8fafc]">
+                <h3 className="font-bold text-[11px] uppercase tracking-widest flex items-center gap-3 text-[#0f172a]">
+                   <History size={20} className="text-orange-500" />
                    Journal de Sécurité (Audit Trail)
                 </h3>
-                <div className="flex gap-2">
+                <div className="flex gap-3">
                    <div className="relative">
-                      <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500" size={14} />
-                      <input type="text" placeholder="Chercher log..." className="pl-9 pr-4 py-1.5 bg-slate-900 border border-slate-700 rounded-lg text-[10px] uppercase font-bold outline-none w-48" />
+                      <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-[#94a3b8]" size={16} />
+                      <input type="text" placeholder="Chercher log..." className="pl-10 pr-4 py-2 bg-white border border-[#cbd5e1] rounded-lg text-xs font-bold outline-none w-64 shadow-inner" />
                    </div>
-                   <button className="p-2 bg-slate-800 border border-slate-700 rounded-lg text-slate-400">
-                      <Filter size={16} />
+                   <button className="p-2 bg-white border border-[#cbd5e1] rounded-lg text-[#64748b] hover:text-[#0f172a] transition-all shadow-sm">
+                      <Filter size={18} />
                    </button>
                 </div>
              </div>
-             <div className="p-0">
+             <div className="p-0 divide-y divide-[#f1f5f9]">
                 {[
-                   { time: '14:45:22', user: 'M. Kane', action: 'Modification Plan Comptable', impact: 'Haute', color: 'rose' },
-                   { time: '14:30:05', user: 'A. Diop', action: 'Validation Journal Ventes', impact: 'Moyenne', color: 'indigo' },
-                   { time: '12:12:45', user: 'System', action: 'Sauvegarde Cloud Réussie', impact: 'Basse', color: 'emerald' },
+                   { time: '14:45:22', user: 'M. Kane', action: 'Modification Plan Comptable', impact: 'Haute', color: 'red' },
+                   { time: '14:30:05', user: 'A. Diop', action: 'Validation Journal Ventes', impact: 'Moyenne', color: 'blue' },
+                   { time: '12:12:45', user: 'System', action: 'Sauvegarde Cloud Réussie', impact: 'Basse', color: 'green' },
                 ].map((log, i) => (
-                  <div key={i} className="flex items-center justify-between p-4 border-b border-slate-800/50 hover:bg-slate-800/20 transition-colors">
-                     <div className="flex items-center gap-4">
-                        <span className="text-[10px] font-mono text-slate-500">{log.time}</span>
+                  <div key={i} className="flex items-center justify-between p-6 hover:bg-blue-50/30 transition-all group">
+                     <div className="flex items-center gap-6">
+                        <span className="text-[10px] font-mono font-bold text-[#94a3b8] uppercase">{log.time}</span>
                         <div className="flex flex-col">
-                           <span className="text-xs font-bold text-white uppercase">{log.action}</span>
-                           <span className="text-[10px] text-slate-500 uppercase font-black tracking-tighter">Par : {log.user}</span>
+                           <span className="text-xs font-bold text-[#334155] uppercase tracking-tight group-hover:text-[#005eb8] transition-colors">{log.action}</span>
+                           <span className="text-[10px] text-[#64748b] font-bold uppercase tracking-wider mt-1">Par : {log.user}</span>
                         </div>
                      </div>
-                     <span className={`px-2 py-0.5 rounded text-[9px] font-black uppercase bg-${log.color}-500/10 text-${log.color}-400 border border-${log.color}-500/20`}>
+                     <span className={`px-3 py-1 rounded border text-[10px] font-bold uppercase tracking-widest ${
+                        log.impact === 'Haute' ? 'bg-red-50 text-[#dc2626] border-red-200' : 
+                        log.impact === 'Moyenne' ? 'bg-blue-50 text-[#005eb8] border-blue-200' : 
+                        'bg-green-50 text-[#107e3e] border-green-200'
+                     }`}>
                         Impact {log.impact}
                      </span>
                   </div>
@@ -239,109 +243,60 @@ const AdminModule = () => {
 
 const InputField = ({ label, value, full }: any) => (
   <div className={`flex flex-col gap-2 ${full ? 'md:col-span-2' : ''}`}>
-    <label className="text-[10px] font-black uppercase text-slate-500 tracking-widest">{label}</label>
+    <label className="text-[10px] font-bold uppercase text-[#64748b] tracking-widest">{label}</label>
     <input 
       type="text" 
       defaultValue={value} 
-      className="bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-sm text-slate-200 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-all shadow-inner" 
+      className="bg-white border border-[#cbd5e1] rounded-lg px-4 py-2.5 text-xs font-bold text-[#334155] focus:outline-none focus:border-[#005eb8] transition-all shadow-inner" 
     />
   </div>
 );
 
 const SelectField = ({ label, options, selected }: any) => (
   <div className="flex flex-col gap-2">
-    <label className="text-[10px] font-black uppercase text-slate-500 tracking-widest">{label}</label>
-    <select className="bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-sm text-slate-200 focus:outline-none focus:border-indigo-500 transition-all shadow-inner appearance-none">
+    <label className="text-[10px] font-bold uppercase text-[#64748b] tracking-widest">{label}</label>
+    <select className="bg-white border border-[#cbd5e1] rounded-lg px-4 py-2.5 text-xs font-bold text-[#334155] focus:outline-none focus:border-[#005eb8] transition-all shadow-inner appearance-none">
        {options.map((opt: string) => <option key={opt} selected={opt === selected}>{opt}</option>)}
     </select>
   </div>
 );
 
 const SettingRow = ({ label, value, status }: any) => (
-  <div className="flex items-center justify-between py-2 border-b border-slate-800/50">
-     <span className="text-xs text-slate-400 font-medium">{label}</span>
+  <div className="flex items-center justify-between py-3 border-b border-blue-100 last:border-0">
+     <span className="text-[11px] text-[#475569] font-bold uppercase tracking-tight">{label}</span>
      {status ? (
-        <span className="text-[10px] font-black uppercase text-emerald-400 flex items-center gap-1">
-           <ShieldCheck size={10} /> {status}
+        <span className="text-[10px] font-bold uppercase text-[#107e3e] flex items-center gap-2">
+           <ShieldCheck size={14} /> {status}
         </span>
      ) : (
-        <span className="text-xs font-black text-white">{value}</span>
+        <span className="text-xs font-bold text-[#005eb8] uppercase">{value}</span>
      )}
   </div>
 );
 
-const UserRow = ({ name, email, role, last, ip, status }: any) => (
-  <tr className="group hover:bg-indigo-500/5 transition-colors">
-    <td className="p-6">
-       <div className="flex items-center gap-4">
-          <div className="w-10 h-10 rounded-2xl bg-indigo-500/10 text-indigo-400 flex items-center justify-center font-black text-sm border border-indigo-500/20 shadow-inner group-hover:scale-110 transition-transform">
-             {name.split(' ').map((n: any) => n[0]).join('')}
-          </div>
-          <div className="flex flex-col">
-             <span className="font-black text-white text-sm uppercase">{name}</span>
-             <span className="text-[10px] text-slate-500 font-bold">{email}</span>
-          </div>
-       </div>
-    </td>
-    <td className="p-6">
-       <span className="px-3 py-1 bg-slate-800 border border-slate-700 rounded-lg text-[10px] font-black uppercase tracking-widest text-slate-300 group-hover:bg-indigo-600 group-hover:text-white transition-all">
-          {role}
-       </span>
-    </td>
-    <td className="p-6">
-       <div className="flex flex-col">
-          <span className="text-xs font-bold text-slate-400">{last}</span>
-          <span className="text-[9px] text-slate-600 font-mono tracking-tighter">IP: {ip}</span>
-       </div>
-    </td>
-    <td className="p-6 text-center">
-       <div className={`mx-auto w-fit px-2.5 py-1 rounded-full text-[10px] font-black uppercase flex items-center gap-1.5 ${status === 'Actif' ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20' : 'bg-slate-800 text-slate-500 border border-slate-700'}`}>
-          <div className={`w-1.5 h-1.5 rounded-full ${status === 'Actif' ? 'bg-emerald-400 animate-pulse' : 'bg-slate-600'}`} />
-          {status}
-       </div>
-    </td>
-    <td className="p-6">
-       <div className="flex items-center justify-center gap-2 opacity-0 group-hover:opacity-100 transition-all">
-          <button className="p-2 text-slate-500 hover:text-indigo-400 rounded-lg hover:bg-indigo-500/10"><Edit3 size={16} /></button>
-          <button className="p-2 text-slate-500 hover:text-rose-400 rounded-lg hover:bg-rose-500/10"><Lock size={16} /></button>
-       </div>
-    </td>
-  </tr>
-);
-
-const SecurityCard = ({ title, status, icon, color }: any) => (
-  <div className="card group hover:border-slate-600 transition-all">
-     <div className="flex items-center gap-4">
-        <div className={`p-3 rounded-2xl bg-${color}-500/10 text-${color}-400 group-hover:scale-110 transition-transform shadow-inner border border-${color}-500/20`}>
-           {icon}
-        </div>
-        <div>
-           <p className="text-[10px] font-black uppercase text-slate-500 tracking-widest leading-none mb-1.5">{title}</p>
-           <h4 className="text-sm font-black text-white">{status}</h4>
-        </div>
-     </div>
-  </div>
-);
-
 const ExoCard = ({ year, status, color, active }: any) => (
-  <div className={`card group hover:border-indigo-500/30 transition-all relative overflow-hidden ${active ? 'border-emerald-500/20 bg-emerald-500/5' : ''}`}>
+  <div className={`bg-white p-8 rounded-xl border transition-all relative overflow-hidden shadow-sm group hover:border-[#005eb8] ${active ? 'border-[#107e3e] border-2' : 'border-[#cbd5e1]'}`}>
      <div className="flex justify-between items-start mb-8">
         <div className="flex flex-col">
-           <h3 className="text-3xl font-black text-white group-hover:text-indigo-400 transition-colors">{year}</h3>
-           <p className="text-[10px] text-slate-500 font-bold uppercase mt-1">Exercice Social</p>
+           <h3 className="text-4xl font-bold text-[#0f172a] tracking-tighter group-hover:text-[#005eb8] transition-colors">{year}</h3>
+           <p className="text-[10px] text-[#64748b] font-bold uppercase mt-1 tracking-widest">Exercice Social</p>
         </div>
-        <div className={`px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest bg-${color}-500/10 text-${color}-400 border border-${color}-500/20 shadow-inner`}>
+        <div className={`px-3 py-1 rounded border text-[10px] font-bold uppercase tracking-widest ${
+          color === 'green' ? 'bg-green-50 text-[#107e3e] border-green-200' : 
+          color === 'red' ? 'bg-red-50 text-[#dc2626] border-red-200' : 
+          'bg-[#f1f5f9] text-[#64748b] border-[#cbd5e1]'
+        }`}>
            {status}
         </div>
      </div>
-     <div className="space-y-3 mb-8">
+     <div className="space-y-4 mb-8">
         <SettingRow label="Ouverture" value={`01/01/${year}`} />
         <SettingRow label="Clôture Prévue" value={`31/12/${year}`} />
      </div>
-     <button className={`w-full py-3 rounded-2xl text-[10px] font-black uppercase tracking-[0.2em] transition-all ${
-       active ? 'bg-rose-600 hover:bg-rose-500 text-white shadow-lg shadow-rose-600/20' : 
-       status === 'Clôturé' ? 'bg-slate-800 text-slate-500 cursor-not-allowed border border-slate-700' : 
-       'bg-indigo-600 hover:bg-indigo-500 text-white shadow-lg shadow-indigo-600/20'
+     <button className={`w-full py-3 rounded-lg text-[11px] font-bold uppercase tracking-[0.2em] transition-all shadow-md ${
+       active ? 'bg-[#dc2626] hover:bg-[#b91c1c] text-white' : 
+       status === 'Clôturé' ? 'bg-[#f1f5f9] text-[#94a3b8] cursor-not-allowed border border-[#cbd5e1]' : 
+       'bg-[#005eb8] hover:bg-[#004080] text-white'
      }`}>
         {active ? 'Procéder à la Clôture' : status === 'Clôturé' ? 'Consulter Archives' : 'Ouvrir l\'Exercice'}
      </button>

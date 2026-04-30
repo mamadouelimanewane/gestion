@@ -34,31 +34,31 @@ const HRModule = () => {
       {/* Header & Tabs */}
       <div className="flex flex-col gap-4">
         <div className="flex items-center justify-between">
-          <div className="flex bg-slate-800/50 p-1 rounded-xl border border-slate-700/50 overflow-x-auto no-scrollbar max-w-full">
+          <div className="flex bg-white p-1 rounded border border-[#cbd5e1] shadow-sm w-fit overflow-x-auto no-scrollbar">
             {tabs.map((tab) => (
               <button
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id)}
-                className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 whitespace-nowrap ${
+                className={`flex items-center gap-2 px-4 py-1.5 rounded text-[11px] font-bold tracking-tight transition-all duration-200 whitespace-nowrap ${
                   activeTab === tab.id
-                    ? 'bg-indigo-600 text-white shadow-md'
-                    : 'text-slate-400 hover:text-slate-200 hover:bg-slate-700/50'
+                    ? 'bg-[#005eb8] text-white shadow-md'
+                    : 'text-[#475569] hover:text-[#0f172a] hover:bg-[#f1f5f9]'
                 }`}
               >
                 <tab.icon size={16} />
-                <span className="text-[10px] font-black uppercase tracking-widest">{tab.label}</span>
+                <span className="uppercase tracking-wider">{tab.label}</span>
               </button>
             ))}
           </div>
           <div className="flex items-center gap-3">
-             <div className="flex items-center gap-2 px-3 py-1.5 bg-indigo-500/10 border border-indigo-500/20 rounded-lg">
-                <Link size={14} className="text-emerald-400" />
-                <span className="text-[10px] font-black uppercase text-emerald-400 tracking-widest">Connecté Comptabilité FI</span>
-             </div>
-             <div className="flex items-center gap-2 px-3 py-1.5 bg-indigo-500/10 border border-indigo-500/20 rounded-lg">
-                <ShieldCheck size={14} className="text-indigo-400" />
-                <span className="text-[10px] font-black uppercase text-indigo-400 tracking-widest">Conformité OHADA</span>
-             </div>
+             <button className="flex items-center gap-2 px-4 py-2 bg-white border border-[#cbd5e1] rounded text-[11px] font-bold text-[#334155] hover:text-[#0f172a] transition-all shadow-sm">
+                <Search size={16} />
+                Rechercher
+             </button>
+             <button className="flex items-center gap-2 px-4 py-2 bg-[#005eb8] hover:bg-[#004a91] text-white rounded text-[11px] font-bold transition-all shadow-md">
+                <Plus size={16} />
+                Recrutement
+             </button>
           </div>
         </div>
       </div>
@@ -85,16 +85,16 @@ const HRDashboard = () => (
     className="grid grid-cols-1 lg:grid-cols-4 gap-6"
   >
     {/* Key Metrics */}
-    <StatCard title="Effectif Total" value="124" sub="Salariés actifs" icon={<Users />} color="indigo" trend="+3" />
+    <StatCard title="Effectif Total" value="124" sub="Salariés actifs" icon={<Users />} color="blue" trend="+3" />
     <StatCard title="Masse Salariale (Mois)" value="45.8M" sub="XOF • Bruts" icon={<Wallet />} color="emerald" trend="+1.2%" />
     <StatCard title="Turnover (Annuel)" value="4.2%" sub="Objectif : < 5%" icon={<TrendingUp />} color="amber" trend="-0.5%" />
     <StatCard title="Taux d'Absenteïsme" value="2.8%" sub="Moyenne Groupe" icon={<Activity />} color="rose" trend="Stable" />
 
     {/* Recruitment Pipeline */}
-    <div className="lg:col-span-2 card bg-slate-800/20 border-slate-700/50 p-8 flex flex-col gap-6 shadow-2xl">
+    <div className="lg:col-span-2 card bg-white p-8 flex flex-col gap-6 shadow-sm border-[#d9d9d9]">
        <div className="flex justify-between items-center">
-          <h4 className="text-xs font-black uppercase tracking-[0.2em] text-white">Pipeline de Recrutement</h4>
-          <button className="text-[10px] font-black text-indigo-400 uppercase">Voir tout</button>
+          <h4 className="text-[13px] font-bold uppercase tracking-wider text-[#1d2d3e]">Pipeline de Recrutement</h4>
+          <button className="text-[11px] font-bold text-[#0a6ed1] uppercase">Voir tout</button>
        </div>
        <div className="flex justify-between gap-4">
           <PipelineStep label="Offres" value="12" active />
@@ -109,10 +109,10 @@ const HRDashboard = () => (
     </div>
 
     {/* Payroll Summary */}
-    <div className="lg:col-span-2 card bg-slate-800/20 border-slate-700/50 p-8 flex flex-col gap-6 shadow-2xl">
+    <div className="lg:col-span-2 card bg-white p-8 flex flex-col gap-6 shadow-sm border-[#d9d9d9]">
        <div className="flex justify-between items-center">
-          <h4 className="text-xs font-black uppercase tracking-[0.2em] text-white">État de la Paie (Avril 2024)</h4>
-          <span className="px-3 py-1 bg-emerald-500/10 text-emerald-400 rounded-full text-[9px] font-black uppercase border border-emerald-500/20">Clôturée</span>
+          <h4 className="text-[13px] font-bold uppercase tracking-wider text-[#1d2d3e]">État de la Paie (Avril 2024)</h4>
+          <span className="px-3 py-1 bg-green-50 text-[#107e3e] rounded text-[10px] font-bold uppercase border border-green-100">Clôturée</span>
        </div>
        <div className="grid grid-cols-2 gap-6">
           <div className="space-y-4">
@@ -120,101 +120,100 @@ const HRDashboard = () => (
              <PayrollMetric label="CSS (Accidents Travail)" value="820.000 F" />
              <PayrollMetric label="IR (Impôt sur le Revenu)" value="5.120.000 F" />
           </div>
-          <div className="flex flex-col items-center justify-center p-6 bg-slate-900 border border-slate-800 rounded-3xl">
-             <PieChart size={48} className="text-indigo-400 mb-4" />
-             <span className="text-xs font-black text-white uppercase tracking-widest text-center">Répartition des Charges Sociales</span>
+          <div className="flex flex-col items-center justify-center p-6 bg-[#f4f5f6] border border-[#d9d9d9] rounded">
+             <PieChart size={40} className="text-[#0a6ed1] mb-4" />
+             <span className="text-[11px] font-bold text-[#1d2d3e] uppercase tracking-tight text-center">Répartition des Charges Sociales</span>
           </div>
        </div>
     </div>
 
     {/* Training & GPEC */}
-    <div className="lg:col-span-1 card bg-slate-800/30 p-8 flex flex-col gap-6">
-       <h4 className="text-xs font-black uppercase tracking-[0.2em] text-white">GPEC & Formations</h4>
+    <div className="lg:col-span-1 card bg-white p-8 flex flex-col gap-6 shadow-sm border-[#d9d9d9]">
+       <h4 className="text-[13px] font-bold uppercase tracking-wider text-[#1d2d3e]">GPEC & Formations</h4>
        <div className="space-y-4">
           <TrainingProgress label="Certif IFRS 17" progress={75} />
           <TrainingProgress label="Management Elite" progress={40} />
           <TrainingProgress label="Sécurité Industrielle" progress={95} />
        </div>
-       <button className="w-full py-3 bg-slate-900 border border-slate-700 rounded-2xl text-[10px] font-black uppercase tracking-widest text-slate-400 hover:text-white transition-all">
+       <button className="w-full py-2.5 bg-[#f4f5f6] border border-[#d9d9d9] rounded text-[11px] font-bold uppercase tracking-wider text-[#556b82] hover:text-[#1d2d3e] transition-all">
           Accéder au catalogue
        </button>
     </div>
 
     {/* Employee Wellness / ESG */}
-    <div className="lg:col-span-3 card bg-indigo-600/5 border-indigo-500/20 p-8 flex items-center gap-8 shadow-2xl">
-       <div className="w-20 h-20 bg-indigo-500/10 rounded-3xl flex items-center justify-center text-indigo-400">
-          <Heart size={40} className="animate-pulse" />
+    <div className="lg:col-span-3 card bg-[#e5f0fa] border-[#0a6ed1]/10 p-8 flex items-center gap-8 shadow-sm">
+       <div className="w-16 h-16 bg-white/50 rounded flex items-center justify-center text-[#0a6ed1] border border-white">
+          <Heart size={32} className="animate-pulse" />
        </div>
        <div className="flex-1">
-          <h4 className="text-lg font-black text-white uppercase tracking-tighter mb-2">Social & Bien-être (ESG Score)</h4>
-          <p className="text-xs text-slate-500 font-medium leading-relaxed max-w-2xl">
+          <h4 className="text-lg font-bold text-[#1d2d3e] uppercase tracking-tight mb-2">Social & Bien-être (ESG Score)</h4>
+          <p className="text-[13px] text-[#556b82] font-medium leading-relaxed max-w-2xl">
              Le score social du groupe est en hausse de **15%** ce trimestre grâce à l'amélioration de la couverture santé et la mise en place du télétravail hybride. 
-             L'IA Joule suggère de renforcer les programmes de formation pour le département Production.
+             L'IA Joule suggère de renforcer les programmes de formation.
           </p>
        </div>
        <div className="flex flex-col items-end">
-          <span className="text-3xl font-black text-indigo-400">8.4<span className="text-xs text-slate-600">/10</span></span>
-          <span className="text-[10px] font-black text-slate-500 uppercase tracking-widest">Score de Satisfaction</span>
+          <span className="text-3xl font-bold text-[#0a6ed1]">8.4<span className="text-sm text-[#748ca5]">/10</span></span>
+          <span className="text-[10px] font-bold text-[#748ca5] uppercase tracking-wider">Score de Satisfaction</span>
        </div>
     </div>
   </motion.div>
 );
 
 const StatCard = ({ title, value, sub, icon, color, trend }: any) => (
-  <div className="card group hover:border-indigo-500/30 transition-all cursor-pointer relative overflow-hidden p-8 shadow-xl border-slate-700/50">
-    <div className={`absolute top-0 right-0 w-24 h-24 -mr-12 -mt-12 rounded-full bg-${color === 'emerald' ? 'emerald' : color === 'amber' ? 'amber' : color === 'rose' ? 'rose' : 'indigo'}-500 opacity-5 group-hover:opacity-10 transition-opacity`}></div>
+  <div className="card group hover:border-[#0a6ed1]/30 transition-all cursor-pointer relative overflow-hidden p-6 shadow-sm border-[#d9d9d9]">
     <div className="flex justify-between items-start mb-4">
-       <p className="text-slate-500 text-[10px] font-black uppercase tracking-widest leading-none">{title}</p>
-       <span className={`text-[9px] font-black px-2 py-0.5 rounded-lg bg-${trend.includes('+') ? 'emerald' : 'slate'}-500/10 text-${trend.includes('+') ? 'emerald' : 'slate'}-400 border border-${trend.includes('+') ? 'emerald' : 'slate'}-500/20`}>{trend}</span>
+       <p className="text-[#748ca5] text-[11px] font-bold uppercase tracking-wider leading-none">{title}</p>
+       <span className={`text-[10px] font-bold px-2 py-0.5 rounded ${trend.includes('+') ? 'bg-green-50 text-[#107e3e] border border-green-100' : 'bg-[#f4f5f6] text-[#556b82] border border-[#d9d9d9]'}`}>{trend}</span>
     </div>
     <div className="flex items-end gap-3">
-       <h3 className="text-2xl font-black text-white">{value}</h3>
-       <div className={`p-1.5 rounded-lg bg-slate-900 text-slate-600 group-hover:text-${color === 'emerald' ? 'emerald-400' : 'indigo-400'} transition-colors mb-1`}>
-          {React.cloneElement(icon, { size: 14 })}
+       <h3 className="text-2xl font-bold text-[#1d2d3e]">{value}</h3>
+       <div className={`p-2 rounded bg-[#f4f5f6] text-[#748ca5] group-hover:text-[#0a6ed1] transition-colors mb-1`}>
+          {React.cloneElement(icon, { size: 16 })}
        </div>
     </div>
-    <p className="text-[9px] font-bold text-slate-600 uppercase mt-2 tracking-tighter">{sub}</p>
+    <p className="text-[11px] font-medium text-[#748ca5] mt-2">{sub}</p>
   </div>
 );
 
 const PipelineStep = ({ label, value, active }: any) => (
   <div className="flex-1 flex flex-col items-center gap-2">
-     <div className={`w-full h-1.5 rounded-full ${active ? 'bg-indigo-500' : 'bg-slate-800'}`} />
-     <span className="text-[9px] font-black text-slate-500 uppercase tracking-tighter">{label}</span>
-     <span className="text-sm font-black text-white">{value}</span>
+     <div className={`w-full h-1.5 rounded-full ${active ? 'bg-[#0a6ed1]' : 'bg-[#f4f5f6]'}`} />
+     <span className="text-[10px] font-bold text-[#748ca5] uppercase tracking-tight">{label}</span>
+     <span className="text-sm font-bold text-[#1d2d3e]">{value}</span>
   </div>
 );
 
 const CandidateRow = ({ name, position, status }: any) => (
-  <div className="flex items-center justify-between p-3 bg-slate-900 border border-slate-800 rounded-xl hover:bg-slate-800 transition-all cursor-pointer">
+  <div className="flex items-center justify-between p-3 bg-[#f4f5f6] border border-[#d9d9d9] rounded hover:bg-[#e5f0fa] transition-all cursor-pointer group">
      <div className="flex items-center gap-3">
-        <div className="w-8 h-8 rounded-lg bg-indigo-500/10 text-indigo-400 flex items-center justify-center font-black text-xs">
+        <div className="w-8 h-8 rounded bg-[#354a5f] text-white flex items-center justify-center font-bold text-xs shadow-sm">
            {name.split(' ').map((n: string) => n[0]).join('')}
         </div>
         <div className="flex flex-col">
-           <span className="text-[11px] font-bold text-white uppercase">{name}</span>
-           <span className="text-[9px] text-slate-500 font-bold uppercase">{position}</span>
+           <span className="text-[12px] font-bold text-[#1d2d3e] group-hover:text-[#0a6ed1]">{name}</span>
+           <span className="text-[10px] text-[#748ca5] font-medium uppercase">{position}</span>
         </div>
      </div>
-     <span className="text-[9px] font-black text-indigo-400 uppercase tracking-widest">{status}</span>
+     <span className="text-[10px] font-bold text-[#0a6ed1] uppercase tracking-wider">{status}</span>
   </div>
 );
 
 const PayrollMetric = ({ label, value }: any) => (
-  <div className="flex justify-between items-center py-2 border-b border-slate-700/30">
-     <span className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">{label}</span>
-     <span className="text-xs font-black text-white">{value}</span>
+  <div className="flex justify-between items-center py-2 border-b border-[#f4f5f6]">
+     <span className="text-[11px] font-bold text-[#748ca5] uppercase tracking-wider">{label}</span>
+     <span className="text-xs font-bold text-[#1d2d3e]">{value}</span>
   </div>
 );
 
 const TrainingProgress = ({ label, progress }: any) => (
   <div className="flex flex-col gap-2">
-     <div className="flex justify-between items-center text-[10px] font-black uppercase tracking-widest">
-        <span className="text-slate-400">{label}</span>
-        <span className="text-white">{progress}%</span>
+     <div className="flex justify-between items-center text-[11px] font-bold uppercase tracking-tight">
+        <span className="text-[#748ca5]">{label}</span>
+        <span className="text-[#1d2d3e]">{progress}%</span>
      </div>
-     <div className="h-1 bg-slate-900 rounded-full overflow-hidden">
-        <div className="h-full bg-indigo-500" style={{ width: `${progress}%` }} />
+     <div className="h-1.5 bg-[#f4f5f6] rounded-full overflow-hidden">
+        <div className="h-full bg-[#0a6ed1]" style={{ width: `${progress}%` }} />
      </div>
   </div>
 );

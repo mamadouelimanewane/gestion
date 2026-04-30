@@ -1,214 +1,324 @@
 import React from 'react';
-import { 
-  BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, 
-  AreaChart, Area, PieChart, Pie, Cell 
+import {
+  BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer,
+  AreaChart, Area, PieChart, Pie, Cell
 } from 'recharts';
-import { TrendingUp, TrendingDown, DollarSign, Users, Package, AlertCircle } from 'lucide-react';
+import {
+  TrendingUp, TrendingDown, DollarSign, Users, Package, AlertCircle,
+  Activity, ArrowUpRight, ArrowDownRight, Briefcase,
+  PieChart as PieChartIcon, ArrowRight, ShieldCheck
+} from 'lucide-react';
 
 const dataPerformance = [
   { name: 'Jan', ventes: 4000, achats: 2400 },
   { name: 'Fév', ventes: 3000, achats: 1398 },
-  { name: 'Mar', ventes: 2000, achats: 9800 },
-  { name: 'Avr', ventes: 2780, achats: 3908 },
-  { name: 'Mai', ventes: 1890, achats: 4800 },
-  { name: 'Juin', ventes: 2390, achats: 3800 },
+  { name: 'Mar', ventes: 5200, achats: 2800 },
+  { name: 'Avr', ventes: 4780, achats: 3200 },
+  { name: 'Mai', ventes: 5890, achats: 3800 },
+  { name: 'Juin', ventes: 6390, achats: 3200 },
 ];
 
 const dataTresorerie = [
-  { name: 'Sem 1', solde: 4000 },
-  { name: 'Sem 2', solde: 3000 },
-  { name: 'Sem 3', solde: 5000 },
-  { name: 'Sem 4', solde: 4780 },
+  { name: 'S1', solde: 28000 },
+  { name: 'S2', solde: 31000 },
+  { name: 'S3', solde: 27500 },
+  { name: 'S4', solde: 33373 },
 ];
 
 const dataAnalytique = [
-  { name: 'Dpt Ventes', value: 400 },
-  { name: 'Production', value: 300 },
-  { name: 'Admin', value: 300 },
-  { name: 'Logistique', value: 200 },
+  { name: 'Ventes',      value: 400 },
+  { name: 'Production',  value: 300 },
+  { name: 'Admin',       value: 200 },
+  { name: 'Logistique',  value: 150 },
 ];
 
-const COLORS = ['#6366f1', '#10b981', '#f59e0b', '#ef4444'];
+const COLORS = ['#2563eb', '#16a34a', '#d97706', '#dc2626'];
 
-const DashboardPilotage = () => {
+/* ─── KPI Card ──────────────────────────────────────────────── */
+interface KpiProps {
+  title: string;
+  value: string;
+  unit?: string;
+  trend: string;
+  trendUp: boolean;
+  icon: React.ReactNode;
+  color: 'blue' | 'red' | 'green' | 'orange';
+}
+
+const KpiCard = ({ title, value, unit = 'F CFA', trend, trendUp, icon, color }: KpiProps) => {
+  const palette = {
+    blue:   { iconBg: '#eff6ff', iconColor: '#2563eb', trendBg: trendUp ? '#f0fdf4' : '#fef2f2' },
+    red:    { iconBg: '#fef2f2', iconColor: '#dc2626', trendBg: trendUp ? '#f0fdf4' : '#fef2f2' },
+    green:  { iconBg: '#f0fdf4', iconColor: '#16a34a', trendBg: trendUp ? '#f0fdf4' : '#fef2f2' },
+    orange: { iconBg: '#fffbeb', iconColor: '#d97706', trendBg: trendUp ? '#f0fdf4' : '#fef2f2' },
+  };
+  const p = palette[color];
+
   return (
-    <div className="space-y-6 overflow-auto h-full pb-8 pr-2">
-      {/* KPI Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        <KpiCard 
-          title="Chiffre d'Affaires" 
-          value="45 823 000 F" 
-          trend="+12.5%" 
-          trendUp={true} 
-          icon={<DollarSign size={20} />}
-          color="indigo"
-        />
-        <KpiCard 
-          title="Achats / Charges" 
-          value="12 450 000 F" 
-          trend="-2.4%" 
-          trendUp={false} 
-          icon={<Package size={20} />}
-          color="rose"
-        />
-        <KpiCard 
-          title="Solde de Trésorerie" 
-          value="33 373 000 F" 
-          trend="+5.2%" 
-          trendUp={true} 
-          icon={<TrendingUp size={20} />}
-          color="emerald"
-        />
-        <KpiCard 
-          title="Créances Clients" 
-          value="8 900 000 F" 
-          trend="+1.8%" 
-          trendUp={true} 
-          icon={<Users size={20} />}
-          color="amber"
-        />
-      </div>
-
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        {/* Graphique Performance */}
-        <div className="card bg-slate-800/20 border-slate-700/50 p-6">
-          <h3 className="text-sm font-bold text-slate-400 uppercase mb-6 tracking-widest">Performance Ventes vs Achats</h3>
-          <div className="h-80 w-full">
-            <ResponsiveContainer width="100%" height="100%">
-              <BarChart data={dataPerformance}>
-                <CartesianGrid strokeDasharray="3 3" stroke="#334155" vertical={false} />
-                <XAxis dataKey="name" stroke="#94a3b8" fontSize={12} tickLine={false} axisLine={false} />
-                <YAxis stroke="#94a3b8" fontSize={12} tickLine={false} axisLine={false} tickFormatter={(value) => `${value}k`} />
-                <Tooltip 
-                  contentStyle={{ backgroundColor: '#1e293b', border: '1px solid #334155', borderRadius: '8px' }}
-                  itemStyle={{ fontSize: '12px' }}
-                />
-                <Legend verticalAlign="top" align="right" iconType="circle" />
-                <Bar dataKey="ventes" fill="#6366f1" radius={[4, 4, 0, 0]} name="Ventes" />
-                <Bar dataKey="achats" fill="#f43f5e" radius={[4, 4, 0, 0]} name="Achats" />
-              </BarChart>
-            </ResponsiveContainer>
-          </div>
+    <div className="erp-card" style={{ padding: '1.25rem' }}>
+      <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: '1rem' }}>
+        <div style={{
+          width: 38, height: 38, borderRadius: 8,
+          background: p.iconBg, color: p.iconColor,
+          display: 'flex', alignItems: 'center', justifyContent: 'center',
+          flexShrink: 0,
+        }}>
+          {icon}
         </div>
-
-        {/* Graphique Trésorerie */}
-        <div className="card bg-slate-800/20 border-slate-700/50 p-6">
-          <h3 className="text-sm font-bold text-slate-400 uppercase mb-6 tracking-widest">Évolution de la Trésorerie</h3>
-          <div className="h-80 w-full">
-            <ResponsiveContainer width="100%" height="100%">
-              <AreaChart data={dataTresorerie}>
-                <defs>
-                  <linearGradient id="colorSolde" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%" stopColor="#10b981" stopOpacity={0.3}/>
-                    <stop offset="95%" stopColor="#10b981" stopOpacity={0}/>
-                  </linearGradient>
-                </defs>
-                <CartesianGrid strokeDasharray="3 3" stroke="#334155" vertical={false} />
-                <XAxis dataKey="name" stroke="#94a3b8" fontSize={12} tickLine={false} axisLine={false} />
-                <YAxis stroke="#94a3b8" fontSize={12} tickLine={false} axisLine={false} />
-                <Tooltip 
-                  contentStyle={{ backgroundColor: '#1e293b', border: '1px solid #334155', borderRadius: '8px' }}
-                />
-                <Area type="monotone" dataKey="solde" stroke="#10b981" fillOpacity={1} fill="url(#colorSolde)" strokeWidth={3} />
-              </AreaChart>
-            </ResponsiveContainer>
-          </div>
+        <div style={{
+          display: 'flex', alignItems: 'center', gap: '0.2rem',
+          padding: '0.2rem 0.5rem', borderRadius: 999,
+          background: trendUp ? '#f0fdf4' : '#fef2f2',
+          fontSize: '0.7rem', fontWeight: 600,
+          color: trendUp ? '#16a34a' : '#dc2626',
+        }}>
+          {trendUp ? <ArrowUpRight size={12} /> : <ArrowDownRight size={12} />}
+          {trend}
         </div>
       </div>
-
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        {/* Répartition Analytique */}
-        <div className="card bg-slate-800/20 border-slate-700/50 p-6 flex flex-col items-center">
-          <h3 className="text-sm font-bold text-slate-400 uppercase mb-6 tracking-widest w-full">Répartition des Charges</h3>
-          <div className="h-64 w-full">
-            <ResponsiveContainer width="100%" height="100%">
-              <PieChart>
-                <Pie
-                  data={dataAnalytique}
-                  cx="50%"
-                  cy="50%"
-                  innerRadius={60}
-                  outerRadius={80}
-                  paddingAngle={5}
-                  dataKey="value"
-                >
-                  {dataAnalytique.map((entry, index) => (
-                    <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-                  ))}
-                </Pie>
-                <Tooltip />
-              </PieChart>
-            </ResponsiveContainer>
-          </div>
-          <div className="grid grid-cols-2 gap-4 w-full mt-4">
-            {dataAnalytique.map((entry, index) => (
-              <div key={entry.name} className="flex items-center gap-2">
-                <div className="w-3 h-3 rounded-full" style={{ backgroundColor: COLORS[index % COLORS.length] }}></div>
-                <span className="text-[10px] text-slate-400 font-bold uppercase">{entry.name}</span>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* Alertes & Notifications */}
-        <div className="lg:col-span-2 card bg-slate-800/20 border-slate-700/50 p-6">
-          <h3 className="text-sm font-bold text-slate-400 uppercase mb-6 tracking-widest">Alertes de Gestion</h3>
-          <div className="space-y-4">
-            <AlertItem 
-              type="warning" 
-              title="Retard de paiement critique" 
-              desc="Le client SARL SUNU a dépassé son échéance de 90 jours (1 250 000 F)." 
-            />
-            <AlertItem 
-              type="info" 
-              title="Clôture de période" 
-              desc="Période Octobre 2024 prête pour la clôture. 98% des écritures sont lettrées." 
-            />
-            <AlertItem 
-              type="error" 
-              title="Dépassement Budgétaire" 
-              desc="Le poste 'Marketing' a dépassé les prévisions de 12% sur le trimestre." 
-            />
-          </div>
-        </div>
-      </div>
+      <p style={{ fontSize: '0.75rem', color: 'var(--clr-text-muted)', marginBottom: '0.25rem', fontWeight: 500 }}>
+        {title}
+      </p>
+      <p style={{ fontSize: '1.375rem', fontWeight: 700, color: 'var(--clr-text-h)', lineHeight: 1.2 }}>
+        {value} <span style={{ fontSize: '0.75rem', fontWeight: 400, color: 'var(--clr-text-muted)' }}>{unit}</span>
+      </p>
     </div>
   );
 };
 
-const KpiCard = ({ title, value, trend, trendUp, icon, color }: any) => (
-  <div className="card group hover:scale-[1.02] transition-all cursor-pointer overflow-hidden">
-    <div className={`absolute top-0 right-0 w-24 h-24 -mr-8 -mt-8 rounded-full opacity-10 bg-${color}-500 group-hover:scale-150 transition-transform duration-700`}></div>
-    <div className="relative flex justify-between items-start">
-      <div className={`p-3 rounded-2xl bg-${color}-500/10 text-${color}-400`}>
-        {icon}
+/* ─── Alert Item ─────────────────────────────────────────────── */
+interface AlertProps {
+  type: 'warning' | 'info' | 'error';
+  title: string;
+  desc: string;
+}
+
+const AlertItem = ({ type, title, desc }: AlertProps) => {
+  const styles = {
+    warning: { accent: '#d97706', bg: '#fffbeb', border: '#fde68a' },
+    info:    { accent: '#2563eb', bg: '#eff6ff', border: '#bfdbfe' },
+    error:   { accent: '#dc2626', bg: '#fef2f2', border: '#fecaca' },
+  };
+  const s = styles[type];
+
+  return (
+    <div style={{
+      display: 'flex', alignItems: 'flex-start', gap: '0.75rem',
+      padding: '0.875rem', borderRadius: 10,
+      background: s.bg, border: `1px solid ${s.border}`,
+      borderLeft: `3px solid ${s.accent}`,
+    }}>
+      <AlertCircle size={16} style={{ color: s.accent, flexShrink: 0, marginTop: 1 }} />
+      <div style={{ flex: 1, minWidth: 0 }}>
+        <p style={{ fontSize: '0.8125rem', fontWeight: 600, color: 'var(--clr-text-body)', marginBottom: '0.15rem' }}>{title}</p>
+        <p style={{ fontSize: '0.75rem', color: 'var(--clr-text-sub)', lineHeight: 1.5 }}>{desc}</p>
       </div>
-      <div className={`flex items-center gap-1 text-[10px] font-black px-2 py-1 rounded-full ${trendUp ? 'bg-emerald-500/10 text-emerald-400' : 'bg-rose-500/10 text-rose-400'}`}>
-        {trendUp ? <TrendingUp size={12} /> : <TrendingDown size={12} />}
-        {trend}
+      <button style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--clr-text-muted)', padding: '0.25rem', flexShrink: 0 }}>
+        <ArrowRight size={14} />
+      </button>
+    </div>
+  );
+};
+
+/* ─── Chart Wrapper ──────────────────────────────────────────── */
+const ChartCard = ({ title, subtitle, children, action }: { title: string; subtitle?: string; children: React.ReactNode; action?: React.ReactNode }) => (
+  <div className="erp-card" style={{ padding: '1.25rem', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+      <div>
+        <h3 style={{ fontSize: '0.9375rem', fontWeight: 600, color: 'var(--clr-text-h)' }}>{title}</h3>
+        {subtitle && <p style={{ fontSize: '0.75rem', color: 'var(--clr-text-muted)', marginTop: '0.1rem' }}>{subtitle}</p>}
       </div>
+      {action}
     </div>
-    <div className="mt-4">
-      <p className="text-xs font-bold text-slate-500 uppercase tracking-widest">{title}</p>
-      <p className="text-2xl font-black text-white mt-1">{value}</p>
-    </div>
+    {children}
   </div>
 );
 
-const AlertItem = ({ type, title, desc }: any) => {
-  const colors = {
-    warning: 'amber',
-    info: 'indigo',
-    error: 'rose'
-  };
-  const color = colors[type as keyof typeof colors] || 'indigo';
-
+/* ─── Main Dashboard ─────────────────────────────────────────── */
+const DashboardPilotage = () => {
   return (
-    <div className={`flex gap-4 p-4 rounded-xl bg-${color}-500/5 border border-${color}-500/10 hover:bg-${color}-500/10 transition-colors`}>
-      <AlertCircle className={`text-${color}-400 shrink-0`} size={20} />
-      <div>
-        <h4 className={`text-sm font-bold text-${color}-400`}>{title}</h4>
-        <p className="text-xs text-slate-400 mt-1">{desc}</p>
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
+
+      {/* KPI Row */}
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '1rem' }}>
+        <KpiCard
+          title="Chiffre d'Affaires"
+          value="45 823 000"
+          trend="+12.5%"
+          trendUp={true}
+          icon={<DollarSign size={18} />}
+          color="blue"
+        />
+        <KpiCard
+          title="Charges d'Exploitation"
+          value="12 450 000"
+          trend="-2.4%"
+          trendUp={false}
+          icon={<Package size={18} />}
+          color="red"
+        />
+        <KpiCard
+          title="Solde Trésorerie"
+          value="33 373 000"
+          trend="+5.2%"
+          trendUp={true}
+          icon={<Activity size={18} />}
+          color="green"
+        />
+        <KpiCard
+          title="Créances Clients"
+          value="8 900 000"
+          trend="+1.8%"
+          trendUp={true}
+          icon={<Briefcase size={18} />}
+          color="orange"
+        />
+      </div>
+
+      {/* Charts Row */}
+      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+        <ChartCard
+          title="Performance d'Exploitation"
+          subtitle="Ventes vs Charges — 6 derniers mois"
+          action={
+            <button className="btn-secondary" style={{ fontSize: '0.75rem', padding: '0.3rem 0.7rem' }}>
+              Exporter
+            </button>
+          }
+        >
+          <div style={{ height: 240 }}>
+            <ResponsiveContainer width="100%" height="100%">
+              <BarChart data={dataPerformance} barGap={4}>
+                <CartesianGrid strokeDasharray="4 4" stroke="#f1f5f9" vertical={false} />
+                <XAxis dataKey="name" fontSize={11} tickLine={false} axisLine={false} dy={8} />
+                <YAxis fontSize={11} tickLine={false} axisLine={false} tickFormatter={(v) => `${(v/1000).toFixed(0)}k`} />
+                <Tooltip
+                  cursor={{ fill: 'rgba(37,99,235,0.04)' }}
+                  contentStyle={{
+                    background: '#fff', border: '1px solid #e2e8f0',
+                    borderRadius: 10, boxShadow: '0 10px 25px rgba(0,0,0,0.08)',
+                    fontSize: 12, padding: '8px 12px',
+                  }}
+                />
+                <Legend wrapperStyle={{ fontSize: 11, paddingTop: 8 }} />
+                <Bar dataKey="ventes" name="Ventes" fill="#2563eb" radius={[4, 4, 0, 0]} barSize={20} />
+                <Bar dataKey="achats" name="Achats" fill="#fca5a5" radius={[4, 4, 0, 0]} barSize={20} />
+              </BarChart>
+            </ResponsiveContainer>
+          </div>
+        </ChartCard>
+
+        <ChartCard
+          title="Cinétique de Trésorerie"
+          subtitle="Solde hebdomadaire (F CFA)"
+          action={
+            <button className="btn-ghost" style={{ fontSize: '0.75rem' }}>Voir tout</button>
+          }
+        >
+          <div style={{ height: 240 }}>
+            <ResponsiveContainer width="100%" height="100%">
+              <AreaChart data={dataTresorerie}>
+                <defs>
+                  <linearGradient id="gradSolde" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="5%"  stopColor="#16a34a" stopOpacity={0.15} />
+                    <stop offset="95%" stopColor="#16a34a" stopOpacity={0} />
+                  </linearGradient>
+                </defs>
+                <CartesianGrid strokeDasharray="4 4" stroke="#f1f5f9" vertical={false} />
+                <XAxis dataKey="name" fontSize={11} tickLine={false} axisLine={false} dy={8} />
+                <YAxis fontSize={11} tickLine={false} axisLine={false} tickFormatter={(v) => `${(v/1000).toFixed(0)}k`} />
+                <Tooltip
+                  contentStyle={{
+                    background: '#fff', border: '1px solid #e2e8f0',
+                    borderRadius: 10, boxShadow: '0 10px 25px rgba(0,0,0,0.08)',
+                    fontSize: 12, padding: '8px 12px',
+                  }}
+                />
+                <Area type="monotone" dataKey="solde" name="Solde" stroke="#16a34a" fill="url(#gradSolde)" strokeWidth={2.5}
+                  dot={{ r: 4, fill: '#fff', stroke: '#16a34a', strokeWidth: 2 }}
+                />
+              </AreaChart>
+            </ResponsiveContainer>
+          </div>
+        </ChartCard>
+      </div>
+
+      {/* Bottom Row */}
+      <div style={{ display: 'grid', gridTemplateColumns: '280px 1fr', gap: '1rem' }}>
+        {/* Pie */}
+        <ChartCard title="Structure Analytique" subtitle="Répartition budgétaire">
+          <div style={{ height: 180, position: 'relative' }}>
+            <ResponsiveContainer width="100%" height="100%">
+              <PieChart>
+                <Pie data={dataAnalytique} cx="50%" cy="50%" innerRadius={55} outerRadius={75}
+                  paddingAngle={4} dataKey="value" stroke="none">
+                  {dataAnalytique.map((_, i) => <Cell key={i} fill={COLORS[i % COLORS.length]} />)}
+                </Pie>
+                <Tooltip contentStyle={{ fontSize: 12, borderRadius: 8, border: '1px solid #e2e8f0' }} />
+              </PieChart>
+            </ResponsiveContainer>
+          </div>
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.375rem', paddingTop: '0.25rem', borderTop: '1px solid var(--clr-border)' }}>
+            {dataAnalytique.map((d, i) => (
+              <div key={d.name} style={{ display: 'flex', alignItems: 'center', gap: '0.375rem' }}>
+                <span style={{ width: 8, height: 8, borderRadius: '50%', background: COLORS[i], flexShrink: 0 }} />
+                <span style={{ fontSize: '0.75rem', color: 'var(--clr-text-sub)' }}>{d.name}</span>
+              </div>
+            ))}
+          </div>
+        </ChartCard>
+
+        {/* Alerts */}
+        <ChartCard
+          title="Signaux de Gestion"
+          subtitle="Alertes nécessitant une action"
+          action={
+            <button className="btn-secondary" style={{ fontSize: '0.75rem', padding: '0.3rem 0.7rem', color: 'var(--clr-danger)' }}>
+              Traiter tout
+            </button>
+          }
+        >
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '0.625rem' }}>
+            <AlertItem
+              type="warning"
+              title="Retard de paiement — SARL SUNU"
+              desc="Encours de 1 250 000 F CFA dépassé depuis 90 jours. Action de relance recommandée."
+            />
+            <AlertItem
+              type="info"
+              title="Clôture périodique disponible"
+              desc="La période Octobre 2024 est prête pour clôture légale. Taux de lettrage : 98.4%."
+            />
+            <AlertItem
+              type="error"
+              title="Dépassement budgétaire — Marketing"
+              desc="Le poste Marketing & Communication dépasse les prévisions de 12% ce trimestre."
+            />
+          </div>
+        </ChartCard>
+      </div>
+
+      {/* System Status Bar */}
+      <div style={{
+        display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+        padding: '0.75rem 1rem',
+        background: 'var(--clr-surface)',
+        border: '1px solid var(--clr-border)',
+        borderRadius: 10,
+      }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.625rem' }}>
+          <ShieldCheck size={16} style={{ color: 'var(--clr-success)' }} />
+          <div>
+            <p style={{ fontSize: '0.8125rem', fontWeight: 600, color: 'var(--clr-text-body)' }}>Piste d'audit universelle active (ACDOCA)</p>
+            <p style={{ fontSize: '0.6875rem', color: 'var(--clr-text-muted)' }}>
+              Hash SHA-256 : <code style={{ fontFamily: 'monospace', background: '#f1f5f9', padding: '0.1rem 0.3rem', borderRadius: 4 }}>8f2e91a0-4d1c9e82</code> • Certifié par Joule AI Auditor
+            </p>
+          </div>
+        </div>
+        <div style={{ display: 'flex', gap: '0.5rem' }}>
+          <button className="btn-secondary" style={{ fontSize: '0.75rem', padding: '0.3rem 0.7rem' }}>Journal Logs</button>
+          <button className="btn-primary" style={{ fontSize: '0.75rem', padding: '0.3rem 0.7rem' }}>Réconciliation</button>
+        </div>
       </div>
     </div>
   );
