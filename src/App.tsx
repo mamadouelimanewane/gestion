@@ -149,10 +149,10 @@ const App = () => {
           </div>
           {!collapsed && (
             <div style={{ overflow: 'hidden', minWidth: 0 }}>
-              <p style={{ fontSize: '0.9375rem', fontWeight: 700, color: '#f1f5f9', lineHeight: 1.2, whiteSpace: 'nowrap' }}>
-                Gestion<span style={{ color: '#60a5fa' }}>Pro</span>
+              <p style={{ fontSize: '0.9375rem', fontWeight: 700, color: '#F1F5F9', lineHeight: 1.2, whiteSpace: 'nowrap', fontFamily: "'Plus Jakarta Sans', sans-serif", letterSpacing: '-0.01em' }}>
+                Gestion<span style={{ color: '#A5B4FC' }}>Pro</span>
               </p>
-              <p style={{ fontSize: '0.6rem', color: '#475569', fontWeight: 500, textTransform: 'uppercase', letterSpacing: '0.08em', marginTop: 2, whiteSpace: 'nowrap' }}>
+              <p style={{ fontSize: '0.6rem', color: '#4B5563', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.1em', marginTop: 2, whiteSpace: 'nowrap' }}>
                 ERP Enterprise
               </p>
             </div>
@@ -188,16 +188,17 @@ const App = () => {
             }}>
               <div style={{
                 width: 32, height: 32, borderRadius: 8,
-                background: '#334155',
+                background: 'rgba(79, 70, 229, 0.25)',
+                border: '1px solid rgba(129, 140, 248, 0.25)',
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
-                fontSize: '0.6875rem', fontWeight: 700, color: '#94a3b8',
+                fontSize: '0.6875rem', fontWeight: 700, color: '#A5B4FC',
                 flexShrink: 0,
               }}>MK</div>
               <div style={{ overflow: 'hidden', minWidth: 0 }}>
-                <p style={{ fontSize: '0.8rem', fontWeight: 600, color: '#cbd5e1', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                <p style={{ fontSize: '0.8rem', fontWeight: 600, color: '#E2E8F0', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
                   Mamadou Kane
                 </p>
-                <p style={{ fontSize: '0.7rem', color: '#475569', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                <p style={{ fontSize: '0.7rem', color: '#4B5563', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
                   Chef Comptable
                 </p>
               </div>
@@ -208,8 +209,8 @@ const App = () => {
             style={{
               width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.375rem',
               padding: '0.4rem',
-              borderRadius: 6, border: '1px solid rgba(255,255,255,0.07)',
-              background: 'transparent', color: '#475569',
+              borderRadius: 6, border: '1px solid rgba(255,255,255,0.06)',
+              background: 'transparent', color: '#4B5563',
               fontSize: '0.75rem', fontWeight: 500,
               cursor: 'pointer', transition: 'background 0.15s',
             }}
@@ -250,7 +251,7 @@ const App = () => {
                 color: 'var(--clr-text-body)',
                 outline: 'none',
               }}
-              onFocus={e => { e.target.style.borderColor = 'var(--clr-primary)'; e.target.style.boxShadow = '0 0 0 3px rgba(37,99,235,0.12)'; }}
+              onFocus={e => { e.target.style.borderColor = 'var(--clr-primary)'; e.target.style.boxShadow = '0 0 0 3px rgba(79,70,229,0.10)'; }}
               onBlur={e => { e.target.style.borderColor = 'var(--clr-border)'; e.target.style.boxShadow = 'none'; }}
             />
           </div>
