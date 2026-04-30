@@ -240,6 +240,14 @@ const VIEW_MAP: Record<string, React.ComponentType<any>> = {
   'co-aiplanner':        AIBudgetPlanner,
 };
 
+const DarkIconBtn = ({ children }: { children: React.ReactNode }) => (
+  <button
+    style={{ padding: '0.3rem', background: 'transparent', border: 'none', cursor: 'pointer', color: '#475569', borderRadius: 5, transition: 'all 0.15s', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+    onMouseEnter={e => { (e.currentTarget as HTMLButtonElement).style.background = 'rgba(255,255,255,0.08)'; (e.currentTarget as HTMLButtonElement).style.color = '#94A3B8'; }}
+    onMouseLeave={e => { (e.currentTarget as HTMLButtonElement).style.background = 'transparent'; (e.currentTarget as HTMLButtonElement).style.color = '#475569'; }}
+  >{children}</button>
+);
+
 const AccountingModule = () => {
   const [activeMenu, setActiveMenu] = useState<string | null>(null);
   const [currentViewId, setCurrentViewId] = useState<string>('home');
@@ -266,9 +274,11 @@ const AccountingModule = () => {
 
       <div style={{
         display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-        background: 'var(--clr-surface)', border: '1px solid var(--clr-border)',
+        background: 'linear-gradient(135deg, #0F172A 0%, #162032 100%)',
         borderRadius: 10, padding: '0.5rem 0.875rem',
         position: 'relative', zIndex: 195,
+        boxShadow: '0 4px 18px rgba(10, 15, 40, 0.22), 0 1px 3px rgba(10,15,40,0.14)',
+        border: '1px solid rgba(255,255,255,0.07)',
       }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '0.25rem', flexWrap: 'wrap' }}>
           {sageMenus.map(menu => (
@@ -277,10 +287,14 @@ const AccountingModule = () => {
           ))}
         </div>
         <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', flexShrink: 0 }}>
-          <div className="badge badge-green">Exercice 2024</div>
-          <div className="badge badge-blue">SYSCOHADA</div>
-          <button className="btn-ghost" style={{ padding: '0.3rem' }}><Printer size={14} /></button>
-          <button className="btn-ghost" style={{ padding: '0.3rem' }}><Settings size={14} /></button>
+          <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.3rem', padding: '0.22rem 0.6rem', background: 'rgba(21,128,61,0.18)', color: '#4ADE80', border: '1px solid rgba(74,222,128,0.25)', borderRadius: 9999, fontSize: '0.75rem', fontWeight: 500, letterSpacing: '0.01em' }}>
+            <span style={{ width: 6, height: 6, borderRadius: '50%', background: '#4ADE80', boxShadow: '0 0 6px rgba(74,222,128,0.6)', flexShrink: 0, display: 'inline-block' }} />
+            Exercice 2024
+          </div>
+          <div style={{ display: 'inline-flex', alignItems: 'center', padding: '0.22rem 0.6rem', background: 'rgba(79,70,229,0.22)', color: '#A5B4FC', border: '1px solid rgba(129,140,248,0.3)', borderRadius: 9999, fontSize: '0.75rem', fontWeight: 500 }}>SYSCOHADA</div>
+          <div style={{ width: 1, height: 18, background: 'rgba(255,255,255,0.08)' }} />
+          <DarkIconBtn><Printer size={14} /></DarkIconBtn>
+          <DarkIconBtn><Settings size={14} /></DarkIconBtn>
         </div>
       </div>
 
@@ -326,12 +340,15 @@ const MenuDropdown = ({ menu, activeMenu, currentViewId, onMenuClick, onItemClic
         style={{
           display: 'flex', alignItems: 'center', gap: '0.375rem',
           padding: '0.375rem 0.75rem', borderRadius: 6,
-          background: isOpen ? 'var(--clr-primary)' : hasActive ? 'var(--clr-primary-lt)' : 'transparent',
-          border: isOpen ? 'none' : hasActive ? '1px solid var(--clr-primary-mid)' : '1px solid transparent',
-          color: isOpen ? '#fff' : hasActive ? 'var(--clr-primary)' : 'var(--clr-text-body)',
+          background: isOpen ? 'var(--clr-primary)' : hasActive ? 'rgba(79,70,229,0.22)' : 'transparent',
+          border: isOpen ? '1px solid rgba(129,140,248,0.4)' : hasActive ? '1px solid rgba(129,140,248,0.35)' : '1px solid transparent',
+          color: isOpen ? '#fff' : hasActive ? '#A5B4FC' : '#94A3B8',
           fontSize: '0.8125rem', fontWeight: 500, cursor: 'pointer', whiteSpace: 'nowrap',
           transition: 'all 0.15s',
+          boxShadow: isOpen ? '0 2px 8px rgba(79,70,229,0.35)' : 'none',
         }}
+        onMouseEnter={e => { if (!isOpen && !hasActive) { (e.currentTarget as HTMLButtonElement).style.background = 'rgba(255,255,255,0.07)'; (e.currentTarget as HTMLButtonElement).style.color = '#CBD5E1'; } }}
+        onMouseLeave={e => { if (!isOpen && !hasActive) { (e.currentTarget as HTMLButtonElement).style.background = 'transparent'; (e.currentTarget as HTMLButtonElement).style.color = '#94A3B8'; } }}
       >
         {menu.icon} {menu.title}
         <ChevronDown size={13} style={{ transform: isOpen ? 'rotate(180deg)' : 'rotate(0)', transition: 'transform 0.2s' }} />
