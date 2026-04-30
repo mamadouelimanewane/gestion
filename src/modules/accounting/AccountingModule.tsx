@@ -6,7 +6,8 @@ import {
   PieChart, CheckCircle2, ChevronRight, FileText,
   FolderOpen, Layers, Calculator, CreditCard,
   Search, RefreshCw, BookOpen, Landmark,
-  ClipboardList, TrendingUp, Globe, Leaf
+  ClipboardList, TrendingUp, Globe, Leaf,
+  Home, FileCheck, ArrowRightLeft, Briefcase
 } from 'lucide-react';
 
 import ChartOfAccounts       from './ChartOfAccounts';
@@ -38,12 +39,10 @@ import ParametresSociete     from './ParametresSociete';
 import ImportExport          from './ImportExport';
 import BalanceAgee           from './BalanceAgee';
 import Echeancier            from './Echeancier';
-import DashboardPilotage     from './DashboardPilotage';
 import FixedAssets           from './FixedAssets';
 import CustomerDunning       from './CustomerDunning';
 import AutoPaymentProgram    from './AutoPaymentProgram';
 import UniversalJournal      from './UniversalJournal';
-import ESGDashboard          from '../reporting/ESGDashboard';
 import TaxEDIModule          from './TaxEDIModule';
 import AIBudgetPlanner       from './AIBudgetPlanner';
 import LeaseManagement       from './LeaseManagement';
@@ -59,19 +58,18 @@ type AnyItem = MenuItem | SeparatorItem;
 interface MenuGroup { title: string; icon: React.ReactNode; items: AnyItem[]; }
 
 /* ═══════════════════════════════════════════════════════════════
-   MENU SAGE 100 COMPTABILITÉ
-   Fidèle à l'architecture Sage Saari Comptabilité 100
+   MENU SAGE 100 COMPTABILITÉ (CONFIDENTIAL STATISTICS MOVED)
    ═══════════════════════════════════════════════════════════════ */
 const sageMenus: MenuGroup[] = [
   {
     title: 'Fichier',
     icon: <FolderOpen size={15} />,
     items: [
-      { id: 'dashboard',     label: 'Tableau de bord' },
-      { id: 'esg-dashboard', label: 'Performance ESG & Durabilité' },
+      { id: 'home',          label: 'Accueil Comptabilité' },
       { type: 'separator' },
-      { id: 'f-params',      label: 'A propos de… / Paramètres Société' },
+      { id: 'f-params',      label: 'Paramètres Société' },
       { id: 'f-import',      label: 'Importation / Exportation' },
+      { id: 'f-communication', label: 'Communication Expert' },
     ]
   },
   {
@@ -92,7 +90,6 @@ const sageMenus: MenuGroup[] = [
       { id: 's-postesbudgetaires', label: 'Postes budgétaires' },
       { type: 'separator' },
       { id: 's-immos',             label: 'Immobilisations (FI-AA)' },
-      { id: 's-leases',            label: 'Gestion IFRS 16 / Leases' },
     ]
   },
   {
@@ -100,19 +97,16 @@ const sageMenus: MenuGroup[] = [
     icon: <Activity size={15} />,
     items: [
       { id: 't-saisieecritures',   label: 'Saisie des écritures' },
-      { id: 't-brouillard-saisie', label: 'Journaux de saisie (Brouillard)' },
+      { id: 't-brouillard-saisie', label: 'Journaux de saisie' },
       { type: 'separator' },
-      { id: 't-cloture',           label: 'Clôture des journaux' },
       { id: 't-interlettrage',     label: 'Interrogation et lettrage' },
-      { type: 'separator' },
       { id: 't-rapproauto',        label: 'Rapprochement bancaire' },
+      { type: 'separator' },
       { id: 't-reglementtiers',    label: 'Règlement tiers' },
-      { id: 't-autopayment',       label: 'Paiements automatiques (F110)' },
-      { type: 'separator' },
+      { id: 't-autopayment',       label: 'Paiements auto (F110)' },
       { id: 't-relances',          label: 'Rappel / Relevé' },
-      { id: 't-dunning',           label: 'Relances clients (Dunning)' },
-      { id: 't-reevaluation',      label: 'Réévaluation devises' },
       { type: 'separator' },
+      { id: 't-reevaluation',      label: 'Réévaluation devises' },
       { id: 't-recherche',         label: 'Recherche d\'écritures' },
       { id: 't-reimputation',      label: 'Réimputation' },
       { type: 'separator' },
@@ -124,37 +118,92 @@ const sageMenus: MenuGroup[] = [
     icon: <FileText size={15} />,
     items: [
       { id: 'e-brouillard',        label: 'Brouillard' },
-      { id: 'e-journalcentralise', label: 'Journal centralisé' },
-      { id: 'e-universal',         label: 'Journal universel (ACDOCA)' },
-      { type: 'separator' },
       { id: 'e-grandlivre',        label: 'Grand-livre des comptes' },
       { id: 'e-balance',           label: 'Balance des comptes' },
-      { id: 'e-balanceagee',       label: 'Balance âgée' },
-      { id: 'e-echeancier',        label: 'Échéancier' },
       { type: 'separator' },
       { id: 'e-bilan',             label: 'Bilan / Compte de résultat' },
       { id: 'e-tax-declaration',   label: 'Déclaration de TVA' },
-      { id: 'e-tax-edi',           label: 'Déclaration fiscale (EDI)' },
       { type: 'separator' },
-      { id: 'e-reporting-hub',     label: 'Reporting Hub (PDF / Excel)' },
+      { id: 'e-reporting-hub',     label: 'Reporting Hub' },
     ]
   },
   {
     title: 'Analytique',
     icon: <PieChart size={15} />,
     items: [
-      { id: 'co-industrial',    label: 'Comptabilité analytique / Coûts' },
+      { id: 'co-industrial',    label: 'Comptabilité analytique' },
       { id: 'co-consolidation', label: 'Consolidation groupe' },
-      { type: 'separator' },
-      { id: 'co-aiplanner',     label: 'Planification budgétaire (IA)' },
+      { id: 'co-aiplanner',     label: 'Planification IA' },
     ]
   },
 ];
 
+/* ─── Welcome Page ───────────────────────────────────────────── */
+const AccountingHome = ({ onNavigate }: { onNavigate: (id: string, label: string) => void }) => {
+  return (
+    <div className="erp-card" style={{ padding: '2rem', display: 'flex', flexDirection: 'column', gap: '2rem' }}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+        <div style={{ width: 48, height: 48, borderRadius: 12, background: 'var(--clr-primary-lt)', color: 'var(--clr-primary)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+          <Briefcase size={24} />
+        </div>
+        <div>
+          <h2 style={{ fontSize: '1.25rem', fontWeight: 700 }}>Espace de Travail Comptable</h2>
+          <p style={{ fontSize: '0.875rem', color: 'var(--clr-text-muted)' }}>Gestion certifiée SYSCOHADA v2.4 • Architecture Sage 100</p>
+        </div>
+      </div>
+
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '1.25rem' }}>
+        <ShortcutCard 
+          icon={<BookOpen size={20} />} 
+          title="Plan Comptable" 
+          desc="Gérer les comptes généraux et auxiliaires" 
+          onClick={() => onNavigate('s-plancomptable', 'Plan comptable')}
+        />
+        <ShortcutCard 
+          icon={<Activity size={20} />} 
+          title="Saisie au Borne" 
+          desc="Enregistrement rapide des pièces comptables" 
+          onClick={() => onNavigate('t-saisieecritures', 'Saisie des écritures')}
+        />
+        <ShortcutCard 
+          icon={<ArrowRightLeft size={20} />} 
+          title="Lettrage" 
+          desc="Rapprochement des écritures tiers" 
+          onClick={() => onNavigate('t-interlettrage', 'Interrogation et lettrage')}
+        />
+        <ShortcutCard 
+          icon={<FileCheck size={20} />} 
+          title="Balance" 
+          desc="Édition de la balance de vérification" 
+          onClick={() => onNavigate('e-balance', 'Balance des comptes')}
+        />
+      </div>
+
+      <div style={{ padding: '1rem', background: 'var(--clr-bg)', borderRadius: 10, border: '1px solid var(--clr-border)', display: 'flex', alignItems: 'center', gap: '1rem' }}>
+        <ShieldCheck size={20} style={{ color: 'var(--clr-success)' }} />
+        <p style={{ fontSize: '0.8125rem', color: 'var(--clr-text-muted)' }}>
+          <strong>Note de sécurité :</strong> Les statistiques et dashboards de pilotage ont été déplacés vers le module dédié **Statistiques** pour garantir la confidentialité des données financières.
+        </p>
+      </div>
+    </div>
+  );
+};
+
+const ShortcutCard = ({ icon, title, desc, onClick }: any) => (
+  <button onClick={onClick} className="erp-card-interactive" style={{ textAlign: 'left', padding: '1.25rem', display: 'flex', alignItems: 'flex-start', gap: '1rem', width: '100%', background: 'var(--clr-surface)', border: '1px solid var(--clr-border)', borderRadius: 12, cursor: 'pointer', transition: 'all 0.2s' }}>
+    <div style={{ width: 40, height: 40, borderRadius: 10, background: 'var(--clr-primary-lt)', color: 'var(--clr-primary)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+      {icon}
+    </div>
+    <div>
+      <h4 style={{ fontSize: '0.9375rem', fontWeight: 600, marginBottom: '0.25rem' }}>{title}</h4>
+      <p style={{ fontSize: '0.75rem', color: 'var(--clr-text-muted)', lineHeight: 1.4 }}>{desc}</p>
+    </div>
+  </button>
+);
+
 /* ─── View ID → Component Mapping ──────────────────────────── */
-const VIEW_MAP: Record<string, React.ComponentType> = {
-  'dashboard':           DashboardPilotage,
-  'esg-dashboard':       ESGDashboard,
+const VIEW_MAP: Record<string, React.ComponentType<any>> = {
+  'home':                AccountingHome,
   'f-params':            ParametresSociete,
   'f-import':            ImportExport,
   's-plancomptable':     ChartOfAccounts,
@@ -168,7 +217,6 @@ const VIEW_MAP: Record<string, React.ComponentType> = {
   's-libelles':          LibellesAuto,
   's-postesbudgetaires': PostesBudgetaires,
   's-immos':             FixedAssets,
-  's-leases':            LeaseManagement,
   't-saisieecritures':   JournalEntry,
   't-brouillard-saisie': Brouillard,
   't-cloture':           ClotureJournaux,
@@ -177,34 +225,99 @@ const VIEW_MAP: Record<string, React.ComponentType> = {
   't-reglementtiers':    ReglementTiers,
   't-autopayment':       AutoPaymentProgram,
   't-relances':          RappelReleve,
-  't-dunning':           CustomerDunning,
   't-reevaluation':      ReevaluationDevise,
   't-recherche':         RechercheEcritures,
   't-reimputation':      Reimputation,
   't-nouvelexercice':    BasculementExercice,
   'e-brouillard':        Brouillard,
-  'e-journalcentralise': JournalCentralise,
-  'e-universal':         UniversalJournal,
   'e-grandlivre':        GrandLivre,
   'e-balance':           Balance,
-  'e-balanceagee':       BalanceAgee,
-  'e-echeancier':        Echeancier,
   'e-bilan':             BilanResultat,
   'e-tax-declaration':   TaxDeclaration,
-  'e-tax-edi':           TaxEDIModule,
   'e-reporting-hub':     ReportingHub,
   'co-industrial':       IndustrialCosting,
   'co-consolidation':    GroupConsolidation,
   'co-aiplanner':        AIBudgetPlanner,
 };
 
-/* ─── Dropdown Component ─────────────────────────────────────── */
-const MenuDropdown = ({ menu, activeMenu, currentViewId, onMenuClick, onItemClick }: {
-  menu: MenuGroup; activeMenu: string | null; currentViewId: string;
-  onMenuClick: (t: string) => void; onItemClick: (i: MenuItem) => void;
-}) => {
+const AccountingModule = () => {
+  const [activeMenu, setActiveMenu] = useState<string | null>(null);
+  const [currentViewId, setCurrentViewId] = useState<string>('home');
+  const [currentViewLabel, setCurrentViewLabel] = useState<string>('Accueil Comptabilité');
+
+  const handleMenuClick = (title: string) => setActiveMenu(activeMenu === title ? null : title);
+  const handleItemClick = (item: MenuItem) => {
+    setCurrentViewId(item.id);
+    setCurrentViewLabel(item.label);
+    setActiveMenu(null);
+  };
+
+  const handleNavigate = (id: string, label: string) => {
+    setCurrentViewId(id);
+    setCurrentViewLabel(label);
+  };
+
+  const parentMenu = sageMenus.find(m => m.items.some(i => !i.type && i.id === currentViewId));
+  const ViewComponent = VIEW_MAP[currentViewId];
+
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', paddingBottom: '2rem', position: 'relative' }}>
+      {activeMenu && <div style={{ position: 'fixed', inset: 0, zIndex: 190 }} onClick={() => setActiveMenu(null)} />}
+
+      <div style={{
+        display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+        background: 'var(--clr-surface)', border: '1px solid var(--clr-border)',
+        borderRadius: 10, padding: '0.5rem 0.875rem',
+        position: 'relative', zIndex: 195,
+      }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.25rem', flexWrap: 'wrap' }}>
+          {sageMenus.map(menu => (
+            <MenuDropdown key={menu.title} menu={menu} activeMenu={activeMenu}
+              currentViewId={currentViewId} onMenuClick={handleMenuClick} onItemClick={handleItemClick} />
+          ))}
+        </div>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', flexShrink: 0 }}>
+          <div className="badge badge-green">Exercice 2024</div>
+          <div className="badge badge-blue">SYSCOHADA</div>
+          <button className="btn-ghost" style={{ padding: '0.3rem' }}><Printer size={14} /></button>
+          <button className="btn-ghost" style={{ padding: '0.3rem' }}><Settings size={14} /></button>
+        </div>
+      </div>
+
+      <div style={{ display: 'flex', alignItems: 'center', gap: '0.375rem', padding: '0 0.25rem' }}>
+        <span style={{ fontSize: '0.75rem', color: 'var(--clr-text-muted)' }}>Comptabilité</span>
+        {parentMenu && (
+          <>
+            <ChevronRight size={12} style={{ color: 'var(--clr-text-muted)' }} />
+            <span style={{ fontSize: '0.75rem', color: 'var(--clr-text-muted)' }}>{parentMenu.title}</span>
+          </>
+        )}
+        <ChevronRight size={12} style={{ color: 'var(--clr-text-muted)' }} />
+        <span style={{ fontSize: '0.8rem', fontWeight: 600, color: 'var(--clr-text-body)' }}>{currentViewLabel}</span>
+      </div>
+
+      <AnimatePresence mode="wait">
+        <motion.div key={currentViewId}
+          initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -8 }} transition={{ duration: 0.2 }}>
+          {ViewComponent ? (
+            <ViewComponent onNavigate={handleNavigate} />
+          ) : (
+            <div className="erp-card" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', minHeight: 320, padding: '3rem', textAlign: 'center', gap: '1rem' }}>
+              <div style={{ width: 48, height: 48, borderRadius: 12, background: 'var(--clr-primary-lt)', color: 'var(--clr-primary)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><Settings size={24} /></div>
+              <h3 style={{ fontSize: '1rem', fontWeight: 600 }}>{currentViewLabel}</h3>
+              <p style={{ fontSize: '0.8125rem', color: 'var(--clr-text-muted)', maxWidth: 400 }}>Module en cours de déploiement.</p>
+            </div>
+          )}
+        </motion.div>
+      </AnimatePresence>
+    </div>
+  );
+};
+
+const MenuDropdown = ({ menu, activeMenu, currentViewId, onMenuClick, onItemClick }: any) => {
   const isOpen = activeMenu === menu.title;
-  const hasActive = menu.items.some(i => !i.type && i.id === currentViewId);
+  const hasActive = menu.items.some((i: any) => !i.type && i.id === currentViewId);
 
   return (
     <div style={{ position: 'relative' }}>
@@ -219,8 +332,6 @@ const MenuDropdown = ({ menu, activeMenu, currentViewId, onMenuClick, onItemClic
           fontSize: '0.8125rem', fontWeight: 500, cursor: 'pointer', whiteSpace: 'nowrap',
           transition: 'all 0.15s',
         }}
-        onMouseEnter={e => { if (!isOpen && !hasActive) e.currentTarget.style.background = 'var(--clr-surface-2)'; }}
-        onMouseLeave={e => { if (!isOpen && !hasActive) e.currentTarget.style.background = 'transparent'; }}
       >
         {menu.icon} {menu.title}
         <ChevronDown size={13} style={{ transform: isOpen ? 'rotate(180deg)' : 'rotate(0)', transition: 'transform 0.2s' }} />
@@ -235,113 +346,22 @@ const MenuDropdown = ({ menu, activeMenu, currentViewId, onMenuClick, onItemClic
             className="erp-dropdown"
             style={{ position: 'absolute', top: 'calc(100% + 6px)', left: 0, minWidth: 260, zIndex: 200, maxHeight: 420, overflowY: 'auto' }}
           >
-            <div style={{ padding: '0.375rem 0.75rem 0.25rem', fontSize: '0.625rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.08em', color: 'var(--clr-text-muted)' }}>
-              {menu.title}
-            </div>
-            {menu.items.map((item, idx) => {
+            {menu.items.map((item: any, idx: number) => {
               if (item.type === 'separator') return <div key={idx} className="erp-dropdown-sep" />;
-              const mi = item as MenuItem;
-              const isActive = currentViewId === mi.id;
+              const isActive = currentViewId === item.id;
               return (
-                <button key={mi.id} onClick={() => onItemClick(mi)}
+                <button key={item.id} onClick={() => onItemClick(item)}
                   className={`erp-dropdown-item ${isActive ? 'active' : ''}`}>
                   {isActive
                     ? <CheckCircle2 size={13} style={{ color: 'var(--clr-primary)', flexShrink: 0 }} />
                     : <ChevronRight size={13} style={{ color: 'var(--clr-text-muted)', flexShrink: 0, opacity: 0.4 }} />
                   }
-                  {mi.label}
+                  {item.label}
                 </button>
               );
             })}
           </motion.div>
         )}
-      </AnimatePresence>
-    </div>
-  );
-};
-
-/* ═══════════════════════════════════════════════════════════════
-   MAIN COMPONENT
-   ═══════════════════════════════════════════════════════════════ */
-const AccountingModule = () => {
-  const [activeMenu, setActiveMenu] = useState<string | null>(null);
-  const [currentViewId, setCurrentViewId] = useState<string>('dashboard');
-  const [currentViewLabel, setCurrentViewLabel] = useState<string>('Tableau de bord');
-
-  const handleMenuClick = (title: string) => setActiveMenu(activeMenu === title ? null : title);
-  const handleItemClick = (item: MenuItem) => {
-    setCurrentViewId(item.id);
-    setCurrentViewLabel(item.label);
-    setActiveMenu(null);
-  };
-
-  // Find which menu group contains current view
-  const parentMenu = sageMenus.find(m => m.items.some(i => !i.type && i.id === currentViewId));
-  const ViewComponent = VIEW_MAP[currentViewId];
-
-  return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', paddingBottom: '2rem', position: 'relative' }}>
-
-      {/* Backdrop for dropdown close */}
-      {activeMenu && <div style={{ position: 'fixed', inset: 0, zIndex: 190 }} onClick={() => setActiveMenu(null)} />}
-
-      {/* ── Menu Bar (Sage 100 Style) ──────────────────────────── */}
-      <div style={{
-        display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-        background: 'var(--clr-surface)', border: '1px solid var(--clr-border)',
-        borderRadius: 10, padding: '0.5rem 0.875rem',
-        position: 'relative', zIndex: 195,
-      }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '0.25rem', flexWrap: 'wrap' }}>
-          {sageMenus.map(menu => (
-            <MenuDropdown key={menu.title} menu={menu} activeMenu={activeMenu}
-              currentViewId={currentViewId} onMenuClick={handleMenuClick} onItemClick={handleItemClick} />
-          ))}
-        </div>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', flexShrink: 0 }}>
-          <div className="badge badge-green"><CheckCircle2 size={11} /> Exercice 2024</div>
-          <div className="badge badge-blue"><ShieldCheck size={11} /> SYSCOHADA</div>
-          <button className="btn-ghost" style={{ padding: '0.3rem' }}><Printer size={14} /></button>
-          <button className="btn-ghost" style={{ padding: '0.3rem' }}><Settings size={14} /></button>
-        </div>
-      </div>
-
-      {/* ── Breadcrumb ─────────────────────────────────────────── */}
-      <div style={{ display: 'flex', alignItems: 'center', gap: '0.375rem', padding: '0 0.25rem' }}>
-        <span style={{ fontSize: '0.75rem', color: 'var(--clr-text-muted)' }}>Comptabilité</span>
-        {parentMenu && (
-          <>
-            <ChevronRight size={12} style={{ color: 'var(--clr-text-muted)' }} />
-            <span style={{ fontSize: '0.75rem', color: 'var(--clr-text-muted)' }}>{parentMenu.title}</span>
-          </>
-        )}
-        <ChevronRight size={12} style={{ color: 'var(--clr-text-muted)' }} />
-        <span style={{ fontSize: '0.8rem', fontWeight: 600, color: 'var(--clr-text-body)' }}>{currentViewLabel}</span>
-      </div>
-
-      {/* ── Active View ────────────────────────────────────────── */}
-      <AnimatePresence mode="wait">
-        <motion.div key={currentViewId}
-          initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: -8 }} transition={{ duration: 0.2 }}>
-          {ViewComponent ? (
-            <ViewComponent />
-          ) : (
-            <div className="erp-card" style={{
-              display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
-              minHeight: 320, padding: '3rem', textAlign: 'center', gap: '1rem',
-            }}>
-              <div style={{ width: 48, height: 48, borderRadius: 12, background: 'var(--clr-primary-lt)',
-                color: 'var(--clr-primary)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                <Settings size={24} />
-              </div>
-              <h3 style={{ fontSize: '1rem', fontWeight: 600 }}>{currentViewLabel}</h3>
-              <p style={{ fontSize: '0.8125rem', color: 'var(--clr-text-muted)', maxWidth: 400 }}>
-                Ce module est en cours de déploiement.
-              </p>
-            </div>
-          )}
-        </motion.div>
       </AnimatePresence>
     </div>
   );
