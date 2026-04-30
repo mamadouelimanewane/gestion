@@ -477,10 +477,37 @@ th span {
 .text-5xl { font-size: 2.25rem  !important; } /* 48px → 34px */
 
 /* ── 10. Monospace Number Readability ───────────────────────── */
-/* Account codes use font-mono which is fine, but font-black    */
-/* on monospace is especially heavy. Already covered by #2.     */
-/* Also ensure good size for financial data.                    */
+/* Account codes use font-mono — ensure good size for data.     */
+
 .font-mono {
   font-size: max(13px, 0.875rem);
   letter-spacing: -0.01em;
+}
+
+/* ── 11. Footer & Status Bar Text ───────────────────────────── */
+/* App.tsx footer uses inline style fontSize: '0.6875rem'       */
+/* = 10.3px. !important overrides inline styles in external CSS.*/
+
+footer span, footer button, footer a {
+  font-size: max(11.5px, 0.75rem) !important;
+  letter-spacing: 0 !important;
+}
+
+/* ── 12. Recharts Labels ────────────────────────────────────── */
+/* Chart axis/tick labels at 11px are unreadable on dense charts.*/
+
+.recharts-text { font-size: 12px !important; }
+
+/* ── 13. text-sm floor ──────────────────────────────────────── */
+/* Tailwind text-sm = 0.875rem = 13.125px at 15px base — fine.  */
+/* text-xs = 0.75rem = 11.25px — lift to 12px.                  */
+
+.text-xs { font-size: 12px !important; }
+
+/* ── 14. Prevent text shrink in flex/truncated labels ──────── */
+/* Truncated labels in tight containers sometimes shrink below  */
+/* readable threshold. Clamp to 12px minimum.                   */
+
+[class*="truncate"], [class*="overflow-hidden"] {
+  min-font-size: 12px; /* progressive enhancement */
 }
