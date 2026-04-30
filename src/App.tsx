@@ -76,7 +76,7 @@ const NavSep = ({ label }: { label: string }) => (
 /* ─────────────────────────────────────────────────────────── */
 const App = () => {
   const [activeTab, setActiveTab] = useState('Comptabilité');
-  const [theme, setTheme]         = useState<Theme>('dark');
+  const [theme, setTheme]         = useState<Theme>('light');
 
   /* Apply theme to <html> */
   useEffect(() => {

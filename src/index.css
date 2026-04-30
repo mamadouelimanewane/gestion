@@ -1,30 +1,30 @@
 @import "tailwindcss";
 
 /* ─── Theme tokens ─────────────────────────────────────────── */
-:root,
 [data-theme="dark"] {
-  --bg-app:       #0b1120;
-  --bg-sidebar:   #0d1526;
-  --bg-header:    rgba(13,21,38,0.6);
-  --bg-card:      rgba(30,41,59,0.55);
-  --bg-card-hover:rgba(30,41,59,0.85);
-  --border:       rgba(255,255,255,0.06);
-  --border-hover: rgba(255,255,255,0.12);
-  --text-main:    #f1f5f9;
-  --text-sub:     #94a3b8;
-  --text-muted:   #475569;
-  --primary:      #6366f1;
-  --primary-hover:#4f46e5;
-  --accent:       #10b981;
-  --danger:       #ef4444;
-  --chart-grid:   #1e293b;
-  --chart-label:  #64748b;
+  --bg-app:       #0f172a;
+  --bg-sidebar:   #1e293b;
+  --bg-header:    rgba(30,41,59,0.7);
+  --bg-card:      #1e293b;
+  --bg-card-hover:#334155;
+  --border:       rgba(255,255,255,0.08);
+  --border-hover: rgba(255,255,255,0.15);
+  --text-main:    #f8fafc;
+  --text-sub:     #cbd5e1;
+  --text-muted:   #64748b;
+  --primary:      #818cf8;
+  --primary-hover:#6366f1;
+  --accent:       #34d399;
+  --danger:       #f87171;
+  --chart-grid:   #334155;
+  --chart-label:  #94a3b8;
   --tooltip-bg:   #1e293b;
-  --tooltip-border:#334155;
-  --scrollbar:    rgba(255,255,255,0.08);
+  --tooltip-border:#475569;
+  --scrollbar:    rgba(255,255,255,0.1);
   color-scheme: dark;
 }
 
+:root,
 [data-theme="light"] {
   --bg-app:       #f8faff;
   --bg-sidebar:   #ffffff;
