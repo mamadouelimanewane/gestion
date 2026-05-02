@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { 
-  Search, Plus, Filter, Download, ChevronRight, 
+import {
+  Search, Plus, Filter, Download, ChevronRight,
   ChevronDown, Folder, FileText, Info, MoreVertical,
   Landmark, Database, BookOpen, Layers, ShieldCheck,
-  Zap, ArrowRight, Printer, Share2
+  Zap, ArrowRight, Printer, Share2, History
 } from 'lucide-react';
 
 const ChartOfAccounts = () => {
@@ -126,12 +126,12 @@ const ChartOfAccounts = () => {
                        <span className="text-[9px] font-bold text-[#94a3b8] uppercase tracking-[0.3em] mt-1">{group.accounts.length} Postes Comptables Certifiés</span>
                     </div>
                     <div className="ml-auto flex items-center gap-6">
-                       <button className="p-2.5 bg-white border border-[#cbd5e1] rounded-xl text-[#94a3b8] hover:text-[#005eb8] shadow-sm transition-all">
+                       <div role="button" tabIndex={0} onClick={(e) => e.stopPropagation()} className="p-2.5 bg-white border border-[#cbd5e1] rounded-xl text-[#94a3b8] hover:text-[#005eb8] shadow-sm transition-all cursor-pointer">
                           <Plus size={18} />
-                       </button>
-                       <button className="p-2.5 bg-white border border-[#cbd5e1] rounded-xl text-[#94a3b8] hover:text-[#0f172a] shadow-sm transition-all">
+                       </div>
+                       <div role="button" tabIndex={0} onClick={(e) => e.stopPropagation()} className="p-2.5 bg-white border border-[#cbd5e1] rounded-xl text-[#94a3b8] hover:text-[#0f172a] shadow-sm transition-all cursor-pointer">
                           <MoreVertical size={18} />
-                       </button>
+                       </div>
                     </div>
                  </button>
 

@@ -4,7 +4,7 @@ import {
   Zap, Activity, Cpu, Database, 
   AlertTriangle, CheckCircle2, Play, 
   Square, RefreshCw, BarChart3, ShieldCheck,
-  Users, HardDrive, Timer, Gauge
+  Users, HardDrive, Timer, Gauge, Download
 } from 'lucide-react';
 
 const LoadTestingDashboard = () => {

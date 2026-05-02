@@ -90,7 +90,7 @@ const PlantMaintenance = () => {
               <div className="p-8 bg-[#f8fafc] border-b border-[#cbd5e1] flex justify-between items-center">
                  <div className="flex items-center gap-4">
                     <div className="w-10 h-10 bg-red-50 text-[#dc2626] rounded-xl flex items-center justify-center border border-red-100 shadow-inner">
-                       <Tools size={20} />
+                       <Wrench size={20} />
                     </div>
                     <h4 className="text-[12px] font-bold uppercase tracking-[0.2em] text-[#0f172a]">Ordres de Travail (Work Orders)</h4>
                  </div>

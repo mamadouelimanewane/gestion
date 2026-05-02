@@ -255,8 +255,8 @@ const InputField = ({ label, value, full }: any) => (
 const SelectField = ({ label, options, selected }: any) => (
   <div className="flex flex-col gap-2">
     <label className="text-[10px] font-bold uppercase text-[#64748b] tracking-widest">{label}</label>
-    <select className="bg-white border border-[#cbd5e1] rounded-lg px-4 py-2.5 text-xs font-bold text-[#334155] focus:outline-none focus:border-[#005eb8] transition-all shadow-inner appearance-none">
-       {options.map((opt: string) => <option key={opt} selected={opt === selected}>{opt}</option>)}
+    <select defaultValue={selected} className="bg-white border border-[#cbd5e1] rounded-lg px-4 py-2.5 text-xs font-bold text-[#334155] focus:outline-none focus:border-[#005eb8] transition-all shadow-inner appearance-none">
+       {options.map((opt: string) => <option key={opt}>{opt}</option>)}
     </select>
   </div>
 );

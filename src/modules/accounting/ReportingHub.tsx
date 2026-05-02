@@ -5,7 +5,7 @@ import {
   Download, Printer, Filter, Calendar, 
   Search, ShieldCheck, PieChart, Info,
   BookOpen, Activity, LayoutDashboard,
-  FileSpreadsheet, Zap
+  FileSpreadsheet, Zap, RefreshCw
 } from 'lucide-react';
 
 const ReportingHub = () => {

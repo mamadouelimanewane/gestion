@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
-  Package, ArrowRightLeft, AlertTriangle, ClipboardList, 
-  Search, Plus, Filter, Download, ArrowUpRight, 
+  Package, ArrowRightLeft, AlertTriangle, ClipboardList,
+  Search, Plus, Filter, Download, ArrowUpRight,
   ArrowDownRight, Barcode, Warehouse, Eye,
   ChevronRight, History, Settings, Trash2, Edit3, Wrench,
-  XCircle, MapPin, Boxes, Activity, Info, MoreVertical
+  XCircle, MapPin, Boxes, Activity, Info, MoreVertical, TrendingUp,
+  ShieldAlert, Clock
 } from 'lucide-react';
 import PlantMaintenance from './PlantMaintenance';
 

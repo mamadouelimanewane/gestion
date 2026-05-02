@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { 
-  ShieldCheck, Eye, Key, AlertTriangle, 
+import {
+  ShieldCheck, Eye, Key, AlertTriangle,
   Lock, Search, Filter, ShieldAlert,
   Users, UserCheck, Layout, Database,
   Activity, Zap, Terminal, Shield,
   ChevronRight, RefreshCw, FileText, Plus,
   MoreVertical, Power, Globe, Server,
-  Fingerprint, FileCheck, History
+  Fingerprint, FileCheck, History, Landmark
 } from 'lucide-react';
 
 const SecurityModule = () => {

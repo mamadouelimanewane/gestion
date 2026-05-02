@@ -6,7 +6,7 @@ import {
   BrainCircuit, Zap, AlertTriangle, CheckCircle2,
   PieChart, Info, DollarSign, Database, Layers,
   ShieldCheck, History, Printer, Download, Share2,
-  ChevronRight, MoreVertical, Activity, BarChart
+  ChevronRight, MoreVertical, Activity, BarChart, Edit
 } from 'lucide-react';
 
 const AIBudgetPlanner = () => {

@@ -399,8 +399,8 @@ const WizardInput = ({ label, value }: any) => (
 const WizardSelect = ({ label, options, selected }: any) => (
   <div className="flex flex-col gap-2">
      <label className="text-[10px] font-bold text-[#64748b] uppercase tracking-widest">{label}</label>
-     <select className="bg-white border border-[#cbd5e1] rounded-lg px-4 py-3 text-xs font-bold text-[#334155] outline-none focus:border-[#005eb8] transition-all shadow-inner appearance-none cursor-pointer">
-        {options.map((o: any) => <option key={o} selected={o === selected}>{o}</option>)}
+     <select defaultValue={selected} className="bg-white border border-[#cbd5e1] rounded-lg px-4 py-3 text-xs font-bold text-[#334155] outline-none focus:border-[#005eb8] transition-all shadow-inner appearance-none cursor-pointer">
+        {options.map((o: any) => <option key={o}>{o}</option>)}
      </select>
   </div>
 );
