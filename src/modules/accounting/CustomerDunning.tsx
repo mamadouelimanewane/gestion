@@ -4,7 +4,7 @@ import {
   CheckCircle, Search, Filter, ArrowRight, Printer,
   User, DollarSign, Calendar, ChevronRight, Share2,
   Download, History, ShieldCheck, Zap, Activity,
-  MoreVertical, Bell, Info, Landmark, Layers, Check
+  MoreVertical, Bell, Info, Landmark, Layers, Check, Database
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 

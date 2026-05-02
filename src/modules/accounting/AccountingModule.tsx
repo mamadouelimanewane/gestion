@@ -310,10 +310,10 @@ const AccountingModule = () => {
         <span style={{ fontSize: '0.8rem', fontWeight: 600, color: 'var(--clr-text-body)' }}>{currentViewLabel}</span>
       </div>
 
-      <AnimatePresence mode="wait">
+      <AnimatePresence mode="wait" initial={false}>
         <motion.div key={currentViewId}
           initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: -8 }} transition={{ duration: 0.2 }}>
+          exit={{ opacity: 0, y: -8 }} transition={{ duration: 0.15 }}>
           {ViewComponent ? (
             <ViewComponent onNavigate={handleNavigate} />
           ) : (

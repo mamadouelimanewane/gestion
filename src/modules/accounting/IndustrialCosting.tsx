@@ -6,7 +6,7 @@ import {
   Cpu, Zap, Layers, Share2, Info, ChevronRight,
   Target, AlertTriangle, CheckCircle2, Box,
   History, Printer, Download, ArrowRight, ShieldCheck,
-  MoreVertical, Check, X
+  MoreVertical, Check, X, BarChart
 } from 'lucide-react';
 
 const IndustrialCosting = () => {

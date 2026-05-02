@@ -1,513 +1,738 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
 @import "tailwindcss";
 
-/* ══════════════════════════════════════════════════════════════
-   GESTIONPRO — PREMIUM ERP THEME
-   Indigo Edition · Enterprise-Grade Visual Design
-   ══════════════════════════════════════════════════════════════ */
+/* ══════════════════════════════════════════════════════════════════════════
+   GESTIONPRO ERP — PREMIUM DESIGN SYSTEM v3
+   Clean · Professional · Enterprise-Grade
+   ══════════════════════════════════════════════════════════════════════════ */
 
 :root {
-  /* ── Core Palette ──────────────────────────────────────────── */
-  --clr-bg:            #F5F6FA;
-  --clr-surface:       #FFFFFF;
-  --clr-surface-2:     #F9FAFB;
-  --clr-sidebar:       #0F172A;
-  --clr-sidebar-hover: #162032;
-  --clr-header:        #FFFFFF;
+  /* ── Brand ──────────────────────────────────────────────────────────── */
+  --primary:        #4F46E5;
+  --primary-dk:     #4338CA;
+  --primary-lt:     #EEF2FF;
+  --primary-mid:    #C7D2FE;
+  --primary-soft:   #A5B4FC;
 
-  /* ── Brand Indigo ──────────────────────────────────────────── */
-  --clr-primary:     #4F46E5;
-  --clr-primary-dk:  #4338CA;
-  --clr-primary-lt:  #EEF2FF;
-  --clr-primary-mid: #C7D2FE;
+  /* ── Neutrals ───────────────────────────────────────────────────────── */
+  --gray-950:  #030712;
+  --gray-900:  #111827;
+  --gray-800:  #1F2937;
+  --gray-700:  #374151;
+  --gray-600:  #4B5563;
+  --gray-500:  #6B7280;
+  --gray-400:  #9CA3AF;
+  --gray-300:  #D1D5DB;
+  --gray-200:  #E5E7EB;
+  --gray-100:  #F3F4F6;
+  --gray-50:   #F9FAFB;
+  --white:     #FFFFFF;
 
-  /* ── Semantic Colors ───────────────────────────────────────── */
-  --clr-success:     #15803d;
-  --clr-success-lt:  #f0fdf4;
-  --clr-success-mid: #bbf7d0;
-  --clr-warning:     #b45309;
-  --clr-warning-lt:  #fffbeb;
-  --clr-warning-mid: #fde68a;
-  --clr-danger:      #dc2626;
-  --clr-danger-lt:   #fef2f2;
-  --clr-danger-mid:  #fecaca;
-  --clr-info:        #0891b2;
-  --clr-info-lt:     #ecfeff;
+  /* ── Semantic ───────────────────────────────────────────────────────── */
+  --success:     #16A34A;
+  --success-dk:  #15803D;
+  --success-lt:  #F0FDF4;
+  --success-mid: #BBF7D0;
+  --warning:     #D97706;
+  --warning-lt:  #FFFBEB;
+  --warning-mid: #FDE68A;
+  --danger:      #DC2626;
+  --danger-lt:   #FEF2F2;
+  --danger-mid:  #FECACA;
+  --info:        #0891B2;
+  --info-lt:     #ECFEFF;
+  --info-mid:    #A5F3FC;
 
-  /* ── Typography ────────────────────────────────────────────── */
-  --clr-text-h:      #080D1C;
-  --clr-text-body:   #1e293b;
-  --clr-text-sub:    #4B5563;
-  --clr-text-muted:  #9CA3AF;
-  --clr-text-sidebar:#CBD5E1;
-  --clr-text-sidebar-muted: #4B5563;
+  /* ── App Shell ──────────────────────────────────────────────────────── */
+  --bg:          #F4F6FB;
+  --surface:     #FFFFFF;
+  --surface-2:   #F9FAFB;
+  --sidebar-bg:  #0F172A;
+  --sidebar-2:   #1E293B;
+  --header-bg:   #FFFFFF;
 
-  /* ── Borders ───────────────────────────────────────────────── */
-  --clr-border:      #E5E7EB;
-  --clr-border-focus:#4F46E5;
+  /* ── Text ───────────────────────────────────────────────────────────── */
+  --text-h:      #0F172A;
+  --text-body:   #1E293B;
+  --text-sub:    #4B5563;
+  --text-muted:  #9CA3AF;
+  --text-side:   #CBD5E1;
 
-  /* ── Shadows ───────────────────────────────────────────────── */
-  --shadow-xs:  0 1px 2px rgba(10, 15, 40, 0.05);
-  --shadow-sm:  0 1px 3px rgba(10, 15, 40, 0.07), 0 1px 2px rgba(10, 15, 40, 0.04);
-  --shadow-md:  0 4px 8px rgba(10, 15, 40, 0.08), 0 2px 4px rgba(10, 15, 40, 0.05);
-  --shadow-lg:  0 12px 24px rgba(10, 15, 40, 0.08), 0 4px 8px rgba(10, 15, 40, 0.04);
-  --shadow-xl:  0 24px 40px rgba(10, 15, 40, 0.10), 0 8px 16px rgba(10, 15, 40, 0.06);
+  /* ── Borders ────────────────────────────────────────────────────────── */
+  --border:      #E5E7EB;
+  --border-2:    #D1D5DB;
+  --border-focus:#4F46E5;
 
-  /* ── Shape ─────────────────────────────────────────────────── */
-  --radius-sm:  5px;
-  --radius-md:  8px;
-  --radius-lg:  12px;
-  --radius-xl:  18px;
+  /* ── Shadows (refined) ──────────────────────────────────────────────── */
+  --shadow-xs: 0 1px 2px 0 rgba(16, 24, 40, 0.05);
+  --shadow-sm: 0 1px 3px 0 rgba(16, 24, 40, 0.07), 0 1px 2px -1px rgba(16, 24, 40, 0.05);
+  --shadow-md: 0 4px 8px -2px rgba(16, 24, 40, 0.08), 0 2px 4px -2px rgba(16, 24, 40, 0.04);
+  --shadow-lg: 0 12px 24px -4px rgba(16, 24, 40, 0.09), 0 4px 8px -2px rgba(16, 24, 40, 0.04);
+  --shadow-xl: 0 24px 40px -8px rgba(16, 24, 40, 0.11), 0 8px 16px -4px rgba(16, 24, 40, 0.06);
+  --shadow-primary: 0 4px 14px 0 rgba(79, 70, 229, 0.30);
+
+  /* ── Radius ─────────────────────────────────────────────────────────── */
+  --r-xs:  4px;
+  --r-sm:  6px;
+  --r-md:  8px;
+  --r-lg:  12px;
+  --r-xl:  16px;
+  --r-2xl: 20px;
+  --r-full: 9999px;
+
+  /* ── Transitions ────────────────────────────────────────────────────── */
+  --t-fast:   0.12s ease;
+  --t-base:   0.2s ease;
+  --t-slow:   0.3s cubic-bezier(0.4, 0, 0.2, 1);
 
   color-scheme: light;
 }
 
-/* ─── Reset ─────────────────────────────────────────────────── */
+/* ══════════════════════════════════════════════════════════════════════════
+   RESET & BASE
+   ══════════════════════════════════════════════════════════════════════════ */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-/* ─── Base ──────────────────────────────────────────────────── */
-html { font-size: 15px; }
+html { font-size: 15px; -webkit-text-size-adjust: 100%; }
 
 body {
-  font-family: 'Inter', system-ui, -apple-system, sans-serif;
-  background-color: var(--clr-bg);
-  color: var(--clr-text-body);
+  font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background-color: var(--bg);
+  color: var(--text-body);
   min-height: 100vh;
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   line-height: 1.6;
+  font-feature-settings: 'cv11', 'ss01';
 }
 
-/* ─── Heading Font ──────────────────────────────────────────── */
-h1, h2, h3, h4, h5, .section-title {
+/* ── Heading Font ─────────────────────────────────────────────────────── */
+h1, h2, h3, h4, h5, .font-display {
   font-family: 'Plus Jakarta Sans', 'Inter', system-ui, sans-serif;
+  color: var(--text-h);
 }
+h1 { font-size: 1.5rem;   font-weight: 700; line-height: 1.25; letter-spacing: -0.02em; }
+h2 { font-size: 1.25rem;  font-weight: 700; line-height: 1.3;  letter-spacing: -0.015em; }
+h3 { font-size: 1rem;     font-weight: 600; line-height: 1.35; letter-spacing: -0.01em; }
+h4 { font-size: 0.9rem;   font-weight: 600; line-height: 1.4; }
+h5 { font-size: 0.825rem; font-weight: 600; line-height: 1.4; }
+p  { color: var(--text-body); line-height: 1.65; }
 
-h1 { font-size: 1.75rem;   font-weight: 700; color: var(--clr-text-h); line-height: 1.2;  letter-spacing: -0.025em; }
-h2 { font-size: 1.375rem;  font-weight: 700; color: var(--clr-text-h); line-height: 1.25; letter-spacing: -0.02em; }
-h3 { font-size: 1.0625rem; font-weight: 600; color: var(--clr-text-h); line-height: 1.3;  letter-spacing: -0.01em; }
-h4 { font-size: 0.9375rem; font-weight: 600; color: var(--clr-text-h); }
-h5 { font-size: 0.875rem;  font-weight: 600; color: var(--clr-text-body); }
-p  { color: var(--clr-text-body); line-height: 1.65; }
-
-/* ─── ERP Card ──────────────────────────────────────────────── */
-.erp-card {
-  background: var(--clr-surface);
-  border: 1px solid var(--clr-border);
-  border-radius: var(--radius-lg);
+/* ══════════════════════════════════════════════════════════════════════════
+   CARDS
+   ══════════════════════════════════════════════════════════════════════════ */
+.card, .erp-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
   box-shadow: var(--shadow-sm);
-  transition: box-shadow 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+  transition: box-shadow var(--t-base), border-color var(--t-base), transform var(--t-base);
 }
-.erp-card:hover {
+.card:hover, .erp-card:hover {
   box-shadow: var(--shadow-md);
-  border-color: #D1D5DB;
-  transform: translateY(-1px);
+  border-color: var(--border-2);
 }
 
-/* ─── KPI Card ──────────────────────────────────────────────── */
+/* KPI / metric card */
 .kpi-card {
-  background: var(--clr-surface);
-  border: 1px solid var(--clr-border);
-  border-radius: var(--radius-lg);
-  padding: 1.25rem 1.5rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  padding: 1.125rem 1.25rem;
   box-shadow: var(--shadow-sm);
-  transition: all 0.2s ease;
+  transition: all var(--t-base);
+  position: relative;
+  overflow: hidden;
+}
+.kpi-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, transparent 60%, rgba(79, 70, 229, 0.03) 100%);
+  pointer-events: none;
 }
 .kpi-card:hover {
   box-shadow: var(--shadow-md);
-  border-color: #D1D5DB;
-  transform: translateY(-2px);
+  transform: translateY(-1px);
+  border-color: var(--primary-mid);
 }
 
-/* ─── Buttons ───────────────────────────────────────────────── */
-button { font-family: inherit; cursor: pointer; }
+/* ══════════════════════════════════════════════════════════════════════════
+   BUTTONS
+   ══════════════════════════════════════════════════════════════════════════ */
+button { font-family: inherit; cursor: pointer; transition: all var(--t-base); }
 
 .btn-primary {
   display: inline-flex; align-items: center; gap: 0.5rem;
-  background: var(--clr-primary);
+  background: var(--primary);
   color: #fff;
   border: none;
-  border-radius: var(--radius-md);
+  border-radius: var(--r-md);
   padding: 0.5rem 1rem;
-  font-size: 0.8125rem; font-weight: 500;
-  transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
-  box-shadow: 0 1px 4px rgba(79, 70, 229, 0.3), 0 0 0 1px rgba(79, 70, 229, 0.1);
+  font-size: 0.8125rem; font-weight: 600;
+  box-shadow: var(--shadow-primary);
+  transition: all var(--t-base);
 }
 .btn-primary:hover {
-  background: var(--clr-primary-dk);
-  box-shadow: 0 4px 12px rgba(79, 70, 229, 0.4), 0 0 0 1px rgba(79, 70, 229, 0.15);
+  background: var(--primary-dk);
+  box-shadow: 0 6px 20px rgba(79, 70, 229, 0.40);
   transform: translateY(-1px);
 }
-.btn-primary:active { transform: translateY(0); }
+.btn-primary:active { transform: translateY(0); box-shadow: var(--shadow-primary); }
 
 .btn-secondary {
   display: inline-flex; align-items: center; gap: 0.5rem;
-  background: var(--clr-surface);
-  color: var(--clr-text-body);
-  border: 1px solid var(--clr-border);
-  border-radius: var(--radius-md);
+  background: var(--surface);
+  color: var(--text-body);
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
   padding: 0.5rem 1rem;
   font-size: 0.8125rem; font-weight: 500;
-  transition: all 0.2s;
   box-shadow: var(--shadow-xs);
+  transition: all var(--t-fast);
 }
 .btn-secondary:hover {
-  background: var(--clr-surface-2);
-  border-color: #C9CDD4;
+  background: var(--gray-50);
+  border-color: var(--border-2);
   box-shadow: var(--shadow-sm);
 }
 
 .btn-ghost {
   display: inline-flex; align-items: center; gap: 0.5rem;
   background: transparent; border: none;
-  color: var(--clr-text-sub);
-  border-radius: var(--radius-sm);
+  color: var(--text-sub);
+  border-radius: var(--r-sm);
   padding: 0.375rem 0.625rem;
   font-size: 0.8125rem; font-weight: 500;
-  transition: all 0.15s;
+  transition: all var(--t-fast);
 }
-.btn-ghost:hover { background: #F3F4F6; color: var(--clr-text-body); }
+.btn-ghost:hover { background: var(--gray-100); color: var(--text-body); }
 
-/* ─── Badge / Chip ──────────────────────────────────────────── */
+.btn-danger {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  background: var(--danger);
+  color: #fff;
+  border: none;
+  border-radius: var(--r-md);
+  padding: 0.5rem 1rem;
+  font-size: 0.8125rem; font-weight: 600;
+  box-shadow: 0 4px 14px rgba(220, 38, 38, 0.3);
+  transition: all var(--t-base);
+}
+.btn-danger:hover { background: #B91C1C; transform: translateY(-1px); }
+
+/* ══════════════════════════════════════════════════════════════════════════
+   BADGES
+   ══════════════════════════════════════════════════════════════════════════ */
 .badge {
   display: inline-flex; align-items: center; gap: 0.3rem;
   font-size: 0.75rem; font-weight: 500;
-  padding: 0.25rem 0.6rem;
-  border-radius: 9999px;
+  padding: 0.2rem 0.6rem;
+  border-radius: var(--r-full);
   border: 1px solid transparent;
   letter-spacing: 0.01em;
+  white-space: nowrap;
 }
-.badge-blue    { background: var(--clr-primary-lt); color: var(--clr-primary);    border-color: var(--clr-primary-mid); }
-.badge-green   { background: var(--clr-success-lt); color: var(--clr-success);   border-color: var(--clr-success-mid); }
-.badge-orange  { background: var(--clr-warning-lt); color: var(--clr-warning);   border-color: var(--clr-warning-mid); }
-.badge-red     { background: var(--clr-danger-lt);  color: var(--clr-danger);    border-color: var(--clr-danger-mid); }
+.badge-blue    { background: var(--primary-lt);  color: var(--primary);    border-color: var(--primary-mid); }
+.badge-green   { background: var(--success-lt);  color: var(--success-dk); border-color: var(--success-mid); }
+.badge-orange  { background: var(--warning-lt);  color: var(--warning);    border-color: var(--warning-mid); }
+.badge-red     { background: var(--danger-lt);   color: var(--danger);     border-color: var(--danger-mid); }
+.badge-gray    { background: var(--gray-100);    color: var(--gray-600);   border-color: var(--gray-200); }
+.badge-info    { background: var(--info-lt);     color: var(--info);       border-color: var(--info-mid); }
 
-/* ─── Table ─────────────────────────────────────────────────── */
+/* ══════════════════════════════════════════════════════════════════════════
+   TABLES
+   ══════════════════════════════════════════════════════════════════════════ */
 .erp-table { width: 100%; border-collapse: collapse; }
 
 .erp-table thead th {
-  background: #F9FAFB;
-  color: #6B7280;
-  font-size: 0.8rem;
+  background: var(--gray-50);
+  color: var(--gray-500);
+  font-size: 0.75rem;
   font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 0.05em;
-  padding: 0.7rem 1rem;
-  border-bottom: 2px solid var(--clr-border);
+  letter-spacing: 0.06em;
+  padding: 0.75rem 1rem;
+  border-bottom: 2px solid var(--border);
   white-space: nowrap;
+  position: sticky; top: 0; z-index: 5;
 }
 .erp-table tbody td {
-  padding: 0.8rem 1rem;
-  border-bottom: 1px solid #F3F4F6;
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid var(--gray-100);
   font-size: 0.875rem;
-  color: var(--clr-text-body);
+  color: var(--text-body);
   line-height: 1.5;
 }
-.erp-table tbody tr:hover { background: #F9FAFB; }
+.erp-table tbody tr { transition: background var(--t-fast); }
+.erp-table tbody tr:hover { background: var(--gray-50); }
 .erp-table tbody tr:last-child td { border-bottom: none; }
 
-/* ─── Form Controls ─────────────────────────────────────────── */
-.erp-input {
+/* ══════════════════════════════════════════════════════════════════════════
+   FORM CONTROLS
+   ══════════════════════════════════════════════════════════════════════════ */
+.erp-input, .erp-select {
   width: 100%;
-  background: var(--clr-surface);
-  border: 1px solid var(--clr-border);
-  border-radius: var(--radius-md);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
   padding: 0.5rem 0.75rem;
   font-size: 0.875rem; font-family: inherit;
-  color: var(--clr-text-body);
-  transition: border-color 0.15s, box-shadow 0.15s;
+  color: var(--text-body);
+  transition: border-color var(--t-fast), box-shadow var(--t-fast);
   outline: none;
 }
-.erp-input::placeholder { color: var(--clr-text-muted); }
-.erp-input:focus {
-  border-color: var(--clr-border-focus);
-  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.10);
+.erp-input::placeholder { color: var(--text-muted); }
+.erp-input:focus, .erp-select:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.12);
 }
 
 .erp-label {
   display: block;
   font-size: 0.8rem; font-weight: 500;
-  color: var(--clr-text-sub);
+  color: var(--text-sub);
   margin-bottom: 0.3rem;
   letter-spacing: 0.01em;
 }
 
-/* ─── Section Header ────────────────────────────────────────── */
-.section-header {
-  display: flex; align-items: center; justify-content: space-between;
-  margin-bottom: 1rem; padding-bottom: 0.75rem;
-  border-bottom: 1px solid var(--clr-border);
-}
-.section-title {
-  font-size: 0.9375rem; font-weight: 700;
-  color: var(--clr-text-h);
-  letter-spacing: -0.01em;
-}
-.section-subtitle {
-  font-size: 0.8rem; color: var(--clr-text-muted); margin-top: 0.125rem;
-}
-
-/* ─── Sidebar Items ─────────────────────────────────────────── */
+/* ══════════════════════════════════════════════════════════════════════════
+   SIDEBAR NAV
+   ══════════════════════════════════════════════════════════════════════════ */
 .sidebar-nav-item {
   display: flex; align-items: center; gap: 0.625rem;
-  width: 100%; padding: 0.5rem 1rem;
-  border-radius: var(--radius-md);
+  width: 100%; padding: 0.5rem 0.875rem;
+  border-radius: var(--r-md);
   font-size: 0.8125rem; font-weight: 500;
-  color: #94A3B8;
+  color: #64748B;
   text-align: left;
   background: transparent; border: none;
   position: relative;
-  transition: background 0.15s, color 0.15s;
+  transition: background var(--t-fast), color var(--t-fast);
   cursor: pointer;
 }
 .sidebar-nav-item:hover {
-  background: var(--clr-sidebar-hover);
-  color: #CBD5E1;
+  background: rgba(255,255,255,0.06);
+  color: #94A3B8;
 }
 .sidebar-nav-item.active {
-  background: rgba(79, 70, 229, 0.18);
+  background: rgba(99, 102, 241, 0.15);
   color: #A5B4FC;
 }
 .sidebar-nav-item.active::before {
   content: '';
   position: absolute;
-  left: 0;
-  top: 50%;
+  left: 0; top: 50%;
   transform: translateY(-50%);
-  height: 60%;
-  width: 3px;
-  background: #818CF8;
+  height: 55%; width: 3px;
+  background: linear-gradient(180deg, #818CF8 0%, #6366F1 100%);
   border-radius: 0 3px 3px 0;
 }
 .sidebar-nav-item.active svg { color: #818CF8; }
 
-/* ─── Status Indicators ─────────────────────────────────────── */
+/* ══════════════════════════════════════════════════════════════════════════
+   STATUS INDICATORS
+   ══════════════════════════════════════════════════════════════════════════ */
 .status-dot {
-  width: 7px; height: 7px;
-  border-radius: 50%;
-  display: inline-block;
-  flex-shrink: 0;
+  width: 7px; height: 7px; border-radius: 50%;
+  display: inline-block; flex-shrink: 0;
 }
-.status-dot.online  { background: var(--clr-success); box-shadow: 0 0 0 2px rgba(21, 128, 61, 0.2); }
-.status-dot.warning { background: var(--clr-warning); }
-.status-dot.error   { background: var(--clr-danger); }
+.status-dot.online  { background: var(--success); box-shadow: 0 0 0 2.5px rgba(22, 163, 74, 0.2); }
+.status-dot.warning { background: var(--warning); }
+.status-dot.error   { background: var(--danger);  }
 
-/* ─── Scrollbar ─────────────────────────────────────────────── */
+/* ══════════════════════════════════════════════════════════════════════════
+   SCROLLBAR
+   ══════════════════════════════════════════════════════════════════════════ */
 ::-webkit-scrollbar { width: 5px; height: 5px; }
 ::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: #D1D5DB; border-radius: 99px; }
-::-webkit-scrollbar-thumb:hover { background: #9CA3AF; }
+::-webkit-scrollbar-thumb { background: var(--gray-300); border-radius: 99px; }
+::-webkit-scrollbar-thumb:hover { background: var(--gray-400); }
 
 .custom-scrollbar::-webkit-scrollbar { width: 4px; }
-.custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(156, 163, 175, 0.35); border-radius: 10px; }
-.custom-scrollbar::-webkit-scrollbar-thumb:hover { background: rgba(156, 163, 175, 0.65); }
+.custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(156, 163, 175, 0.3); border-radius: 10px; }
+.custom-scrollbar::-webkit-scrollbar-thumb:hover { background: rgba(156, 163, 175, 0.6); }
 
-/* ─── Utility ───────────────────────────────────────────────── */
-.text-primary { color: var(--clr-primary); }
-.text-success { color: var(--clr-success); }
-.text-warning { color: var(--clr-warning); }
-.text-danger  { color: var(--clr-danger); }
-.text-muted   { color: var(--clr-text-muted); }
-.text-sub     { color: var(--clr-text-sub); }
-
-.mono { font-family: 'JetBrains Mono', 'Fira Code', ui-monospace, monospace; }
-
-/* ─── Recharts Overrides ────────────────────────────────────── */
-.recharts-cartesian-grid-horizontal line,
-.recharts-cartesian-grid-vertical line {
-  stroke: #F3F4F6 !important;
-  stroke-dasharray: 4 4 !important;
+/* ══════════════════════════════════════════════════════════════════════════
+   SECTION HEADER
+   ══════════════════════════════════════════════════════════════════════════ */
+.section-header {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 1rem; padding-bottom: 0.875rem;
+  border-bottom: 1px solid var(--border);
 }
-.recharts-text { fill: var(--clr-text-muted) !important; font-size: 11px !important; font-weight: 500 !important; }
-.recharts-tooltip-wrapper .recharts-default-tooltip {
-  background: var(--clr-surface) !important;
-  border: 1px solid var(--clr-border) !important;
-  border-radius: var(--radius-lg) !important;
-  box-shadow: var(--shadow-xl) !important;
-  color: var(--clr-text-body) !important;
-  padding: 0.75rem 1rem !important;
-  font-size: 0.875rem !important;
+.section-title {
+  font-size: 0.9375rem; font-weight: 700;
+  color: var(--text-h); letter-spacing: -0.01em;
+  font-family: 'Plus Jakarta Sans', sans-serif;
 }
+.section-subtitle { font-size: 0.8rem; color: var(--text-muted); margin-top: 0.125rem; }
 
-/* ─── Page Transition ───────────────────────────────────────── */
-@keyframes fadeUp {
-  from { opacity: 0; transform: translateY(8px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-.page-enter { animation: fadeUp 0.25s ease both; }
-
-/* ─── Dropdown ──────────────────────────────────────────────── */
+/* ══════════════════════════════════════════════════════════════════════════
+   DROPDOWN
+   ══════════════════════════════════════════════════════════════════════════ */
 .erp-dropdown {
-  background: var(--clr-surface);
-  border: 1px solid var(--clr-border);
-  border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-xl);
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--r-lg); box-shadow: var(--shadow-xl);
   overflow: hidden;
 }
 .erp-dropdown-item {
   display: flex; align-items: center; gap: 0.5rem;
   width: 100%; padding: 0.5rem 0.875rem;
   font-size: 0.875rem; font-weight: 400;
-  color: var(--clr-text-body);
+  color: var(--text-body);
   background: transparent; border: none;
   text-align: left; cursor: pointer;
-  transition: background 0.1s;
+  transition: background var(--t-fast);
 }
-.erp-dropdown-item:hover { background: #F9FAFB; }
-.erp-dropdown-item.active { background: var(--clr-primary-lt); color: var(--clr-primary); font-weight: 500; }
-.erp-dropdown-sep { height: 1px; background: var(--clr-border); margin: 0.25rem 0; }
+.erp-dropdown-item:hover { background: var(--gray-50); }
+.erp-dropdown-item.active { background: var(--primary-lt); color: var(--primary); font-weight: 500; }
+.erp-dropdown-sep { height: 1px; background: var(--border); margin: 0.25rem 0; }
 
-/* ─── Tag Labels ────────────────────────────────────────────── */
+/* ══════════════════════════════════════════════════════════════════════════
+   TAGS
+   ══════════════════════════════════════════════════════════════════════════ */
 .tag {
   display: inline-flex; align-items: center;
   font-size: 0.75rem; font-weight: 500;
   padding: 0.2rem 0.55rem;
-  border-radius: var(--radius-sm);
-  letter-spacing: 0.01em;
+  border-radius: var(--r-sm);
 }
-.tag-charge  { background: #FEF2F2; color: #B91C1C; }
-.tag-produit { background: #F0FDF4; color: #15803D; }
-.tag-immo    { background: var(--clr-primary-lt); color: #4338CA; }
-.tag-tiers   { background: #F5F3FF; color: #6D28D9; }
-.tag-valide  { background: #F0FDF4; color: #15803D; }
-.tag-pending { background: #FFFBEB; color: #B45309; }
+.tag-charge  { background: var(--danger-lt);  color: #B91C1C; }
+.tag-produit { background: var(--success-lt); color: var(--success-dk); }
+.tag-immo    { background: var(--primary-lt); color: #4338CA; }
+.tag-tiers   { background: #F5F3FF;           color: #6D28D9; }
+.tag-valide  { background: var(--success-lt); color: var(--success-dk); }
+.tag-pending { background: var(--warning-lt); color: var(--warning); }
 
+/* ══════════════════════════════════════════════════════════════════════════
+   UTILS
+   ══════════════════════════════════════════════════════════════════════════ */
+.text-primary { color: var(--primary); }
+.text-success { color: var(--success); }
+.text-warning { color: var(--warning); }
+.text-danger  { color: var(--danger); }
+.text-muted   { color: var(--text-muted); }
+.text-sub     { color: var(--text-sub); }
 
-/* ══════════════════════════════════════════════════════════════
-   READABILITY OVERRIDE LAYER
-   Corrects illegible Tailwind arbitrary values used in modules.
-   All overrides use !important to win over inline class specificity.
-   ══════════════════════════════════════════════════════════════ */
+.mono { font-family: 'JetBrains Mono', 'Fira Code', ui-monospace, monospace; }
 
-/* ── 1. Minimum Font Size Enforcement ──────────────────────── */
-/* Components use text-[9px]→text-[12px] extensively in tables  */
-/* and labels — these sizes are unreadable for sustained use.   */
+/* ── Animations ───────────────────────────────────────────────────────── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+@keyframes shimmer {
+  from { background-position: -200% center; }
+  to   { background-position: 200% center; }
+}
+@keyframes pulse-ring {
+  0%   { box-shadow: 0 0 0 0 rgba(22, 163, 74, 0.4); }
+  70%  { box-shadow: 0 0 0 8px rgba(22, 163, 74, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(22, 163, 74, 0); }
+}
 
-.text-\[9px\]  { font-size: 12px   !important; }
+.page-enter { animation: fadeUp 0.2s ease both; }
+.fade-in    { animation: fadeIn 0.2s ease both; }
+
+/* Skeleton loader */
+.skeleton {
+  background: linear-gradient(90deg, var(--gray-100) 25%, var(--gray-50) 50%, var(--gray-100) 75%);
+  background-size: 200% auto;
+  animation: shimmer 1.5s linear infinite;
+  border-radius: var(--r-sm);
+}
+
+/* ── Recharts ─────────────────────────────────────────────────────────── */
+.recharts-cartesian-grid-horizontal line,
+.recharts-cartesian-grid-vertical line {
+  stroke: var(--gray-100) !important; stroke-dasharray: 4 4 !important;
+}
+.recharts-text { fill: var(--text-muted) !important; font-size: 11.5px !important; font-weight: 500 !important; }
+.recharts-tooltip-wrapper .recharts-default-tooltip {
+  background: var(--surface) !important; border: 1px solid var(--border) !important;
+  border-radius: var(--r-lg) !important; box-shadow: var(--shadow-xl) !important;
+  color: var(--text-body) !important; padding: 0.75rem 1rem !important;
+  font-size: 0.875rem !important;
+}
+
+/* ══════════════════════════════════════════════════════════════════════════
+   MODULE OVERRIDES — Harmonisation visuelle
+   Normalise tous les modules vers un langage visuel cohérent
+   ══════════════════════════════════════════════════════════════════════════ */
+
+/* ── 1. Couleurs de fond des modules sombres → fond clair premium ─────── */
+/* Les modules demo/CO utilisent bg-slate-900/slate-800 — on normalise   */
+.bg-slate-900  { background-color: #F8FAFC !important; }
+.bg-slate-800  { background-color: #F1F5F9 !important; }
+.bg-slate-800\/10 { background-color: rgba(241,245,249,0.7) !important; }
+.bg-slate-800\/20 { background-color: rgba(241,245,249,0.8) !important; }
+.bg-slate-800\/30 { background-color: rgba(241,245,249,0.9) !important; }
+.bg-slate-800\/50 { background-color: #F1F5F9 !important; }
+
+/* ── 2. Textes blancs dans modules sombres → texte foncé lisible ──────── */
+.text-white  { color: var(--text-h) !important; }
+.text-slate-100 { color: var(--text-body) !important; }
+.text-slate-200 { color: var(--text-body) !important; }
+.text-slate-300 { color: var(--text-sub) !important; }
+.text-slate-400 { color: var(--text-muted) !important; }
+.text-slate-500 { color: var(--text-muted) !important; }
+
+/* ── 3. Bordures slate → bordures système ─────────────────────────────── */
+.border-slate-700   { border-color: var(--border) !important; }
+.border-slate-700\/50 { border-color: var(--border) !important; }
+.border-slate-600   { border-color: var(--border-2) !important; }
+
+/* ── 4. Cards dark → cards claires ────────────────────────────────────── */
+/* La classe .card est utilisée dans EndToEndFlow et autres modules dark  */
+.card {
+  background: var(--surface) !important;
+  border: 1px solid var(--border) !important;
+  border-radius: var(--r-lg) !important;
+  box-shadow: var(--shadow-sm) !important;
+  color: var(--text-body) !important;
+}
+
+/* ── 5. Module-level dark gradient bg ─────────────────────────────────── */
+/* Certains modules utilisent bg-gradient depuis slate-950 */
+[class*="bg-gradient"][class*="slate"] {
+  background: linear-gradient(135deg, #F8FAFC 0%, #EEF2FF 100%) !important;
+}
+
+/* ── 6. Harmonisation couleur brand dans modules ───────────────────────── */
+/* Modules SYSCOHADA utilisent #005eb8 — harmoniser avec primary #4F46E5 */
+.bg-\[\#005eb8\]       { background-color: var(--primary) !important; }
+.text-\[\#005eb8\]     { color: var(--primary) !important; }
+.border-\[\#005eb8\]   { border-color: var(--primary) !important; }
+.hover\:bg-\[\#004080\]:hover   { background-color: var(--primary-dk) !important; }
+.hover\:text-\[\#005eb8\]:hover { color: var(--primary) !important; }
+.focus\:border-\[\#005eb8\]:focus { border-color: var(--primary) !important; }
+.shadow-blue-500\/20   { box-shadow: 0 4px 14px rgba(79,70,229,0.18) !important; }
+
+/* Page background couleur module light → fond app */
+.bg-\[\#f8fafc\] { background-color: var(--surface-2) !important; }
+.bg-\[\#f1f5f9\] { background-color: var(--gray-100) !important; }
+.bg-white        { background-color: var(--surface) !important; }
+
+/* ── 7. Typographie — harmonisation tailles ────────────────────────────── */
+.text-\[9px\]  { font-size: 12px   !important; letter-spacing: 0.01em !important; }
 .text-\[10px\] { font-size: 12.5px !important; }
 .text-\[11px\] { font-size: 13px   !important; }
-.text-\[12px\] { font-size: 13.5px !important; }
-.text-\[13px\] { font-size: 14px   !important; }
+.text-\[12px\] { font-size: 13px   !important; }
+.text-\[13px\] { font-size: 13.5px !important; }
+.text-xs       { font-size: 12.5px !important; }
+.text-sm       { font-size: 13.5px !important; }
 
-/* Tailwind named sizes that land too small at 15px base */
-.text-xs  { font-size: 0.8rem   !important; }  /* 12px → 12px (floor, fine) */
+/* ── 8. Font weight — lecture confortable ─────────────────────────────── */
+.font-black { font-weight: 700 !important; }
 
-/* ── 2. Font Weight Normalization ───────────────────────────── */
-/* font-black (900) on small text creates an unreadable blob.   */
-/* Cap at semibold (650) — still clearly bold, far more legible.*/
+/* ── 9. Letter-spacing — lisibilité ──────────────────────────────────── */
+.tracking-widest       { letter-spacing: 0.06em  !important; }
+.tracking-\[0\.2em\]   { letter-spacing: 0.06em  !important; }
+.tracking-\[0\.3em\]   { letter-spacing: 0.07em  !important; }
+.tracking-\[0\.4em\]   { letter-spacing: 0.07em  !important; }
+.tracking-\[0\.15em\]  { letter-spacing: 0.05em  !important; }
+.tracking-tighter      { letter-spacing: -0.015em !important; }
+.tracking-tight        { letter-spacing: -0.01em  !important; }
 
-.font-black { font-weight: 650 !important; }
+/* ── 10. Titres excessivement grands → scale raisonnable ─────────────── */
+.text-4xl  { font-size: 1.75rem  !important; }  /* 36px → 26px */
+.text-5xl  { font-size: 2rem     !important; }  /* 48px → 30px */
+.text-3xl  { font-size: 1.5rem   !important; }  /* 30px → 22px */
+.text-2xl  { font-size: 1.25rem  !important; }  /* 24px → 18px */
 
-/* ── 3. Letter-Spacing Normalization ────────────────────────── */
-/* Extreme tracking like 0.2em–0.3em on 10-12px text is         */
-/* completely unreadable. Normalize to comfortable values.       */
-
-.tracking-widest      { letter-spacing: 0.07em  !important; }
-.tracking-\[0\.2em\]  { letter-spacing: 0.07em  !important; }
-.tracking-\[0\.3em\]  { letter-spacing: 0.08em  !important; }
-.tracking-\[0\.15em\] { letter-spacing: 0.05em  !important; }
-.tracking-tighter     { letter-spacing: -0.01em !important; }
-
-/* ── 4. Global Table Readability ────────────────────────────── */
-/* Enforces a floor on all table content regardless of          */
-/* Tailwind classes applied by individual components.           */
-
+/* ── 11. Tables — lisibilité universelle ──────────────────────────────── */
 table thead th {
-  font-size: max(12px, 0.8rem) !important;
-  letter-spacing: 0.04em       !important;
-  font-weight: 600             !important;
-  line-height: 1.4             !important;
+  font-size:  max(12px, 0.78rem) !important;
+  letter-spacing: 0.05em         !important;
+  font-weight: 600               !important;
+  line-height: 1.4               !important;
+  color: var(--gray-500)         !important;
+  background: var(--gray-50)     !important;
+  border-bottom: 2px solid var(--border) !important;
+}
+table tbody td, table tbody th {
+  font-size:   max(13px, 0.875rem) !important;
+  line-height: 1.55                !important;
+  color: var(--text-body)          !important;
+}
+table tbody tr { transition: background var(--t-fast); }
+table tbody tr:hover { background: var(--gray-50) !important; }
+table tbody tr td, table tbody tr th {
+  border-bottom: 1px solid var(--gray-100) !important;
 }
 
-table tbody td,
-table tbody th {
-  font-size: max(13px, 0.875rem) !important;
-  line-height: 1.55              !important;
-}
-
-/* ── 5. Italic + Opacity Mitigation ────────────────────────── */
-/* Labels combining italic + small size + opacity hurt contrast. */
-/* Lift the opacity floor so these remain readable.             */
-
-p.italic, span.italic {
-  font-style: normal !important;
-}
-
-/* Specific pattern: module sub-headers use opacity to mute     */
-/* an already-tiny text. Lift to minimum readable opacity.      */
-.opacity-60 { opacity: 0.78 !important; }
-.opacity-70 { opacity: 0.82 !important; }
-.opacity-80 { opacity: 0.90 !important; }
-
-/* ── 6. Input & Search Field Text Size ─────────────────────── */
-/* Several modules use text-xs / text-[12px] on inputs.        */
-
+/* ── 12. Inputs — lisibilité & focus states ───────────────────────────── */
 input, textarea, select {
-  font-size: max(14px, 0.9rem) !important;
-  line-height: 1.5             !important;
+  font-size:    max(13.5px, 0.875rem) !important;
+  line-height:  1.5                   !important;
+  color: var(--text-body)             !important;
+  font-family: inherit                !important;
+}
+input:focus, textarea:focus, select:focus {
+  outline: none !important;
+  border-color: var(--primary) !important;
+  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.12) !important;
 }
 
-/* ── 7. Button Text Minimum ─────────────────────────────────── */
-/* Many buttons use text-[11px] with uppercase + tracking.     */
-
+/* ── 13. Boutons — cohérence visuelle ────────────────────────────────── */
 button {
-  font-size: max(12.5px, 0.8125rem);
-  letter-spacing: max(-0.01em, var(--btn-tracking, 0em));
+  font-family: inherit;
+  font-size: max(12.5px, 0.825rem);
+  letter-spacing: 0.01em;
 }
 
-/* ── 8. Body Text & Content Line Height ─────────────────────── */
-/* Dense content areas need breathing room.                     */
+/* ── 14. Opacité — lisibilité texte ──────────────────────────────────── */
+.opacity-60 { opacity: 0.80 !important; }
+.opacity-70 { opacity: 0.85 !important; }
+.opacity-80 { opacity: 0.92 !important; }
 
-.flex-col p,
-.flex-col span:not([class*="icon"]),
-td span,
-th span {
-  line-height: 1.55;
+/* Italic seul n'est pas un problème — on retire le !important qui force normal */
+/* Mais on garde une taille minimale lisible */
+p.italic, span.italic, p.italic.text-\[10px\], span.italic.text-\[10px\] {
+  font-style: italic;
 }
 
-/* ── 9. Module Header Subtitle Readability ──────────────────── */
-/* The pattern: text-[11-12px] font-black uppercase italic      */
-/* tracking-[0.2-0.3em] opacity-80 — fix what we can in CSS.   */
-/* font-size, font-weight, tracking overrides already cover it. */
-/* Also normalize the text-4xl module main titles to be less    */
-/* aggressive — these are too visually dominant at 36px.        */
+/* ── 15. Rounded corners — standardisation ────────────────────────────── */
+.rounded-\[2\.5rem\] { border-radius: var(--r-xl) !important; }
+.rounded-\[3rem\]    { border-radius: var(--r-xl) !important; }
+.rounded-\[2rem\]    { border-radius: var(--r-xl) !important; }
+.rounded-3xl         { border-radius: var(--r-xl) !important; }
+.rounded-2xl         { border-radius: var(--r-lg) !important; }
+.rounded-xl          { border-radius: var(--r-lg) !important; }
 
-.text-4xl { font-size: 1.875rem !important; } /* 36px → 28px */
-.text-5xl { font-size: 2.25rem  !important; } /* 48px → 34px */
+/* ── 16. Module header background — cohérence ─────────────────────────── */
+/* Modules dark utilisent bg-rose-600/10 ou bg-indigo-600/10 comme header */
+.bg-rose-600\/10    { background-color: rgba(239, 68, 68, 0.06) !important; }
+.bg-indigo-600\/10  { background-color: var(--primary-lt) !important; }
+.bg-indigo-600\/20  { background-color: rgba(79, 70, 229, 0.10) !important; }
 
-/* ── 10. Monospace Number Readability ───────────────────────── */
-/* Account codes use font-mono — ensure good size for data.     */
+/* ── 17. Séparateurs slate → border système ──────────────────────────── */
+.border-slate-800  { border-color: var(--border) !important; }
+.divide-slate-800  > * + * { border-color: var(--border) !important; }
+.divide-\[\#f1f5f9\] > * + * { border-color: var(--gray-100) !important; }
 
-.font-mono {
-  font-size: max(13px, 0.875rem);
-  letter-spacing: -0.01em;
-}
+/* ── 18. Module-specific bg fixes ───────────────────────────────────── */
+/* RH, Demo, Treasury dark cards → light */
+.bg-slate-900\/50 { background-color: rgba(241,245,249,0.85) !important; }
+.bg-slate-900\/30 { background-color: rgba(248,250,252,0.9) !important; }
 
-/* ── 11. Footer & Status Bar Text ───────────────────────────── */
-/* App.tsx footer uses inline style fontSize: '0.6875rem'       */
-/* = 10.3px. !important overrides inline styles in external CSS.*/
+/* Rose module header in CostVarianceScenario */
+.bg-rose-600 { background-color: var(--danger) !important; }
+.shadow-rose-600\/30 { box-shadow: 0 4px 14px rgba(220, 38, 38, 0.25) !important; }
+.border-rose-500\/20 { border-color: var(--danger-mid) !important; }
 
+/* ── 19. Footer & status bar ─────────────────────────────────────────── */
 footer span, footer button, footer a {
   font-size: max(11.5px, 0.75rem) !important;
   letter-spacing: 0 !important;
 }
 
-/* ── 12. Recharts Labels ────────────────────────────────────── */
-/* Chart axis/tick labels at 11px are unreadable on dense charts.*/
-
+/* ── 20. Recharts label size ─────────────────────────────────────────── */
 .recharts-text { font-size: 12px !important; }
 
-/* ── 13. text-sm floor ──────────────────────────────────────── */
-/* Tailwind text-sm = 0.875rem = 13.125px at 15px base — fine.  */
-/* text-xs = 0.75rem = 11.25px — lift to 12px.                  */
-
-.text-xs { font-size: 12px !important; }
-
-/* ── 14. Prevent text shrink in flex/truncated labels ──────── */
-/* Truncated labels in tight containers sometimes shrink below  */
-/* readable threshold. Clamp to 12px minimum.                   */
-
-[class*="truncate"], [class*="overflow-hidden"] {
-  min-font-size: 12px; /* progressive enhancement */
+/* ── 21. Monospace — codes comptables ───────────────────────────────── */
+.font-mono {
+  font-family: 'JetBrains Mono', 'Fira Code', ui-monospace, monospace !important;
+  font-size: max(12.5px, 0.825rem) !important;
+  letter-spacing: -0.01em !important;
 }
+
+/* ── 22. Animations Joule / badges pulse ─────────────────────────────── */
+.animate-pulse { animation: pulse-ring 2s cubic-bezier(0.4, 0, 0.6, 1) infinite; }
+
+/* ── 23. Scrollbar custom ─────────────────────────────────────────────── */
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+/* ── 24. Premium gradient accents ────────────────────────────────────── */
+/* Subtle top-left gradient on module containers */
+.flex.flex-col.h-full.gap-8 > div:first-child,
+.flex.flex-col.h-full.gap-6 > div:first-child {
+  position: relative;
+}
+
+/* ── 25. Focus visible ring — accessibilité ──────────────────────────── */
+:focus-visible {
+  outline: 2px solid var(--primary) !important;
+  outline-offset: 2px !important;
+}
+button:focus-visible, a:focus-visible {
+  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.3) !important;
+  outline: none !important;
+}
+
+/* ── 26. Transition universelle sur les éléments interactifs ─────────── */
+a, button, [role="button"], input, select, textarea {
+  transition: all var(--t-fast);
+}
+
+/* ── 27. Stat cards — responsive sizing ─────────────────────────────── */
+.grid.grid-cols-4 > * { min-width: 0; }
+
+/* ── 28. Text dans les cartes rose/danger sombres ─────────────────────  */
+.bg-rose-600 .text-white,
+.text-rose-400 { color: var(--danger) !important; }
+.text-emerald-400 { color: var(--success-dk) !important; }
+.text-indigo-400  { color: var(--primary) !important; }
+.text-amber-400   { color: var(--warning) !important; }
+
+/* Badges colorés dans modules dark */
+.bg-rose-500   { background-color: var(--danger) !important; }
+.bg-indigo-500 { background-color: var(--primary) !important; }
+.bg-emerald-500 { background-color: var(--success) !important; }
+.border-rose-500\/30 { border-color: var(--danger-mid) !important; }
+.bg-rose-500\/5  { background-color: var(--danger-lt) !important; }
+
+/* ── 29. Terminal / Console panels — garder sombres (intentionnel) ───── */
+/* Ces éléments sont des consoles de démo — le fond sombre est voulu     */
+.bg-slate-950\/80 {
+  background-color: #0F172A !important;
+  color: #94A3B8 !important;
+}
+.bg-slate-950 { background-color: #0F172A !important; }
+
+/* Le card PARENT de la console reste clair */
+.card.bg-slate-800\/20 { background-color: var(--surface) !important; }
+
+/* Progress bar track dans demo — gris clair */
+.bg-slate-900.rounded-full { background-color: var(--gray-200) !important; }
+
+/* Step icon "non démarré" dans demo → gris clair */
+.bg-slate-900.text-slate-600 {
+  background-color: var(--gray-100) !important;
+  color: var(--gray-400) !important;
+}
+
+/* Ligne verticale connecteur du workflow */
+.bg-slate-800.-z-10 { background-color: var(--border) !important; }
+
+/* Bouton désactivé "simulation en cours" → style cohérent */
+.bg-slate-800.text-slate-500 {
+  background-color: var(--gray-100) !important;
+  color: var(--text-muted) !important;
+}
+
+/* Génerer Rapport CO button dans CostVarianceScenario */
+.bg-slate-900.border.border-slate-700 {
+  background-color: var(--gray-50) !important;
+  border-color: var(--border) !important;
+  color: var(--text-sub) !important;
+}
+
+/* ── 29. Padding modéré sur grands cards ────────────────────────────── */
+/* Certains modules ont px-10 py-10 qui crée des espaces excessifs       */
+.px-10 { padding-left: 1.75rem  !important; padding-right: 1.75rem  !important; }
+.py-10 { padding-top:  1.75rem  !important; padding-bottom: 1.75rem !important; }
+.p-10  { padding: 1.75rem       !important; }
+.px-8  { padding-left: 1.5rem   !important; padding-right: 1.5rem   !important; }
+.py-8  { padding-top:  1.5rem   !important; padding-bottom: 1.5rem  !important; }
+.p-8   { padding: 1.5rem        !important; }
+
+/* ── 30. Line height confort ────────────────────────────────────────── */
+.flex-col p, .flex-col span, td span, th span { line-height: 1.55; }
